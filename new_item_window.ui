@@ -1,0 +1,610 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DialogCreateNewItem</class>
+ <widget class="QDialog" name="DialogCreateNewItem">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>896</width>
+    <height>670</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Добавление новой детали</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLabel" name="labelProductLine">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(181, 181, 181);
+font: 75 15pt &quot;MS Sans Serif&quot;;</string>
+       </property>
+       <property name="text">
+        <string>Выберите линейку оборудования:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBoxProductLine">
+       <item>
+        <property name="text">
+         <string/>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>TPS-Line</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>EZLine</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>REDA</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>другое</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelItemType">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(181, 181, 181);
+font: 75 15pt &quot;MS Sans Serif&quot;;</string>
+       </property>
+       <property name="text">
+        <string>Выберите тип детали:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBoxItemType">
+       <item>
+        <property name="text">
+         <string/>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Корпус</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Направляющий аппарат</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Нижний направляющий аппарат</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Подшипник</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Концевая деталь</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelItemParameters">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(181, 181, 181);
+font: 75 15pt &quot;MS Sans Serif&quot;;</string>
+       </property>
+       <property name="text">
+        <string>Укажите параметры детали:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QFormLayout" name="formLayoutParameters">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetDefaultConstraint</enum>
+       </property>
+       <property name="fieldGrowthPolicy">
+        <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+       </property>
+       <property name="labelAlignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="formAlignment">
+        <set>Qt::AlignHCenter|Qt::AlignTop</set>
+       </property>
+       <item row="0" column="0">
+        <widget class="QLabel" name="labelSeriesRus">
+         <property name="text">
+          <string>Серия</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="comboBoxSeriesRus">
+         <item>
+          <property name="text">
+           <string>2A</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>5</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>5A</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="labelSeriesEng">
+         <property name="text">
+          <string>Серия, eng</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QComboBox" name="comboBoxSeriesEng">
+         <item>
+          <property name="text">
+           <string>A</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>D</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>G</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>H</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>J</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>S</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="labelHorB">
+         <property name="text">
+          <string>Тип концевой детали</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QComboBox" name="comboBoxHorB">
+         <item>
+          <property name="text">
+           <string>Голова</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Основание</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="labelStagSize">
+         <property name="text">
+          <string>Типоразмер ступени</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="lineEditStagSize"/>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="labelLengthCodeRus">
+         <property name="text">
+          <string>Шифр длины, м</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QComboBox" name="comboBoxLengthCodeRus">
+         <item>
+          <property name="text">
+           <string>0.5</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>1</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>1.5</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>2</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>2.5</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>3</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>3.5</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>4</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>4.5</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>5</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>5.5</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>6</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>6.5</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>7</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>7.5</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>8</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>8.5</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>9</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>9.5</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>10</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="labelLengthCodeEng">
+         <property name="text">
+          <string>Шифр длины, #</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QComboBox" name="comboBoxLengthCodeEng">
+         <item>
+          <property name="text">
+           <string>#10</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>#20</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>#30</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>#40</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>#50</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>#60</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>#70</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>#80</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>#90</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>#100</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>#110</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>#120</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>#130</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>#140</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>#150</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>#160</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="labelHeight">
+         <property name="text">
+          <string>Высота, мм</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QLineEdit" name="lineEditHeight"/>
+       </item>
+       <item row="9" column="0">
+        <widget class="QLabel" name="labelUpDev">
+         <property name="text">
+          <string>Допуск вверх, мм</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="1">
+        <widget class="QLineEdit" name="lineEditUpDev"/>
+       </item>
+       <item row="10" column="0">
+        <widget class="QLabel" name="labelLowDev">
+         <property name="text">
+          <string>Допуск вниз, мм</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="1">
+        <widget class="QLineEdit" name="lineEditLowDev"/>
+       </item>
+       <item row="11" column="0">
+        <widget class="QLabel" name="labelBearingImp">
+         <property name="text">
+          <string>Колесо ПП</string>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="1">
+        <widget class="QComboBox" name="comboBoxBearingImp">
+         <item>
+          <property name="text">
+           <string>Отсутствует</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Короткое</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Обычное</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="12" column="0">
+        <widget class="QLabel" name="labelBearingMod">
+         <property name="text">
+          <string>Модификация ПП</string>
+         </property>
+        </widget>
+       </item>
+       <item row="12" column="1">
+        <widget class="QLineEdit" name="lineEditBearingMod"/>
+       </item>
+       <item row="5" column="1">
+        <widget class="QComboBox" name="comboBoxCRFL">
+         <item>
+          <property name="text">
+           <string>CR</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>FL</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="labelCRFL">
+         <property name="text">
+          <string>CR/FL</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="labelCompression">
+         <property name="text">
+          <string>Компрессия на ступень, мкм</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLineEdit" name="lineEditCompression"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QWidget" name="widget" native="true"/>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::MinimumExpanding</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QPushButton" name="pushButtonSave">
+         <property name="text">
+          <string>Сохранить</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButtonCancel">
+         <property name="text">
+          <string>Отмена</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
