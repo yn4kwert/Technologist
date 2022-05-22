@@ -138,15 +138,9 @@
          <property name="geometry">
           <rect>
            <x>0</x>
-<<<<<<< HEAD
-           <y>-1754</y>
+           <y>0</y>
            <width>1375</width>
            <height>2665</height>
-=======
-           <y>0</y>
-           <width>1367</width>
-           <height>3140</height>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -201,11 +195,7 @@ border: 2px solid rgb(170, 0, 0);
             <item>
              <widget class="QPushButton" name="pushButtonHideMTHousing">
               <property name="sizePolicy">
-<<<<<<< HEAD
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-=======
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -218,64 +208,16 @@ border: 2px solid rgb(170, 0, 0);
               </property>
               <property name="maximumSize">
                <size>
-<<<<<<< HEAD
                 <width>99999</width>
-=======
-                <width>50</width>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <height>20</height>
                </size>
               </property>
               <property name="baseSize">
                <size>
-<<<<<<< HEAD
                 <width>-31073</width>
                 <height>0</height>
                </size>
               </property>
-=======
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>Hide</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="labelMTHousing">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
               <property name="styleSheet">
                <string notr="true">background-color: rgb(255, 229, 229);
 border: 1px solid rgb(220, 0, 0);</string>
@@ -283,12 +225,6 @@ border: 1px solid rgb(220, 0, 0);</string>
               <property name="text">
                <string>Корпуса</string>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
              </widget>
             </item>
             <item>
@@ -630,11 +566,7 @@ border: 1px solid rgb(220, 0, 0);</string>
             <item>
              <widget class="QPushButton" name="pushButtonHideMTDif">
               <property name="sizePolicy">
-<<<<<<< HEAD
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-=======
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -647,11 +579,7 @@ border: 1px solid rgb(220, 0, 0);</string>
               </property>
               <property name="maximumSize">
                <size>
-<<<<<<< HEAD
                 <width>99999</width>
-=======
-                <width>50</width>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <height>20</height>
                </size>
               </property>
@@ -661,46 +589,6 @@ border: 1px solid rgb(220, 0, 0);</string>
                 <height>0</height>
                </size>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="text">
-               <string>Hide</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="labelMTDif">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
               <property name="styleSheet">
                <string notr="true">background-color: rgb(255, 229, 229);
 border: 1px solid rgb(220, 0, 0);</string>
@@ -708,12 +596,6 @@ border: 1px solid rgb(220, 0, 0);</string>
               <property name="text">
                <string>Направляющие аппараты</string>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
              </widget>
             </item>
             <item>
@@ -993,11 +875,7 @@ border: 1px solid rgb(220, 0, 0);</string>
             <item>
              <widget class="QPushButton" name="pushButtonHideMTLDif">
               <property name="sizePolicy">
-<<<<<<< HEAD
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-=======
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -1010,11 +888,7 @@ border: 1px solid rgb(220, 0, 0);</string>
               </property>
               <property name="maximumSize">
                <size>
-<<<<<<< HEAD
                 <width>99999</width>
-=======
-                <width>50</width>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <height>20</height>
                </size>
               </property>
@@ -1024,46 +898,6 @@ border: 1px solid rgb(220, 0, 0);</string>
                 <height>0</height>
                </size>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="text">
-               <string>Hide</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="labelMTLDif">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
               <property name="styleSheet">
                <string notr="true">background-color: rgb(255, 229, 229);
 border: 1px solid rgb(220, 0, 0);</string>
@@ -1071,12 +905,6 @@ border: 1px solid rgb(220, 0, 0);</string>
               <property name="text">
                <string>Нижние направляющие аппараты</string>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
              </widget>
             </item>
             <item>
@@ -1316,11 +1144,7 @@ border: 1px solid rgb(220, 0, 0);</string>
             <item>
              <widget class="QPushButton" name="pushButtonHideMTBearing">
               <property name="sizePolicy">
-<<<<<<< HEAD
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-=======
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -1333,11 +1157,7 @@ border: 1px solid rgb(220, 0, 0);</string>
               </property>
               <property name="maximumSize">
                <size>
-<<<<<<< HEAD
                 <width>99999</width>
-=======
-                <width>50</width>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <height>20</height>
                </size>
               </property>
@@ -1347,46 +1167,6 @@ border: 1px solid rgb(220, 0, 0);</string>
                 <height>0</height>
                </size>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="text">
-               <string>Hide</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="labelMTBearing">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
               <property name="styleSheet">
                <string notr="true">background-color: rgb(255, 229, 229);
 border: 1px solid rgb(220, 0, 0);</string>
@@ -1394,12 +1174,6 @@ border: 1px solid rgb(220, 0, 0);</string>
               <property name="text">
                <string>Подшипники</string>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
              </widget>
             </item>
             <item>
@@ -1724,11 +1498,7 @@ border: 1px solid rgb(220, 0, 0);</string>
             <item>
              <widget class="QPushButton" name="pushButtonHideMTHB">
               <property name="sizePolicy">
-<<<<<<< HEAD
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-=======
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -1741,11 +1511,7 @@ border: 1px solid rgb(220, 0, 0);</string>
               </property>
               <property name="maximumSize">
                <size>
-<<<<<<< HEAD
                 <width>2000</width>
-=======
-                <width>50</width>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <height>20</height>
                </size>
               </property>
@@ -1755,46 +1521,6 @@ border: 1px solid rgb(220, 0, 0);</string>
                 <height>0</height>
                </size>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="text">
-               <string>Hide</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="labelMTHB">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
               <property name="styleSheet">
                <string notr="true">background-color: rgb(255, 229, 229);
 border: 1px solid rgb(220, 0, 0);</string>
@@ -1802,12 +1528,6 @@ border: 1px solid rgb(220, 0, 0);</string>
               <property name="text">
                <string>Концевые детали</string>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
              </widget>
             </item>
             <item>
@@ -2320,11 +2040,7 @@ border: 2px solid rgb(229, 214, 0);
             <item>
              <widget class="QPushButton" name="pushButtonHideEZLineHousing">
               <property name="sizePolicy">
-<<<<<<< HEAD
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-=======
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -2337,11 +2053,7 @@ border: 2px solid rgb(229, 214, 0);
               </property>
               <property name="maximumSize">
                <size>
-<<<<<<< HEAD
                 <width>99999</width>
-=======
-                <width>50</width>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <height>20</height>
                </size>
               </property>
@@ -2351,46 +2063,6 @@ border: 2px solid rgb(229, 214, 0);
                 <height>0</height>
                </size>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="text">
-               <string>Hide</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="labelEZLineHousing">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
               <property name="styleSheet">
                <string notr="true">background-color: rgb(248, 255, 167);
 border: 1px solid rgb(229, 214, 0);
@@ -2399,12 +2071,6 @@ border: 1px solid rgb(229, 214, 0);
               <property name="text">
                <string>Корпуса</string>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
              </widget>
             </item>
             <item>
@@ -2626,11 +2292,7 @@ border: 1px solid rgb(229, 214, 0);
             <item>
              <widget class="QPushButton" name="pushButtonHideEZLineDif">
               <property name="sizePolicy">
-<<<<<<< HEAD
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-=======
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -2643,11 +2305,7 @@ border: 1px solid rgb(229, 214, 0);
               </property>
               <property name="maximumSize">
                <size>
-<<<<<<< HEAD
                 <width>99999</width>
-=======
-                <width>50</width>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <height>20</height>
                </size>
               </property>
@@ -2657,46 +2315,6 @@ border: 1px solid rgb(229, 214, 0);
                 <height>0</height>
                </size>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="text">
-               <string>Hide</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="labelEZLineDif">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
               <property name="styleSheet">
                <string notr="true">background-color: rgb(248, 255, 167);
 border: 1px solid rgb(229, 214, 0);
@@ -2705,12 +2323,6 @@ border: 1px solid rgb(229, 214, 0);
               <property name="text">
                <string>Направляющие аппараты</string>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
              </widget>
             </item>
             <item>
@@ -2900,11 +2512,7 @@ border: 1px solid rgb(229, 214, 0);
             <item>
              <widget class="QPushButton" name="pushButtonHideEZLineLDif">
               <property name="sizePolicy">
-<<<<<<< HEAD
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-=======
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -2917,11 +2525,7 @@ border: 1px solid rgb(229, 214, 0);
               </property>
               <property name="maximumSize">
                <size>
-<<<<<<< HEAD
                 <width>99999</width>
-=======
-                <width>50</width>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <height>20</height>
                </size>
               </property>
@@ -2931,46 +2535,6 @@ border: 1px solid rgb(229, 214, 0);
                 <height>0</height>
                </size>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="text">
-               <string>Hide</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="labelEZLineLDif">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
               <property name="styleSheet">
                <string notr="true">background-color: rgb(248, 255, 167);
 border: 1px solid rgb(229, 214, 0);
@@ -2979,12 +2543,6 @@ border: 1px solid rgb(229, 214, 0);
               <property name="text">
                <string>Нижние направляющие аппараты</string>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
              </widget>
             </item>
             <item>
@@ -3154,11 +2712,7 @@ border: 1px solid rgb(229, 214, 0);
             <item>
              <widget class="QPushButton" name="pushButtonHideEZLineBearing">
               <property name="sizePolicy">
-<<<<<<< HEAD
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-=======
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -3171,11 +2725,7 @@ border: 1px solid rgb(229, 214, 0);
               </property>
               <property name="maximumSize">
                <size>
-<<<<<<< HEAD
                 <width>99999</width>
-=======
-                <width>50</width>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <height>20</height>
                </size>
               </property>
@@ -3185,46 +2735,6 @@ border: 1px solid rgb(229, 214, 0);
                 <height>0</height>
                </size>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="text">
-               <string>Hide</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="labelEZLineBearing">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
               <property name="styleSheet">
                <string notr="true">background-color: rgb(248, 255, 167);
 border: 1px solid rgb(229, 214, 0);
@@ -3233,12 +2743,6 @@ border: 1px solid rgb(229, 214, 0);
               <property name="text">
                <string>Подшипники</string>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
              </widget>
             </item>
             <item>
@@ -3428,11 +2932,7 @@ border: 1px solid rgb(229, 214, 0);
             <item>
              <widget class="QPushButton" name="pushButtonHideEZLineHB">
               <property name="sizePolicy">
-<<<<<<< HEAD
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-=======
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -3445,11 +2945,7 @@ border: 1px solid rgb(229, 214, 0);
               </property>
               <property name="maximumSize">
                <size>
-<<<<<<< HEAD
                 <width>99999</width>
-=======
-                <width>50</width>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <height>20</height>
                </size>
               </property>
@@ -3459,62 +2955,14 @@ border: 1px solid rgb(229, 214, 0);
                 <height>0</height>
                </size>
               </property>
-<<<<<<< HEAD
               <property name="styleSheet">
                <string notr="true">background-color: rgb(248, 255, 167);
-=======
-              <property name="text">
-               <string>Hide</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="labelEZLineHB">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(248, 255, 167);
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
 border: 1px solid rgb(229, 214, 0);
 </string>
               </property>
               <property name="text">
                <string>Концевые детали</string>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
              </widget>
             </item>
             <item>
@@ -3747,11 +3195,7 @@ border: 2px solid rgb(0, 0, 180);
             <item>
              <widget class="QPushButton" name="pushButtonHideREDAHousing">
               <property name="sizePolicy">
-<<<<<<< HEAD
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-=======
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -3764,11 +3208,7 @@ border: 2px solid rgb(0, 0, 180);
               </property>
               <property name="maximumSize">
                <size>
-<<<<<<< HEAD
                 <width>99999</width>
-=======
-                <width>50</width>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <height>20</height>
                </size>
               </property>
@@ -3778,46 +3218,6 @@ border: 2px solid rgb(0, 0, 180);
                 <height>0</height>
                </size>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="text">
-               <string>Hide</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="labelREDAHousing">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
               <property name="styleSheet">
                <string notr="true">background-color: rgb(200, 200, 255);
 border: 1px solid rgb(0, 0, 180);
@@ -3827,12 +3227,6 @@ border: 1px solid rgb(0, 0, 180);
               <property name="text">
                <string>Корпуса</string>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
              </widget>
             </item>
             <item>
@@ -4054,11 +3448,7 @@ border: 1px solid rgb(0, 0, 180);
             <item>
              <widget class="QPushButton" name="pushButtonHideREDADif">
               <property name="sizePolicy">
-<<<<<<< HEAD
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-=======
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -4071,11 +3461,7 @@ border: 1px solid rgb(0, 0, 180);
               </property>
               <property name="maximumSize">
                <size>
-<<<<<<< HEAD
                 <width>99999</width>
-=======
-                <width>50</width>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <height>20</height>
                </size>
               </property>
@@ -4085,46 +3471,6 @@ border: 1px solid rgb(0, 0, 180);
                 <height>0</height>
                </size>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="text">
-               <string>Hide</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="labelREDADif">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
               <property name="styleSheet">
                <string notr="true">background-color: rgb(200, 200, 255);
 border: 1px solid rgb(0, 0, 180);
@@ -4134,12 +3480,6 @@ border: 1px solid rgb(0, 0, 180);
               <property name="text">
                <string>Направляющие аппараты</string>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
              </widget>
             </item>
             <item>
@@ -4329,11 +3669,7 @@ border: 1px solid rgb(0, 0, 180);
             <item>
              <widget class="QPushButton" name="pushButtonHideREDALDif">
               <property name="sizePolicy">
-<<<<<<< HEAD
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-=======
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -4346,11 +3682,7 @@ border: 1px solid rgb(0, 0, 180);
               </property>
               <property name="maximumSize">
                <size>
-<<<<<<< HEAD
                 <width>99999</width>
-=======
-                <width>50</width>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <height>20</height>
                </size>
               </property>
@@ -4360,46 +3692,6 @@ border: 1px solid rgb(0, 0, 180);
                 <height>0</height>
                </size>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="text">
-               <string>Hide</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="labelREDALDif">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
               <property name="styleSheet">
                <string notr="true">background-color: rgb(200, 200, 255);
 border: 1px solid rgb(0, 0, 180);
@@ -4409,12 +3701,6 @@ border: 1px solid rgb(0, 0, 180);
               <property name="text">
                <string>Нижние направляющие аппараты</string>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
              </widget>
             </item>
             <item>
@@ -4584,11 +3870,7 @@ border: 1px solid rgb(0, 0, 180);
             <item>
              <widget class="QPushButton" name="pushButtonHideREDABearing">
               <property name="sizePolicy">
-<<<<<<< HEAD
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-=======
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -4601,11 +3883,7 @@ border: 1px solid rgb(0, 0, 180);
               </property>
               <property name="maximumSize">
                <size>
-<<<<<<< HEAD
                 <width>99999</width>
-=======
-                <width>50</width>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <height>20</height>
                </size>
               </property>
@@ -4615,46 +3893,6 @@ border: 1px solid rgb(0, 0, 180);
                 <height>0</height>
                </size>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="text">
-               <string>Hide</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="labelREDABearing">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
               <property name="styleSheet">
                <string notr="true">background-color: rgb(200, 200, 255);
 border: 1px solid rgb(0, 0, 180);
@@ -4664,12 +3902,6 @@ border: 1px solid rgb(0, 0, 180);
               <property name="text">
                <string>Подшипники</string>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
              </widget>
             </item>
             <item>
@@ -4859,11 +4091,7 @@ border: 1px solid rgb(0, 0, 180);
             <item>
              <widget class="QPushButton" name="pushButtonHideREDAHB">
               <property name="sizePolicy">
-<<<<<<< HEAD
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-=======
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -4876,11 +4104,7 @@ border: 1px solid rgb(0, 0, 180);
               </property>
               <property name="maximumSize">
                <size>
-<<<<<<< HEAD
                 <width>99999</width>
-=======
-                <width>50</width>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <height>20</height>
                </size>
               </property>
@@ -4890,46 +4114,6 @@ border: 1px solid rgb(0, 0, 180);
                 <height>0</height>
                </size>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="text">
-               <string>Hide</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="labelREDAHB">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
               <property name="styleSheet">
                <string notr="true">background-color: rgb(200, 200, 255);
 border: 1px solid rgb(0, 0, 180);
@@ -4939,12 +4123,6 @@ border: 1px solid rgb(0, 0, 180);
               <property name="text">
                <string>Концевые детали</string>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
              </widget>
             </item>
             <item>
@@ -5177,11 +4355,7 @@ border: 2px solid rgb(6, 126, 0);
             <item>
              <widget class="QPushButton" name="pushButtonHideOtherHousing">
               <property name="sizePolicy">
-<<<<<<< HEAD
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-=======
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -5194,11 +4368,7 @@ border: 2px solid rgb(6, 126, 0);
               </property>
               <property name="maximumSize">
                <size>
-<<<<<<< HEAD
                 <width>99999</width>
-=======
-                <width>50</width>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <height>20</height>
                </size>
               </property>
@@ -5208,64 +4378,14 @@ border: 2px solid rgb(6, 126, 0);
                 <height>0</height>
                </size>
               </property>
-<<<<<<< HEAD
               <property name="styleSheet">
                <string notr="true">background-color: rgb(200, 255, 200);
 border: 1px solid rgb(0, 126, 0);
-=======
-              <property name="text">
-               <string>Hide</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="labelOtherHousing">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(200, 255, 200);
-border: 1px solid rgb(0, 126, 0);
-
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
 </string>
               </property>
               <property name="text">
                <string>Корпуса</string>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
              </widget>
             </item>
             <item>
@@ -5487,11 +4607,7 @@ border: 1px solid rgb(0, 126, 0);
             <item>
              <widget class="QPushButton" name="pushButtonHideOtherDif">
               <property name="sizePolicy">
-<<<<<<< HEAD
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-=======
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -5504,11 +4620,7 @@ border: 1px solid rgb(0, 126, 0);
               </property>
               <property name="maximumSize">
                <size>
-<<<<<<< HEAD
                 <width>99999</width>
-=======
-                <width>50</width>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <height>20</height>
                </size>
               </property>
@@ -5518,64 +4630,14 @@ border: 1px solid rgb(0, 126, 0);
                 <height>0</height>
                </size>
               </property>
-<<<<<<< HEAD
               <property name="styleSheet">
                <string notr="true">background-color: rgb(200, 255, 200);
 border: 1px solid rgb(0, 126, 0);
-=======
-              <property name="text">
-               <string>Hide</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="labelOtherDif">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(200, 255, 200);
-border: 1px solid rgb(0, 126, 0);
-
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
 </string>
               </property>
               <property name="text">
                <string>Направляющие аппараты</string>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
              </widget>
             </item>
             <item>
@@ -5765,11 +4827,7 @@ border: 1px solid rgb(0, 126, 0);
             <item>
              <widget class="QPushButton" name="pushButtonHideOtherLDif">
               <property name="sizePolicy">
-<<<<<<< HEAD
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-=======
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -5782,11 +4840,7 @@ border: 1px solid rgb(0, 126, 0);
               </property>
               <property name="maximumSize">
                <size>
-<<<<<<< HEAD
                 <width>99999</width>
-=======
-                <width>50</width>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <height>20</height>
                </size>
               </property>
@@ -5796,64 +4850,14 @@ border: 1px solid rgb(0, 126, 0);
                 <height>0</height>
                </size>
               </property>
-<<<<<<< HEAD
               <property name="styleSheet">
                <string notr="true">background-color: rgb(200, 255, 200);
 border: 1px solid rgb(0, 126, 0);
-=======
-              <property name="text">
-               <string>Hide</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="labelOtherLDif">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(200, 255, 200);
-border: 1px solid rgb(0, 126, 0);
-
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
 </string>
               </property>
               <property name="text">
                <string>Нижние направляющие аппараты</string>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
              </widget>
             </item>
             <item>
@@ -6023,11 +5027,7 @@ border: 1px solid rgb(0, 126, 0);
             <item>
              <widget class="QPushButton" name="pushButtonHideOtherBearing">
               <property name="sizePolicy">
-<<<<<<< HEAD
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-=======
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -6040,11 +5040,7 @@ border: 1px solid rgb(0, 126, 0);
               </property>
               <property name="maximumSize">
                <size>
-<<<<<<< HEAD
                 <width>99999</width>
-=======
-                <width>50</width>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <height>20</height>
                </size>
               </property>
@@ -6054,64 +5050,14 @@ border: 1px solid rgb(0, 126, 0);
                 <height>0</height>
                </size>
               </property>
-<<<<<<< HEAD
               <property name="styleSheet">
                <string notr="true">background-color: rgb(200, 255, 200);
 border: 1px solid rgb(0, 126, 0);
-=======
-              <property name="text">
-               <string>Hide</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="labelOtherBearing">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(200, 255, 200);
-border: 1px solid rgb(0, 126, 0);
-
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
 </string>
               </property>
               <property name="text">
                <string>Подшипники</string>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
              </widget>
             </item>
             <item>
@@ -6301,11 +5247,7 @@ border: 1px solid rgb(0, 126, 0);
             <item>
              <widget class="QPushButton" name="pushButtonHideOtherHB">
               <property name="sizePolicy">
-<<<<<<< HEAD
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-=======
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -6318,11 +5260,7 @@ border: 1px solid rgb(0, 126, 0);
               </property>
               <property name="maximumSize">
                <size>
-<<<<<<< HEAD
                 <width>99999</width>
-=======
-                <width>50</width>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
                 <height>20</height>
                </size>
               </property>
@@ -6332,64 +5270,14 @@ border: 1px solid rgb(0, 126, 0);
                 <height>0</height>
                </size>
               </property>
-<<<<<<< HEAD
               <property name="styleSheet">
                <string notr="true">background-color: rgb(200, 255, 200);
 border: 1px solid rgb(0, 126, 0);
-=======
-              <property name="text">
-               <string>Hide</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="labelOtherHB">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>0</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(200, 255, 200);
-border: 1px solid rgb(0, 126, 0);
-
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
 </string>
               </property>
               <property name="text">
                <string>Концевые детали</string>
               </property>
-<<<<<<< HEAD
-=======
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
              </widget>
             </item>
             <item>
@@ -6652,11 +5540,7 @@ border: 1px solid rgb(0, 126, 0);
      <x>0</x>
      <y>0</y>
      <width>1414</width>
-<<<<<<< HEAD
      <height>21</height>
-=======
-     <height>26</height>
->>>>>>> 85b1406ea72b9185ef17b28623dd5319445eda74
     </rect>
    </property>
    <widget class="QMenu" name="menu">

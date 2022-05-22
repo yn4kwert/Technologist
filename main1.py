@@ -2,6 +2,7 @@ from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtGui import QPixmap
 import resources_rc
+import traceback
 
 from constant_window import Ui_CheckConstantWindow
 from main_window import Ui_MainWindow
@@ -221,19 +222,14 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
                            self.ui.tableWidgetMTLDif,
                            self.ui.tableWidgetMTBearing,
                            self.ui.pushButtonHideMTHousing,
-                           self.ui.labelMTHousing,
                            self.ui.pushButtonInitTableMTHousing,
                            self.ui.pushButtonHideMTHB,
-                           self.ui.labelMTHB,
                            self.ui.pushButtonInitTableMTHB,
                            self.ui.pushButtonHideMTDif,
-                           self.ui.labelMTDif,
                            self.ui.pushButtonInitTableMTDif,
                            self.ui.pushButtonHideMTLDif,
-                           self.ui.labelMTLDif,
                            self.ui.pushButtonInitTableMTLDif,
                            self.ui.pushButtonHideMTBearing,
-                           self.ui.labelMTBearing,
                            self.ui.pushButtonInitTableMTBearing
         ]
         '''Put a logo'''
@@ -259,10 +255,29 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
         self.ui.pushButtonSaveChanges.clicked.connect(self.btnSaveChangesClicked)
         self.ui.pushButtonAddItem.clicked.connect(self.showAddNewItemWindow)
         self.ui.TestButton.clicked.connect(self.blockUneditableTablesVals)
+        self.addRightClickMenu(self.ui.tableWidgetMTHousing)
 
         self.setupHideButtons()
 
-    #def put_a_logo(self):
+    # def put_a_logo(self):
+    def addRightClickMenu(self, table):
+        table.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        table.customContextMenuRequested.connect(self.initRightClickMenu)
+
+    def initRightClickMenu(self, point):
+        menu = QtWidgets.QMenu()
+        if self.ui.tableWidgetMTHousing.itemAt(point):
+            edit_item = QtWidgets.QAction('edit_item', menu)
+            edit_item.triggered.connect(self.showAddNewItemWindow)
+
+            del_item = QtWidgets.QAction('del_item', menu)
+            del_item.triggered.connect(lambda: print("Текст в первой ячейке: " +
+                                                      self.ui.tableWidgetMTHousing.objectName()))
+            menu.addAction(edit_item)
+            menu.addAction(del_item)
+        else:
+            pass
+        menu.exec(self.ui.tableWidgetMTHousing.mapToGlobal(point))
 
     def setupHideButtons(self):
         self.ui.pushButtonTPSLine.clicked.connect(self.hideAllMT, MT_hidden)
@@ -555,23 +570,18 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
         # self.ui.tableWidgetMTBearing.setVisible(MT_hidden)
         #
         # self.ui.pushButtonHideMTHousing.setVisible(MT_hidden)
-        # self.ui.labelMTHousing.setVisible(MT_hidden)
         # self.ui.pushButtonInitTableMTHousing.setVisible(MT_hidden)
         #
         # self.ui.pushButtonHideMTHB.setVisible(MT_hidden)
-        # self.ui.labelMTHB.setVisible(MT_hidden)
         # self.ui.pushButtonInitTableMTHB.setVisible(MT_hidden)
         #
         # self.ui.pushButtonHideMTDif.setVisible(MT_hidden)
-        # self.ui.labelMTDif.setVisible(MT_hidden)
         # self.ui.pushButtonInitTableMTDif.setVisible(MT_hidden)
         #
         # self.ui.pushButtonHideMTLDif.setVisible(MT_hidden)
-        # self.ui.labelMTLDif.setVisible(MT_hidden)
         # self.ui.pushButtonInitTableMTLDif.setVisible(MT_hidden)
         #
         # self.ui.pushButtonHideMTBearing.setVisible(MT_hidden)
-        # self.ui.labelMTBearing.setVisible(MT_hidden)
         # self.ui.pushButtonInitTableMTBearing.setVisible(MT_hidden)
         MT_hidden = not MT_hidden
 
@@ -589,23 +599,18 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
         self.ui.tableWidgetEZLineBearing.setVisible(EZLine_hidden)
 
         self.ui.pushButtonHideEZLineHousing.setVisible(EZLine_hidden)
-        self.ui.labelEZLineHousing.setVisible(EZLine_hidden)
         self.ui.pushButtonInitTableEZLineHousing.setVisible(EZLine_hidden)
 
         self.ui.pushButtonHideEZLineHB.setVisible(EZLine_hidden)
-        self.ui.labelEZLineHB.setVisible(EZLine_hidden)
         self.ui.pushButtonInitTableEZLineHB.setVisible(EZLine_hidden)
 
         self.ui.pushButtonHideEZLineDif.setVisible(EZLine_hidden)
-        self.ui.labelEZLineDif.setVisible(EZLine_hidden)
         self.ui.pushButtonInitTableEZLineDif.setVisible(EZLine_hidden)
 
         self.ui.pushButtonHideEZLineLDif.setVisible(EZLine_hidden)
-        self.ui.labelEZLineLDif.setVisible(EZLine_hidden)
         self.ui.pushButtonInitTableEZLineLDif.setVisible(EZLine_hidden)
 
         self.ui.pushButtonHideEZLineBearing.setVisible(EZLine_hidden)
-        self.ui.labelEZLineBearing.setVisible(EZLine_hidden)
         self.ui.pushButtonInitTableEZLineBearing.setVisible(EZLine_hidden)
 
         EZLine_hidden = not EZLine_hidden
@@ -621,23 +626,18 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
         self.ui.tableWidgetREDABearing.setVisible(REDA_hidden)
 
         self.ui.pushButtonHideREDAHousing.setVisible(REDA_hidden)
-        self.ui.labelREDAHousing.setVisible(REDA_hidden)
         self.ui.pushButtonInitTableREDAHousing.setVisible(REDA_hidden)
 
         self.ui.pushButtonHideREDAHB.setVisible(REDA_hidden)
-        self.ui.labelREDAHB.setVisible(REDA_hidden)
         self.ui.pushButtonInitTableREDAHB.setVisible(REDA_hidden)
 
         self.ui.pushButtonHideREDADif.setVisible(REDA_hidden)
-        self.ui.labelREDADif.setVisible(REDA_hidden)
         self.ui.pushButtonInitTableREDADif.setVisible(REDA_hidden)
 
         self.ui.pushButtonHideREDALDif.setVisible(REDA_hidden)
-        self.ui.labelREDALDif.setVisible(REDA_hidden)
         self.ui.pushButtonInitTableREDALDif.setVisible(REDA_hidden)
 
         self.ui.pushButtonHideREDABearing.setVisible(REDA_hidden)
-        self.ui.labelREDABearing.setVisible(REDA_hidden)
         self.ui.pushButtonInitTableREDABearing.setVisible(REDA_hidden)
 
         REDA_hidden = not REDA_hidden
@@ -653,23 +653,18 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
         self.ui.tableWidgetOtherBearing.setVisible(Other_hidden)
 
         self.ui.pushButtonHideOtherHousing.setVisible(Other_hidden)
-        self.ui.labelOtherHousing.setVisible(Other_hidden)
         self.ui.pushButtonInitTableOtherHousing.setVisible(Other_hidden)
 
         self.ui.pushButtonHideOtherHB.setVisible(Other_hidden)
-        self.ui.labelOtherHB.setVisible(Other_hidden)
         self.ui.pushButtonInitTableOtherHB.setVisible(Other_hidden)
 
         self.ui.pushButtonHideOtherDif.setVisible(Other_hidden)
-        self.ui.labelOtherDif.setVisible(Other_hidden)
         self.ui.pushButtonInitTableOtherDif.setVisible(Other_hidden)
 
         self.ui.pushButtonHideOtherLDif.setVisible(Other_hidden)
-        self.ui.labelOtherLDif.setVisible(Other_hidden)
         self.ui.pushButtonInitTableOtherLDif.setVisible(Other_hidden)
 
         self.ui.pushButtonHideOtherBearing.setVisible(Other_hidden)
-        self.ui.labelOtherBearing.setVisible(Other_hidden)
         self.ui.pushButtonInitTableOtherBearing.setVisible(Other_hidden)
 
         Other_hidden = not Other_hidden
@@ -683,15 +678,25 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
     #         self.ui.tableWidgetMTHousing.setVisible(True)
     #         self.ui.pushButtonHideMTHousing.setText('Hide')
 
+    # def buttonHide3Clicked(self, btn_name):
+    #     '''This method allows to hide any Table widget dependantly on clicked button Hide/Unhide
+    #     It is not safe to use eval() - needed to be replaced'''
+    #     if eval('self.ui.pushButtonHide'+btn_name+'.text()') == 'Hide':
+    #         eval('self.ui.tableWidget'+btn_name+'.setVisible(False)')
+    #         eval('self.ui.pushButtonHide'+btn_name+'.setText(\'Unhide\')')
+    #     else:
+    #         eval('self.ui.tableWidget'+btn_name+'.setVisible(True)')
+    #         eval('self.ui.pushButtonHide'+btn_name+'.setText(\'Hide\')')
+
     def buttonHide2Clicked(self, btn_name):
         '''This method allows to hide any Table widget dependantly on clicked button Hide/Unhide
         It is not safe to use eval() - needed to be replaced'''
-        if eval('self.ui.pushButtonHide'+btn_name+'.text()') == 'Hide':
-            eval('self.ui.tableWidget'+btn_name+'.setVisible(False)')
-            eval('self.ui.pushButtonHide'+btn_name+'.setText(\'Unhide\')')
+        table = getattr(self.ui, 'tableWidget'+btn_name, 'smth_wrong_with_tab_name')
+        print(table, type(table))
+        if table.isVisible():
+            table.hide()
         else:
-            eval('self.ui.tableWidget'+btn_name+'.setVisible(True)')
-            eval('self.ui.pushButtonHide'+btn_name+'.setText(\'Hide\')')
+            table.show()
 
     def closeConstantWindow(self):
         self.ui.pushButtonClose.clicked.connect(self.close)
@@ -1330,26 +1335,16 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
         self.ui.pushButtonClose.clicked.connect(self.close)
 
 
+def excepthook(exc_type, exc_value, exc_tb):
+    tb = "".join(traceback.format_exception(exc_type, exc_value, exc_tb))
+    print("Oбнаружена ошибка !:", tb)
+#    QtWidgets.QApplication.quit()             # !!! если вы хотите, чтобы событие завершилось
 
-
-        #self.ui.pushButton_backToMainWindow.clicked.connect(self.showMainWindow)
-
-    # def showMainWindow(self):
-    #     self.ui = MainWindow()
-    #     self.ui.show()
-    #     self.ui.showMainWindow()
-
-
-
-    # for item in xl:
-    #     print(xl[item])
-
-
-    # Load a sheet into a DataFrame by name: df1
-    #df1 = xl.parse('Sheet1')
-
+sys.excepthook = excepthook
 
 if __name__ == '__main__':
+    import os
+    print(os.getcwd())
     app = QtWidgets.QApplication(sys.argv)
     w = MainWindow()
     w.show()
