@@ -4,6 +4,7 @@ from PyQt5.QtGui import QPixmap
 import resources_rc
 import traceback
 
+from PyQt5.QtCore import pyqtSlot
 from constant_window import Ui_CheckConstantWindow
 from main_window import Ui_MainWindow
 from pumpCalc_window import Ui_PumpCalcWindow
@@ -261,23 +262,60 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
 
     # def put_a_logo(self):
     def addRightClickMenu(self, table):
-        table.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
-        table.customContextMenuRequested.connect(self.initRightClickMenu)
+
+            table.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+            table.customContextMenuRequested.connect(self.initRightClickMenu)
 
     def initRightClickMenu(self, point):
+        table = self.ui.tableWidgetMTHousing
         menu = QtWidgets.QMenu()
-        if self.ui.tableWidgetMTHousing.itemAt(point):
+        if table.itemAt(point):
             edit_item = QtWidgets.QAction('edit_item', menu)
-            edit_item.triggered.connect(self.showAddNewItemWindow)
+            edit_item.triggered.connect(lambda: self.showAddNewItemWindow())
 
             del_item = QtWidgets.QAction('del_item', menu)
-            del_item.triggered.connect(lambda: print("Текст в первой ячейке: " +
-                                                      self.ui.tableWidgetMTHousing.objectName()))
+            del_item.triggered.connect(lambda: self.deleteChosenRow(table, point))
             menu.addAction(edit_item)
             menu.addAction(del_item)
         else:
             pass
-        menu.exec(self.ui.tableWidgetMTHousing.mapToGlobal(point))
+        menu.exec(table.mapToGlobal(point))
+
+
+    # def confirmDeleteRowDialog_decorated(self):
+    #     dialog = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning,
+    #                                f"Уверен?",
+    #                                f'Точно уверен???',
+    #                                buttons=QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.Cancel,
+    #                                parent=self)
+    #     dialog.exec_()
+    #
+    #
+    # #@are_you_sure
+    # def deleteChosenRow_decorated(self, table, point):
+    #
+    #     deleted_row = table.itemAt(point).row()
+    #     #print(self.confirmDeleteRowDialog())
+    #     self.are_you_sure()
+    #     table.removeRow(deleted_row)
+    #     print(deleted_row)
+
+
+    def confirmDeleteRowDialog(self, row):
+        dialog = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning,
+                                   f"Удалить деталь",
+                                   f'Вы уверены, что хотите удалить ряд {row+1} в выбранной таблице?',
+                                   buttons=QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.Cancel,
+                                   parent=self)
+        result = dialog.exec_()
+        return result
+
+    def deleteChosenRow(self, table, point):
+        deleted_row = table.itemAt(point).row()
+        if self.confirmDeleteRowDialog(deleted_row) == QtWidgets.QMessageBox.Yes:
+            table.removeRow(deleted_row)
+            print(deleted_row)
+
 
     def setupHideButtons(self):
         self.ui.pushButtonTPSLine.clicked.connect(self.hideAllMT, MT_hidden)
@@ -357,8 +395,9 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
         # self.ui.tableWidgetOtherBearing.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
         # self.ui.tableWidgetOtherHB.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
 
-    def showAddNewItemWindow(self):
+    def showAddNewItemWindow(self): #, is_edited=False
         self.ui_new = NewItemWindow(self) #NewItemWindow(self) - ссылка на self как раз позволяет прицепить дочерний класс к родительскому. Т.е. у NewItemWindow - родитель self (constant_window)
+        #self.ui_new.is_edited = is_edited
         self.ui_new.open()
         self.ui_new.closeNewItemWindow()
 
@@ -692,7 +731,6 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
         '''This method allows to hide any Table widget dependantly on clicked button Hide/Unhide
         It is not safe to use eval() - needed to be replaced'''
         table = getattr(self.ui, 'tableWidget'+btn_name, 'smth_wrong_with_tab_name')
-        print(table, type(table))
         if table.isVisible():
             table.hide()
         else:
@@ -917,18 +955,13 @@ class NewItemWindow(QtWidgets.QDialog):
     '''Describes behaviour of NewItemWindow'''
     chosen_product_line = ''
     comboBoxItemType_activated = False
+    #is_edited = False
     def __init__(self, parent=None):
         super(NewItemWindow, self).__init__(parent)
         self.parent = parent
         self.ui_new = Ui_DialogCreateNewItem()
         self.ui_new.setupUi(self)
-
-        self.ui_new.labelItemType.hide()
-        self.ui_new.comboBoxItemType.hide()
-
-        self.ui_new.labelItemParameters.hide()
-
-        self.hideAllParameters()
+        self.hideContent() #self.is_edited
         self.ui_new.comboBoxProductLine.currentTextChanged.connect(self.checkProductLine)
         self.ui_new.comboBoxItemType.currentTextChanged.connect(self.checkItemType)
 
@@ -938,6 +971,14 @@ class NewItemWindow(QtWidgets.QDialog):
         '''Запихнуть в контейнер?Написать функцию на строку из булевых значений?'''
         # all_QLineEdits = self.ui_new.findChildren(QtWidgets.QLabel) #Почему не работает?
         # print(all_QLineEdits)
+    def hideContent(self): #, is_edited
+        #if not is_edited:
+            self.ui_new.labelItemType.hide()
+            self.ui_new.comboBoxItemType.hide()
+            self.ui_new.labelItemParameters.hide()
+            self.hideAllParameters()
+        # else:
+        #     print('I dont hide')
 
     def hideAllParameters(self):
         '''This method hides all labels, comboboxes and linedits'''
