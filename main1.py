@@ -307,10 +307,10 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
     #     print(deleted_row)
 
 
-    def confirmDeleteRowDialog(self, row):
+    def confirmDeleteRowDialog(self, row, table):
         dialog = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning,
                                    f"Удалить деталь",
-                                   f'Вы уверены, что хотите удалить ряд {row+1} в выбранной таблице?',
+                                   f'Вы уверены, что хотите удалить ряд {row+1} в таблице {table.objectName()}?',
                                    buttons=QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.Cancel,
                                    parent=self)
         result = dialog.exec_()
@@ -318,7 +318,7 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
 
     def deleteChosenRow(self, table, point):
         deleted_row = table.itemAt(point).row()
-        if self.confirmDeleteRowDialog(deleted_row) == QtWidgets.QMessageBox.Yes:
+        if self.confirmDeleteRowDialog(deleted_row, table) == QtWidgets.QMessageBox.Yes:
             table.removeRow(deleted_row)
             print(deleted_row)
 
