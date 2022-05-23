@@ -244,12 +244,17 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
         self.loadTablesData()
         '''UNCOMMENT THIS when releasing the program
         vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv'''
-        if user != 'Главный технолог':
-            self.disableTablesIfNotChiefTech()
-        else:
-            self.blockUneditableTablesVals()
-            self.addRightClickMenu()
+        # if user != 'Главный технолог':
+        #     self.disableTablesIfNotChiefTech()
+        # else:
+        #     self.blockUneditableTablesVals()
+        #     self.addRightClickMenu()
         '''^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'''
+        '''and comment this:
+        vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv'''
+        self.addRightClickMenu()
+        '''^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'''
+
         self.ui.pushButtonInitTableMTHousing.clicked.connect(self.upload_xlsx_file)
         self.ui.pushButtonRecalculate.clicked.connect(self.recalculateAllHousingLengthsValues)
         #self.ui.pushButtonHideMTHousing.clicked.connect(self.button_hide_clicked) #replaced with universal method ''buttonHide2Clicked''
