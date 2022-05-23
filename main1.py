@@ -244,10 +244,11 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
         self.loadTablesData()
         '''UNCOMMENT THIS when releasing the program
         vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv'''
-        # if user != 'Главный технолог':
-        #     self.disableTablesIfNotChiefTech()
-        # else:
-        #     self.blockUneditableTablesVals()
+        if user != 'Главный технолог':
+            self.disableTablesIfNotChiefTech()
+        else:
+            self.blockUneditableTablesVals()
+            self.addRightClickMenu()
         '''^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'''
         self.ui.pushButtonInitTableMTHousing.clicked.connect(self.upload_xlsx_file)
         self.ui.pushButtonRecalculate.clicked.connect(self.recalculateAllHousingLengthsValues)
@@ -256,26 +257,31 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
         self.ui.pushButtonSaveChanges.clicked.connect(self.btnSaveChangesClicked)
         self.ui.pushButtonAddItem.clicked.connect(self.showAddNewItemWindow)
         self.ui.TestButton.clicked.connect(self.blockUneditableTablesVals)
-        self.addRightClickMenu(self.ui.tableWidgetMTHousing)
+
 
         self.setupHideButtons()
 
     # def put_a_logo(self):
-    def addRightClickMenu(self, table):
-
+    def addRightClickMenu(self):
+        for table in self.all_tables:
             table.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
-            table.customContextMenuRequested.connect(self.initRightClickMenu)
+            table.customContextMenuRequested.connect(lambda point, table=table: self.initRightClickMenu(point, table))
 
-    def initRightClickMenu(self, point):
-        table = self.ui.tableWidgetMTHousing
+    def initRightClickMenu(self, point, table):
         menu = QtWidgets.QMenu()
         if table.itemAt(point):
-            edit_item = QtWidgets.QAction('edit_item', menu)
-            edit_item.triggered.connect(lambda: self.showAddNewItemWindow())
+            # edit_item = QtWidgets.QAction('edit_item', menu)
+            # edit_item.triggered.connect(lambda: self.showAddNewItemWindow())
+            # menu.addAction(edit_item)
+            if 'Housing' in str(table.objectName()):
+                recalc_row = QtWidgets.QAction('recalculate_row', menu)
+                row = table.itemAt(point).row()
+                HB_table = getattr(self.ui, table.objectName()[:-6] + 'B', 'Check names of Housing and HB tables!!!')
+                recalc_row.triggered.connect(lambda: self.tryRecalculateCurrentRowHousingLengthsValues(row, table, HB_table))
+                menu.addAction(recalc_row)
 
             del_item = QtWidgets.QAction('del_item', menu)
             del_item.triggered.connect(lambda: self.deleteChosenRow(table, point))
-            menu.addAction(edit_item)
             menu.addAction(del_item)
         else:
             pass
@@ -315,7 +321,6 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
         if self.confirmDeleteRowDialog(deleted_row) == QtWidgets.QMessageBox.Yes:
             table.removeRow(deleted_row)
             print(deleted_row)
-
 
     def setupHideButtons(self):
         self.ui.pushButtonTPSLine.clicked.connect(self.hideAllMT, MT_hidden)
@@ -408,15 +413,24 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
             HB_table = getattr(self.ui, table.objectName()[:-6] + 'B', 'Check names of Housing and HB tables!!!')
             rows = table.rowCount()
             for row in range(rows):
-                result_set, product_line, series, FL_or_CR = self.findHBRowsForRecalculatedValues(row, table, HB_table)
-                if self.checkRelevantHBQuantityInHBTable(HB_table, result_set, product_line, series, FL_or_CR):
-                    head_sizes_list, base_sizes_list = self.getHeadAndBaseSizesFromHBTable(result_set, HB_table)
-                    self.recalculateCurrentRowHousingLengthsValues(table, row, head_sizes_list, base_sizes_list)
-                else:
-                    self.putWorkLengthValuesInHousingTablesAndBlock(table, row)
+                self.tryRecalculateCurrentRowHousingLengthsValues(row, table, HB_table)
+                # result_set, product_line, series, FL_or_CR = self.findHBRowsForRecalculatedValues(row, table, HB_table)
+                # if self.checkRelevantHBQuantityInHBTable(HB_table, result_set, product_line, series, FL_or_CR):
+                #     head_sizes_list, base_sizes_list = self.getHeadAndBaseSizesFromHBTable(result_set, HB_table)
+                #     self.recalculateCurrentRowHousingLengthsValues(table, row, head_sizes_list, base_sizes_list)
+                # else:
+                #     self.putWorkLengthValuesInHousingTablesAndBlock(table, row)
         self.blockUneditableTablesVals()
         #print(self.incorrect_HB_data)
         self.showIncorrectDataInHBTable(self.incorrect_HB_data)
+
+    def tryRecalculateCurrentRowHousingLengthsValues(self, row, table, HB_table):
+        result_set, product_line, series, FL_or_CR = self.findHBRowsForRecalculatedValues(row, table, HB_table)
+        if self.checkRelevantHBQuantityInHBTable(HB_table, result_set, product_line, series, FL_or_CR):
+            head_sizes_list, base_sizes_list = self.getHeadAndBaseSizesFromHBTable(result_set, HB_table)
+            self.recalculateCurrentRowHousingLengthsValues(table, row, head_sizes_list, base_sizes_list)
+        else:
+            self.putWorkLengthValuesInHousingTablesAndBlock(table, row)
 
     def putWorkLengthValuesInHousingTablesAndBlock(self, table, row, nom_len='-1', max_len='-1', min_len='-1'):
         item = table.setItem(row, 7, QtWidgets.QTableWidgetItem(nom_len))
@@ -593,6 +607,7 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
 
         self.ui.pushButtonAddItem.hide()
         self.ui.pushButtonSaveChanges.hide()
+        self.ui.pushButtonRecalculate.hide()
 
     def hideAllMT(self):
         '''This method allows to hide all data about MT equipment by clicking TPS-line nameline (button)
