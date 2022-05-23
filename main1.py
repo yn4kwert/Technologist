@@ -94,9 +94,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def showPumpCalcWindow(self):
         '''Create and show PumpCalcWindow'''
-        self.ui = PumpCalcWindow()
-        self.ui.show()
-        self.ui.closePumpCalcWindow()
+        self.ui_main = PumpCalcWindow()
+        self.ui_main.show()
+        self.ui_main.closePumpCalcWindow()
 
     def changeUser(self):
         '''checks flag value and changes current user label in MainWindow'''
@@ -419,12 +419,6 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
             rows = table.rowCount()
             for row in range(rows):
                 self.tryRecalculateCurrentRowHousingLengthsValues(row, table, HB_table)
-                # result_set, product_line, series, FL_or_CR = self.findHBRowsForRecalculatedValues(row, table, HB_table)
-                # if self.checkRelevantHBQuantityInHBTable(HB_table, result_set, product_line, series, FL_or_CR):
-                #     head_sizes_list, base_sizes_list = self.getHeadAndBaseSizesFromHBTable(result_set, HB_table)
-                #     self.recalculateCurrentRowHousingLengthsValues(table, row, head_sizes_list, base_sizes_list)
-                # else:
-                #     self.putWorkLengthValuesInHousingTablesAndBlock(table, row)
         self.blockUneditableTablesVals()
         #print(self.incorrect_HB_data)
         self.showIncorrectDataInHBTable(self.incorrect_HB_data)
@@ -507,7 +501,12 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
                                      - head_size_up_dev
                                      , 3
                                      )
-        self.putWorkLengthValuesInHousingTablesAndBlock(table, row, str(work_housing_len_nom), str(work_housing_len_max), str(work_housing_len_min))
+        self.putWorkLengthValuesInHousingTablesAndBlock(table,
+                                                        row,
+                                                        str(work_housing_len_nom),
+                                                        str(work_housing_len_max),
+                                                        str(work_housing_len_min)
+                                                        )
         # item = table.setItem(row, 7, QtWidgets.QTableWidgetItem(str(work_housing_len_nom)))
         # item = table.item(row, 7)
         # item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
@@ -528,11 +527,23 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
         res_list = list(result_set)
 
         if HB_table.item(res_list[0], 2).text() == 'Голова':
-           head_sizes_list.extend((HB_table.item(res_list[0], 4).text(), HB_table.item(res_list[0], 5).text(), HB_table.item(res_list[0], 6).text()))
-           base_sizes_list.extend((HB_table.item(res_list[1], 4).text(), HB_table.item(res_list[1], 5).text(), HB_table.item(res_list[1], 6).text()))
+           head_sizes_list.extend((HB_table.item(res_list[0], 4).text(),
+                                   HB_table.item(res_list[0], 5).text(),
+                                   HB_table.item(res_list[0], 6).text()
+                                   ))
+           base_sizes_list.extend((HB_table.item(res_list[1], 4).text(),
+                                   HB_table.item(res_list[1], 5).text(),
+                                   HB_table.item(res_list[1], 6).text()
+                                   ))
         else:
-            base_sizes_list.extend((HB_table.item(res_list[0], 4).text(), HB_table.item(res_list[0], 5).text(), HB_table.item(res_list[0], 6).text()))
-            head_sizes_list.extend((HB_table.item(res_list[1], 4).text(), HB_table.item(res_list[1], 5).text(), HB_table.item(res_list[1], 6).text()))
+            base_sizes_list.extend((HB_table.item(res_list[0], 4).text(),
+                                    HB_table.item(res_list[0], 5).text(),
+                                    HB_table.item(res_list[0], 6).text()
+                                    ))
+            head_sizes_list.extend((HB_table.item(res_list[1], 4).text(),
+                                    HB_table.item(res_list[1], 5).text(),
+                                    HB_table.item(res_list[1], 6).text()
+                                    ))
         return head_sizes_list, base_sizes_list
 
     def showIncorrectDataInHBTable(self, incorrect_HB_data):
@@ -585,30 +596,6 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
          in constant_window if current user is not chief technologist'''
         for table in self.all_tables:
             table.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
-
-        # self.ui.tableWidgetMTHousing.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
-        # self.ui.tableWidgetMTHB.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
-        # self.ui.tableWidgetMTDif.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
-        # self.ui.tableWidgetMTLDif.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
-        # self.ui.tableWidgetMTBearing.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
-        #
-        # self.ui.tableWidgetEZLineHousing.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
-        # self.ui.tableWidgetEZLineHB.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
-        # self.ui.tableWidgetEZLineDif.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
-        # self.ui.tableWidgetEZLineLDif.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
-        # self.ui.tableWidgetEZLineBearing.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
-        #
-        # self.ui.tableWidgetREDAHousing.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
-        # self.ui.tableWidgetREDAHB.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
-        # self.ui.tableWidgetREDADif.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
-        # self.ui.tableWidgetREDALDif.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
-        # self.ui.tableWidgetREDABearing.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
-        #
-        # self.ui.tableWidgetOtherHousing.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
-        # self.ui.tableWidgetOtherHB.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
-        # self.ui.tableWidgetOtherDif.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
-        # self.ui.tableWidgetOtherLDif.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
-        # self.ui.tableWidgetOtherBearing.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
 
         self.ui.pushButtonAddItem.hide()
         self.ui.pushButtonSaveChanges.hide()
@@ -736,16 +723,6 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
     #     else:
     #         self.ui.tableWidgetMTHousing.setVisible(True)
     #         self.ui.pushButtonHideMTHousing.setText('Hide')
-
-    # def buttonHide3Clicked(self, btn_name):
-    #     '''This method allows to hide any Table widget dependantly on clicked button Hide/Unhide
-    #     It is not safe to use eval() - needed to be replaced'''
-    #     if eval('self.ui.pushButtonHide'+btn_name+'.text()') == 'Hide':
-    #         eval('self.ui.tableWidget'+btn_name+'.setVisible(False)')
-    #         eval('self.ui.pushButtonHide'+btn_name+'.setText(\'Unhide\')')
-    #     else:
-    #         eval('self.ui.tableWidget'+btn_name+'.setVisible(True)')
-    #         eval('self.ui.pushButtonHide'+btn_name+'.setText(\'Hide\')')
 
     def buttonHide2Clicked(self, btn_name):
         '''This method allows to hide any Table widget dependantly on clicked button Hide/Unhide
@@ -1385,15 +1362,27 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
 
     def __init__(self):
         super(PumpCalcWindow, self).__init__()
-        self.ui = Ui_PumpCalcWindow()
-        self.ui.setupUi(self)
+        self.ui_calc = Ui_PumpCalcWindow()
+        self.ui_calc.setupUi(self)
+
+        self.ui_new = Ui_DialogCreateNewItem()
+        self.ui_new.setupUi(self)
 
         pixmap = QPixmap(':/images/logo.png')  # resource path starts with ':'
-        self.ui.putImageHere.setPixmap(pixmap)
-        self.ui.labelCurrentUser.setText(user)
+        self.ui_calc.putImageHere.setPixmap(pixmap)
+        self.ui_calc.labelCurrentUser.setText(user)
+
+        self.ui_calc.gridLayoutInput.addWidget(self.ui_new.comboBoxProductLine, 1, 1, 1, 1)
+        self.ui_calc.gridLayoutInput.addWidget(self.ui_new.comboBoxCRFL, 1, 2, 1, 1)
+        self.ui_calc.gridLayoutInput.addWidget(self.ui_new.comboBoxSeriesRus, 1, 3, 1, 1)
+        self.ui_calc.gridLayoutInput.addWidget(self.ui_new.comboBoxSeriesEng, 1, 4, 1, 1)
+        self.ui_calc.gridLayoutInput.addWidget(self.ui_new.comboBoxLengthCodeRus, 1, 5, 1, 1)
+        self.ui_calc.gridLayoutInput.addWidget(self.ui_new.comboBoxLengthCodeEng, 1, 6, 1, 1)
+
+
 
     def closePumpCalcWindow(self):
-        self.ui.pushButtonClose.clicked.connect(self.close)
+        self.ui_calc.pushButtonClose.clicked.connect(self.close)
 
 
 def excepthook(exc_type, exc_value, exc_tb):
