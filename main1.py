@@ -36,7 +36,7 @@ HOUSING_LENGTH_CODE = {
     '7.5': 7500, '8': 8000, '8.5': 8500,
     '9': 9000, '9.5': 9500, '10': 10000,
     }
-
+MINIMUM_TUBE_LEN = 20
 '''
 class - CamelCase
 Method and func - lower_case_with_underscores or likeThatName
@@ -968,6 +968,7 @@ class NewItemWindow(QtWidgets.QDialog):
         '''Запихнуть в контейнер?Написать функцию на строку из булевых значений?'''
         # all_QLineEdits = self.ui_new.findChildren(QtWidgets.QLabel) #Почему не работает?
         # print(all_QLineEdits)
+
     def hideContent(self): #, is_edited
         #if not is_edited:
             self.ui_new.labelItemType.hide()
@@ -1137,15 +1138,20 @@ class NewItemWindow(QtWidgets.QDialog):
                           "font: 75 15pt \"MS Sans Serif\";")
             #self.ui_new.DialogCreateNewItem.setStyleSheet("background-color: rgb(220, 255, 220);")
 
+        self.applyStyle(label_style)
 
+    def applyStyle(self, label_style):
         self.ui_new.labelProductLine.setStyleSheet(label_style)
         self.ui_new.labelItemType.setStyleSheet(label_style)
         self.ui_new.labelItemParameters.setStyleSheet(label_style)
 
+
     def checkProductLine(self):
         ''' Checks chosen product line and hides all fields, if no product line is chosen and shows ItemTypeBoxes'''
+        print(type(self.comboBoxItemType_activated))
         print(self.comboBoxItemType_activated)
         chosen_product_line = self.ui_new.comboBoxProductLine.currentText()
+        print(chosen_product_line)
         self.changeWindowColor(chosen_product_line)
         if chosen_product_line == '':
             self.ui_new.labelItemType.hide()
@@ -1360,6 +1366,9 @@ class AboutWindow(QtWidgets.QMainWindow):
 
 class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
 
+    global MINIMUM_TUBE_LEN
+    result_block_visible = False
+
     def __init__(self):
         super(PumpCalcWindow, self).__init__()
         self.ui_calc = Ui_PumpCalcWindow()
@@ -1371,19 +1380,183 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
         pixmap = QPixmap(':/images/logo.png')  # resource path starts with ':'
         self.ui_calc.putImageHere.setPixmap(pixmap)
         self.ui_calc.labelCurrentUser.setText(user)
+        self.initComboBoxInput()
+        self.applyVisibilityResultBlock()
+        self.ui_new.comboBoxProductLine.currentTextChanged.connect(self.checkProductLine)
+        self.ui_calc.pushButtonCalculate.clicked.connect(self.catchInputData)
 
+    def initComboBoxInput(self):
         self.ui_calc.gridLayoutInput.addWidget(self.ui_new.comboBoxProductLine, 1, 1, 1, 1)
         self.ui_calc.gridLayoutInput.addWidget(self.ui_new.comboBoxCRFL, 1, 2, 1, 1)
         self.ui_calc.gridLayoutInput.addWidget(self.ui_new.comboBoxSeriesRus, 1, 3, 1, 1)
         self.ui_calc.gridLayoutInput.addWidget(self.ui_new.comboBoxSeriesEng, 1, 4, 1, 1)
         self.ui_calc.gridLayoutInput.addWidget(self.ui_new.comboBoxLengthCodeRus, 1, 5, 1, 1)
         self.ui_calc.gridLayoutInput.addWidget(self.ui_new.comboBoxLengthCodeEng, 1, 6, 1, 1)
+        self.hideChangingContent()
 
+    def hideChangingContent(self):
+        self.ui_calc.labelSeriesRus.hide()
+        self.ui_new.comboBoxSeriesRus.hide()
+        self.ui_calc.labelHousingLengthRus.hide()
+        self.ui_new.comboBoxLengthCodeRus.hide()
+
+        self.ui_calc.labelSeriesEng.hide()
+        self.ui_new.comboBoxSeriesEng.hide()
+        self.ui_calc.labelHousingLengthEng.hide()
+        self.ui_new.comboBoxLengthCodeEng.hide()
+
+    def checkProductLine(self):
+        ''' Checks chosen product line and hides all fields, if no product line is chosen and shows ItemTypeBoxes'''
+        chosen_product_line = self.ui_new.comboBoxProductLine.currentText()
+        print(chosen_product_line)
+        if chosen_product_line == 'TPS-Line' or chosen_product_line == 'другое':
+            self.ui_calc.labelSeriesRus.show()
+            self.ui_new.comboBoxSeriesRus.show()
+            self.ui_calc.labelHousingLengthRus.show()
+            self.ui_new.comboBoxLengthCodeRus.show()
+
+            self.ui_calc.labelSeriesEng.hide()
+            self.ui_new.comboBoxSeriesEng.hide()
+            self.ui_calc.labelHousingLengthEng.hide()
+            self.ui_new.comboBoxLengthCodeEng.hide()
+
+        elif chosen_product_line == 'EZLine' or chosen_product_line == 'REDA':
+            self.ui_calc.labelSeriesRus.hide()
+            self.ui_new.comboBoxSeriesRus.hide()
+            self.ui_calc.labelHousingLengthRus.hide()
+            self.ui_new.comboBoxLengthCodeRus.hide()
+
+            self.ui_calc.labelSeriesEng.show()
+            self.ui_new.comboBoxSeriesEng.show()
+            self.ui_calc.labelHousingLengthEng.show()
+            self.ui_new.comboBoxLengthCodeEng.show()
+        else:
+            self.hideChangingContent()
+
+    def applyVisibilityResultBlock(self):
+        self.ui_calc.widgetResultBlock.setVisible(self.result_block_visible)
+
+    def showResultBlock(self):
+        self.result_block_visible = True
+        self.applyVisibilityResultBlock()
+
+    def catchInputData(self):
+        EXS_dist = float(self.ui_calc.comboBoxEXSDistanse.currentText())
+        product_line = self.ui_new.comboBoxProductLine.currentText()
+        FL_CR = self.ui_new.comboBoxCRFL.currentText()
+        stage_size = self.ui_calc.lineEditlabelStagSize.text()
+        brg_mod = self.ui_calc.lineEditlabelBearingMod.text()
+        if product_line == 'TPS-Line' or product_line == 'другое':
+            series = self.ui_new.comboBoxSeriesRus.currentText()
+            hsg_len_code = self.ui_new.comboBoxLengthCodeRus.currentText()
+        if product_line == 'EZLine' or product_line == 'REDA':
+            series = self.ui_new.comboBoxSeriesEng.currentText()
+            hsg_len_code = self.ui_new.comboBoxLengthCodeEng.currentText()
+        if product_line == '' or brg_mod == '' or stage_size == '':
+            print('Open dialog and say Empty Values')
+        else:
+            result_min, result_nom, result_max = self.calculateResult(EXS_dist, product_line, FL_CR, stage_size, brg_mod, series, hsg_len_code)
+            self.showResultBlock()
 
 
     def closePumpCalcWindow(self):
         self.ui_calc.pushButtonClose.clicked.connect(self.close)
 
+    def calcTubeLength (self, dif_num, dif_len, ldif_len, brg_num, brg_len, comp_per_stg, hsg_work_len):
+        '''calculates compression tube length'''
+        rotor_len = dif_num * dif_len + ldif_len + brg_num * brg_len
+        pump_comp = (dif_num + brg_num + 1) * comp_per_stg
+        tube_len = hsg_work_len - rotor_len + pump_comp
+        return tube_len
+
+
+    def getBearingData(self, product_line, series, stage_size, brg_mod):
+        pass
+
+    def getDifData(self, product_line, series, stage_size, FL_CR):
+        pass
+
+    def getHousingData(self, product_line, series, hsg_len_code):
+        pass
+
+    def getLDifData(self, product_line, series, stage_size):
+        pass
+
+    def defineBearingNum(self, overall_hsg_len, EXS_dist):
+        pass
+
+    def defineDifNum(self, brg_num, brg_max_len, hsg_min_len, dif_max_len, ldif_max_len):
+        pass
+
+    def defineBrgImpNum(self, brg_num, brg_imp_type):
+        pass
+
+    def defineImpNum(dif_min_num, brg_is_dif, brg_imp_type):
+        pass
+
+    def calcLenBtwBrg(self, brg_num, dif_min_num, dif_max_len):
+        pass
+
+    def calculateResult(self, EXS_dist, product_line, FL_CR, stage_size, brg_mod, series, hsg_len_code):
+
+        '''MAX - когда влезет больше всего ступеней
+        MIN - когда влезет меньше всего ступеней
+        tube_min_len может быть больше tube_max_len'''
+        global HOUSING_LENGTH_CODE
+        brg_min_len, brg_nom_len, brg_max_len, brg_is_dif, brg_imp_type = self.getBearingData(self, product_line, series, stage_size, brg_mod)
+        dif_min_len, dif_nom_len, dif_max_len, comp_per_stg = self.getDifData(self, product_line, series, stage_size, FL_CR)
+        ldif_min_len, ldif_nom_len, ldif_max_len = self.getLDifData(self, product_line, series, stage_size)
+        hsg_min_len, hsg_nom_len, hsg_max_len = self.getHousingData(self, product_line, series, hsg_len_code)
+
+        overall_hsg_len = HOUSING_LENGTH_CODE[hsg_len_code]
+        brg_num = self.defineBearingNum(self, overall_hsg_len, EXS_dist)
+
+        dif_min_num = self.defineDifNum(self,
+                                    brg_num,
+                                    brg_max_len,
+                                    hsg_min_len,
+                                    dif_max_len,
+                                    ldif_max_len
+                                    )
+
+        dif_nom_num = self.defineDifNum(self,
+                                        brg_num,
+                                        brg_nom_len,
+                                        hsg_nom_len,
+                                        dif_nom_len,
+                                        ldif_nom_len
+                                        )
+
+        dif_max_num = self.defineDifNum(self,
+                                    brg_num,
+                                    brg_min_len,
+                                    hsg_max_len,
+                                    dif_min_len,
+                                    ldif_min_len
+                                    )
+
+
+
+        brg_imp_num = self.defineBrgImpNum(self, brg_num, brg_imp_type)
+
+        imp_min_num = self.defineImpNum(dif_min_num, brg_is_dif, brg_imp_type)
+        imp_nom_num = self.defineImpNum(dif_nom_num, brg_is_dif, brg_imp_type)
+        imp_max_num = self.defineImpNum(dif_max_num, brg_is_dif, brg_imp_type)
+
+        tube_min_len = self.calcTubeLength(self, dif_min_num, dif_min_len, ldif_min_len, brg_num, brg_min_len, comp_per_stg, hsg_min_len)
+        tube_nom_len = self.calcTubeLength(self, dif_nom_num, dif_nom_len, ldif_nom_len, brg_num, brg_nom_len, comp_per_stg, hsg_nom_len)
+        tube_max_len = self.calcTubeLength(self, dif_max_num, dif_max_len, ldif_max_len, brg_num, brg_max_len, comp_per_stg, hsg_max_len)
+
+        #Без учета компрессии!
+        len_btw_brg_min = self.calcLenBtwBrg(self, brg_num, dif_min_num, dif_max_len)
+        len_btw_brg_nom = self.calcLenBtwBrg(self, brg_num, dif_nom_num, dif_nom_len)
+        len_btw_brg_max = self.calcLenBtwBrg(self, brg_num, dif_max_num, dif_min_len)
+
+        result_min = (imp_min_num, dif_min_num, brg_num, brg_imp_num, tube_min_len, len_btw_brg_min)
+        result_nom = (imp_nom_num, dif_nom_num, brg_num, brg_imp_num, tube_nom_len, len_btw_brg_nom)
+        result_max = (imp_max_num, dif_max_num, brg_num, brg_imp_num, tube_max_len, len_btw_brg_max)
+
+        return result_min, result_nom, result_max
 
 def excepthook(exc_type, exc_value, exc_tb):
     tb = "".join(traceback.format_exception(exc_type, exc_value, exc_tb))
