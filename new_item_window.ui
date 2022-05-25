@@ -562,6 +562,27 @@ font: 75 15pt &quot;MS Sans Serif&quot;;</string>
        <item row="4" column="1">
         <widget class="QLineEdit" name="lineEditCompression"/>
        </item>
+       <item row="13" column="0">
+        <widget class="QLabel" name="labelBearingIsDif">
+         <property name="text">
+          <string>Подшипник - аппарат</string>
+         </property>
+        </widget>
+       </item>
+       <item row="13" column="1">
+        <widget class="QComboBox" name="comboBoxBearingIsDif">
+         <item>
+          <property name="text">
+           <string>Да</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Нет</string>
+          </property>
+         </item>
+        </widget>
+       </item>
       </layout>
      </item>
      <item>

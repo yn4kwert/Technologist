@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QDialog
 from PyQt5.QtGui import QPixmap
 import resources_rc
 import traceback
+import math
 
 from PyQt5.QtCore import pyqtSlot
 from constant_window import Ui_CheckConstantWindow
@@ -868,6 +869,7 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
         self.fillFirst6Cols(table, row_position, data_to_save, new_item_product_line)
         table.setItem(row_position, 6, QtWidgets.QTableWidgetItem(data_to_save[5]))
         table.setItem(row_position, 7, QtWidgets.QTableWidgetItem(data_to_save[6]))
+        table.setItem(row_position, 8, QtWidgets.QTableWidgetItem(data_to_save[7]))
 
     def fillHBTable(self, table, new_item_product_line, data_to_save):
         '''This method fills in Head&Base table of chosen product line'''
@@ -1010,6 +1012,8 @@ class NewItemWindow(QtWidgets.QDialog):
         self.ui_new.comboBoxBearingImp.hide()
         self.ui_new.labelBearingMod.hide()
         self.ui_new.lineEditBearingMod.hide()
+        self.ui_new.labelBearingIsDif.hide()
+        self.ui_new.comboBoxBearingIsDif.hide()
 
     def closeNewItemWindow(self):
         '''Defines what to do on close button push'''
@@ -1049,7 +1053,8 @@ class NewItemWindow(QtWidgets.QDialog):
                                 self.ui_new.lineEditUpDev,
                                 self.ui_new.lineEditLowDev,
                                 self.ui_new.comboBoxBearingImp,
-                                self.ui_new.lineEditBearingMod
+                                self.ui_new.lineEditBearingMod,
+                                self.ui_new.comboBoxBearingIsDif
                             ]#или в __init__ его?
         for param in param_properties:
             if param.isVisible():
@@ -1227,6 +1232,8 @@ class NewItemWindow(QtWidgets.QDialog):
             self.ui_new.comboBoxBearingImp.hide()
             self.ui_new.labelBearingMod.hide()
             self.ui_new.lineEditBearingMod.hide()
+            self.ui_new.labelBearingIsDif.hide()
+            self.ui_new.comboBoxBearingIsDif.hide()
         elif chosen_item_type == 'Направляющий аппарат':
             if self.chosen_product_line == 'REDA' or self.chosen_product_line == 'EZLine':
                 self.ui_new.labelSeriesRus.hide()
@@ -1255,6 +1262,8 @@ class NewItemWindow(QtWidgets.QDialog):
             self.ui_new.comboBoxBearingImp.hide()
             self.ui_new.labelBearingMod.hide()
             self.ui_new.lineEditBearingMod.hide()
+            self.ui_new.labelBearingIsDif.hide()
+            self.ui_new.comboBoxBearingIsDif.hide()
         elif chosen_item_type == 'Нижний направляющий аппарат':
             if self.chosen_product_line == 'REDA' or self.chosen_product_line == 'EZLine':
                 self.ui_new.labelSeriesRus.hide()
@@ -1283,6 +1292,8 @@ class NewItemWindow(QtWidgets.QDialog):
             self.ui_new.comboBoxBearingImp.hide()
             self.ui_new.labelBearingMod.hide()
             self.ui_new.lineEditBearingMod.hide()
+            self.ui_new.labelBearingIsDif.hide()
+            self.ui_new.comboBoxBearingIsDif.hide()
         elif chosen_item_type == 'Подшипник':
             if self.chosen_product_line == 'REDA' or self.chosen_product_line == 'EZLine':
                 self.ui_new.labelSeriesRus.hide()
@@ -1311,6 +1322,9 @@ class NewItemWindow(QtWidgets.QDialog):
             self.ui_new.comboBoxBearingImp.show()##
             self.ui_new.labelBearingMod.show()##
             self.ui_new.lineEditBearingMod.show()##
+            self.ui_new.labelBearingIsDif.show()##
+            self.ui_new.comboBoxBearingIsDif.show()##
+
         elif chosen_item_type == 'Концевая деталь':
             if self.chosen_product_line == 'REDA' or self.chosen_product_line == 'EZLine':
                 self.ui_new.labelSeriesRus.hide()
@@ -1339,6 +1353,8 @@ class NewItemWindow(QtWidgets.QDialog):
             self.ui_new.comboBoxBearingImp.hide()
             self.ui_new.labelBearingMod.hide()
             self.ui_new.lineEditBearingMod.hide()
+            self.ui_new.labelBearingIsDif.hide()
+            self.ui_new.comboBoxBearingIsDif.hide()
         elif chosen_item_type == '':
             self.hideAllParameters()
             self.ui_new.labelItemParameters.hide()
@@ -1366,7 +1382,6 @@ class AboutWindow(QtWidgets.QMainWindow):
 
 class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
 
-    global MINIMUM_TUBE_LEN
     result_block_visible = False
 
     def __init__(self):
@@ -1457,6 +1472,7 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
         else:
             result_min, result_nom, result_max = self.calculateResult(EXS_dist, product_line, FL_CR, stage_size, brg_mod, series, hsg_len_code)
             self.showResultBlock()
+            print(result_min, result_nom, result_max)
 
 
     def closePumpCalcWindow(self):
@@ -1471,31 +1487,57 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
 
 
     def getBearingData(self, product_line, series, stage_size, brg_mod):
-        pass
+        '''Gather bearing data from file'''
+        brg_min_len, brg_nom_len, brg_max_len, brg_is_dif, brg_imp_type = 'brg_min_len', 'brg_nom_len', 'brg_max_len', 'brg_is_dif', 'brg_imp_type'
+        return brg_min_len, brg_nom_len, brg_max_len, brg_is_dif, brg_imp_type
 
     def getDifData(self, product_line, series, stage_size, FL_CR):
-        pass
+        '''Gather diffuser data from file'''
+        dif_min_len, dif_nom_len, dif_max_len, comp_per_stg = 'dif_min_len', 'dif_nom_len', 'dif_max_len', 'comp_per_stg'
+
+        return dif_min_len, dif_nom_len, dif_max_len, comp_per_stg
 
     def getHousingData(self, product_line, series, hsg_len_code):
-        pass
+        '''Gather housing data from file'''
+        hsg_min_len, hsg_nom_len, hsg_max_len = 'hsg_min_len', 'hsg_nom_len', 'hsg_max_len'
+        return hsg_min_len, hsg_nom_len, hsg_max_len
 
     def getLDifData(self, product_line, series, stage_size):
-        pass
+        '''Gather lower diffuser data from file'''
+        ldif_min_len, ldif_nom_len, ldif_max_len = 'ldif_min_len', 'ldif_nom_len', 'ldif_max_len'
+        return ldif_min_len, ldif_nom_len, ldif_max_len
 
     def defineBearingNum(self, overall_hsg_len, EXS_dist):
-        pass
+        '''Defines amount of radial bearings depenantly on overall housing and EXS distance'''
+        brg_num = math.floor((overall_hsg_len + 1) / (1000 * EXS_dist)) - 1
+        return brg_num
 
-    def defineDifNum(self, brg_num, brg_max_len, hsg_min_len, dif_max_len, ldif_max_len):
-        pass
+    def defineDifNum(self, brg_num, brg_len, hsg_len, dif_len, ldif_len, comp_per_stg):
+        global MINIMUM_TUBE_LEN
+        '''Calculate amount of diffusers in pump '''
+        dif_num = math.floor((hsg_len - MINIMUM_TUBE_LEN - brg_num * brg_len - ldif_len) / (dif_len - comp_per_stg))
+        return dif_num
 
     def defineBrgImpNum(self, brg_num, brg_imp_type):
-        pass
+        '''Calculate amount of bearing-specific impellers in pump'''
+        if brg_imp_type == 'Короткое':
+            brg_imp_num = brg_num
+        else:
+            brg_imp_num = 0
+        return brg_imp_num
 
-    def defineImpNum(dif_min_num, brg_is_dif, brg_imp_type):
-        pass
+    def defineImpNum(self, dif_num, brg_num, brg_is_dif, brg_imp_type):
+        '''Calculate amount of  impellers in pump'''
+        brg_imp_bot = brg_num if brg_imp_type != 'Обычное' else 0
+        brg_imp_top = brg_num if brg_is_dif else 0
+        imp_num = dif_num - brg_imp_bot + brg_imp_top
+        return imp_num
 
-    def calcLenBtwBrg(self, brg_num, dif_min_num, dif_max_len):
-        pass
+    def calcLenBtwBrg(self, brg_num, dif_num, dif_max_len):
+        '''Calculate distance between bearings in pump. This should be the maximum possible distance
+         without compression account! I.e. dif_len is always maximum value!'''
+        len_btw_brg = math.ceil(brg_num / dif_num) * dif_max_len
+        return len_btw_brg
 
     def calculateResult(self, EXS_dist, product_line, FL_CR, stage_size, brg_mod, series, hsg_len_code):
 
@@ -1503,54 +1545,37 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
         MIN - когда влезет меньше всего ступеней
         tube_min_len может быть больше tube_max_len'''
         global HOUSING_LENGTH_CODE
-        brg_min_len, brg_nom_len, brg_max_len, brg_is_dif, brg_imp_type = self.getBearingData(self, product_line, series, stage_size, brg_mod)
-        dif_min_len, dif_nom_len, dif_max_len, comp_per_stg = self.getDifData(self, product_line, series, stage_size, FL_CR)
-        ldif_min_len, ldif_nom_len, ldif_max_len = self.getLDifData(self, product_line, series, stage_size)
-        hsg_min_len, hsg_nom_len, hsg_max_len = self.getHousingData(self, product_line, series, hsg_len_code)
+
+        brg_min_len, brg_nom_len, brg_max_len, brg_is_dif, brg_imp_type = self.getBearingData(product_line, series, stage_size, brg_mod)
+        dif_min_len, dif_nom_len, dif_max_len, comp_per_stg = self.getDifData(product_line, series, stage_size, FL_CR)
+        ldif_min_len, ldif_nom_len, ldif_max_len = self.getLDifData(product_line, series, stage_size)
+        hsg_min_len, hsg_nom_len, hsg_max_len = self.getHousingData(product_line, series, hsg_len_code)
 
         overall_hsg_len = HOUSING_LENGTH_CODE[hsg_len_code]
-        brg_num = self.defineBearingNum(self, overall_hsg_len, EXS_dist)
+        brg_num = self.defineBearingNum(overall_hsg_len, EXS_dist)
 
-        dif_min_num = self.defineDifNum(self,
-                                    brg_num,
-                                    brg_max_len,
-                                    hsg_min_len,
-                                    dif_max_len,
-                                    ldif_max_len
-                                    )
+        dif_min_num = self.defineDifNum(brg_num, brg_max_len, hsg_min_len, dif_max_len, ldif_max_len, comp_per_stg)
 
-        dif_nom_num = self.defineDifNum(self,
-                                        brg_num,
-                                        brg_nom_len,
-                                        hsg_nom_len,
-                                        dif_nom_len,
-                                        ldif_nom_len
-                                        )
+        dif_nom_num = self.defineDifNum(brg_num, brg_nom_len, hsg_nom_len, dif_nom_len, ldif_nom_len, comp_per_stg)
 
-        dif_max_num = self.defineDifNum(self,
-                                    brg_num,
-                                    brg_min_len,
-                                    hsg_max_len,
-                                    dif_min_len,
-                                    ldif_min_len
-                                    )
+        dif_max_num = self.defineDifNum(brg_num, brg_min_len, hsg_max_len, dif_min_len, ldif_min_len, comp_per_stg)
 
 
 
-        brg_imp_num = self.defineBrgImpNum(self, brg_num, brg_imp_type)
+        brg_imp_num = self.defineBrgImpNum(brg_num, brg_imp_type)
 
-        imp_min_num = self.defineImpNum(dif_min_num, brg_is_dif, brg_imp_type)
-        imp_nom_num = self.defineImpNum(dif_nom_num, brg_is_dif, brg_imp_type)
-        imp_max_num = self.defineImpNum(dif_max_num, brg_is_dif, brg_imp_type)
+        imp_min_num = self.defineImpNum(dif_min_num, brg_num, brg_is_dif, brg_imp_type)
+        imp_nom_num = self.defineImpNum(dif_nom_num, brg_num, brg_is_dif, brg_imp_type)
+        imp_max_num = self.defineImpNum(dif_max_num, brg_num, brg_is_dif, brg_imp_type)
 
-        tube_min_len = self.calcTubeLength(self, dif_min_num, dif_min_len, ldif_min_len, brg_num, brg_min_len, comp_per_stg, hsg_min_len)
-        tube_nom_len = self.calcTubeLength(self, dif_nom_num, dif_nom_len, ldif_nom_len, brg_num, brg_nom_len, comp_per_stg, hsg_nom_len)
-        tube_max_len = self.calcTubeLength(self, dif_max_num, dif_max_len, ldif_max_len, brg_num, brg_max_len, comp_per_stg, hsg_max_len)
+        tube_min_len = self.calcTubeLength(dif_min_num, dif_min_len, ldif_min_len, brg_num, brg_min_len, comp_per_stg, hsg_min_len)
+        tube_nom_len = self.calcTubeLength(dif_nom_num, dif_nom_len, ldif_nom_len, brg_num, brg_nom_len, comp_per_stg, hsg_nom_len)
+        tube_max_len = self.calcTubeLength(dif_max_num, dif_max_len, ldif_max_len, brg_num, brg_max_len, comp_per_stg, hsg_max_len)
 
         #Без учета компрессии!
-        len_btw_brg_min = self.calcLenBtwBrg(self, brg_num, dif_min_num, dif_max_len)
-        len_btw_brg_nom = self.calcLenBtwBrg(self, brg_num, dif_nom_num, dif_nom_len)
-        len_btw_brg_max = self.calcLenBtwBrg(self, brg_num, dif_max_num, dif_min_len)
+        len_btw_brg_min = self.calcLenBtwBrg(brg_num, dif_min_num, dif_max_len)
+        len_btw_brg_nom = self.calcLenBtwBrg(brg_num, dif_nom_num, dif_max_len)
+        len_btw_brg_max = self.calcLenBtwBrg(brg_num, dif_max_num, dif_max_len)
 
         result_min = (imp_min_num, dif_min_num, brg_num, brg_imp_num, tube_min_len, len_btw_brg_min)
         result_nom = (imp_nom_num, dif_nom_num, brg_num, brg_imp_num, tube_nom_len, len_btw_brg_nom)

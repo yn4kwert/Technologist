@@ -138,7 +138,7 @@
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>0</y>
+           <y>-1754</y>
            <width>1375</width>
            <height>2665</height>
           </rect>
@@ -1326,6 +1326,11 @@ border: 1px solid rgb(220, 0, 0);</string>
             <column>
              <property name="text">
               <string>Модификация</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Подшипник-аппарат</string>
              </property>
             </column>
             <item row="0" column="0">
@@ -2882,6 +2887,11 @@ border: 1px solid rgb(229, 214, 0);
               <string>Модификация</string>
              </property>
             </column>
+            <column>
+             <property name="text">
+              <string>Подшипник-аппарат</string>
+             </property>
+            </column>
             <item row="0" column="0">
              <property name="text">
               <string>MT</string>
@@ -4041,6 +4051,11 @@ border: 1px solid rgb(0, 0, 180);
               <string>Модификация</string>
              </property>
             </column>
+            <column>
+             <property name="text">
+              <string>Подшипник-аппарат</string>
+             </property>
+            </column>
             <item row="0" column="0">
              <property name="text">
               <string>MT</string>
@@ -5195,6 +5210,11 @@ border: 1px solid rgb(0, 126, 0);
             <column>
              <property name="text">
               <string>Модификация</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Подшипник-аппарат</string>
              </property>
             </column>
             <item row="0" column="0">
