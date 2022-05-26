@@ -296,7 +296,7 @@
              <item row="1" column="0">
               <layout class="QGridLayout" name="gridLayoutResMin">
                <item row="1" column="1">
-                <widget class="QLabel" name="label_18">
+                <widget class="QLabel" name="labelImpNumMinVal">
                  <property name="text">
                   <string>TextLabel</string>
                  </property>
@@ -324,21 +324,21 @@
                 </widget>
                </item>
                <item row="0" column="1">
-                <widget class="QLabel" name="label_8">
+                <widget class="QLabel" name="labelDifNumMinVal">
                  <property name="text">
                   <string>TextLabel</string>
                  </property>
                 </widget>
                </item>
                <item row="3" column="1">
-                <widget class="QLabel" name="label_17">
+                <widget class="QLabel" name="labelBrgImpNumMinVal">
                  <property name="text">
                   <string>TextLabel</string>
                  </property>
                 </widget>
                </item>
                <item row="2" column="1">
-                <widget class="QLabel" name="label_19">
+                <widget class="QLabel" name="labelBrgNumMinVal">
                  <property name="text">
                   <string>TextLabel</string>
                  </property>
@@ -352,7 +352,7 @@
                 </widget>
                </item>
                <item row="5" column="1">
-                <widget class="QLabel" name="label_6">
+                <widget class="QLabel" name="labelLenBetweenBrgMinVal">
                  <property name="text">
                   <string>TextLabel</string>
                  </property>
@@ -373,7 +373,7 @@
                 </widget>
                </item>
                <item row="4" column="1">
-                <widget class="QLabel" name="label_21">
+                <widget class="QLabel" name="labelComprTubeLenMinVal">
                  <property name="text">
                   <string>TextLabel</string>
                  </property>
@@ -383,10 +383,17 @@
              </item>
              <item row="1" column="4">
               <layout class="QGridLayout" name="gridLayoutResMax">
-               <item row="1" column="1">
-                <widget class="QLabel" name="label_25">
+               <item row="2" column="0">
+                <widget class="QLabel" name="labelBrgNumMax">
                  <property name="text">
-                  <string>TextLabel</string>
+                  <string>Кол-во ПП</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="labelBrgImpNumMax">
+                 <property name="text">
+                  <string>Кол-во РК ПП</string>
                  </property>
                 </widget>
                </item>
@@ -404,43 +411,29 @@
                  </property>
                 </widget>
                </item>
-               <item row="3" column="0">
-                <widget class="QLabel" name="labelBrgImpNumMax">
-                 <property name="text">
-                  <string>Кол-во РК ПП</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="1">
-                <widget class="QLabel" name="label_10">
+               <item row="1" column="1">
+                <widget class="QLabel" name="labelImpNumMaxVal">
                  <property name="text">
                   <string>TextLabel</string>
                  </property>
                 </widget>
                </item>
                <item row="3" column="1">
-                <widget class="QLabel" name="label_26">
+                <widget class="QLabel" name="labelBrgImpNumMaxVal">
                  <property name="text">
                   <string>TextLabel</string>
                  </property>
                 </widget>
                </item>
-               <item row="2" column="1">
-                <widget class="QLabel" name="label_27">
+               <item row="0" column="1">
+                <widget class="QLabel" name="labelDifNumMaxVal">
                  <property name="text">
                   <string>TextLabel</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="labelBrgNumMax">
-                 <property name="text">
-                  <string>Кол-во ПП</string>
                  </property>
                 </widget>
                </item>
                <item row="5" column="1">
-                <widget class="QLabel" name="label_28">
+                <widget class="QLabel" name="labelLenBetweenBrgMaxVal">
                  <property name="text">
                   <string>TextLabel</string>
                  </property>
@@ -453,6 +446,13 @@
                  </property>
                 </widget>
                </item>
+               <item row="4" column="1">
+                <widget class="QLabel" name="labelComprTubeLenMaxVal">
+                 <property name="text">
+                  <string>TextLabel</string>
+                 </property>
+                </widget>
+               </item>
                <item row="4" column="0">
                 <widget class="QLabel" name="labelComprTubeLenMax">
                  <property name="text">
@@ -460,8 +460,8 @@
                  </property>
                 </widget>
                </item>
-               <item row="4" column="1">
-                <widget class="QLabel" name="label_29">
+               <item row="2" column="1">
+                <widget class="QLabel" name="labelBrgNumMaxVal">
                  <property name="text">
                   <string>TextLabel</string>
                  </property>
@@ -472,7 +472,7 @@
              <item row="1" column="2">
               <layout class="QGridLayout" name="gridLayoutResNom">
                <item row="1" column="1">
-                <widget class="QLabel" name="label_20">
+                <widget class="QLabel" name="labelImpNumNomVal">
                  <property name="text">
                   <string>TextLabel</string>
                  </property>
@@ -500,21 +500,21 @@
                 </widget>
                </item>
                <item row="0" column="1">
-                <widget class="QLabel" name="label_9">
+                <widget class="QLabel" name="labelDifNumNomVal">
                  <property name="text">
                   <string>TextLabel</string>
                  </property>
                 </widget>
                </item>
                <item row="3" column="1">
-                <widget class="QLabel" name="label_22">
+                <widget class="QLabel" name="labelBrgImpNumNomVal">
                  <property name="text">
                   <string>TextLabel</string>
                  </property>
                 </widget>
                </item>
                <item row="2" column="1">
-                <widget class="QLabel" name="label_23">
+                <widget class="QLabel" name="labelBrgNumNomVal">
                  <property name="text">
                   <string>TextLabel</string>
                  </property>
@@ -528,7 +528,7 @@
                 </widget>
                </item>
                <item row="5" column="1">
-                <widget class="QLabel" name="label_7">
+                <widget class="QLabel" name="labelLenBetweenBrgNomVal">
                  <property name="text">
                   <string>TextLabel</string>
                  </property>
@@ -549,7 +549,7 @@
                 </widget>
                </item>
                <item row="4" column="1">
-                <widget class="QLabel" name="label_24">
+                <widget class="QLabel" name="labelComprTubeLenNomVal">
                  <property name="text">
                   <string>TextLabel</string>
                  </property>

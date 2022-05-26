@@ -1381,8 +1381,12 @@ class AboutWindow(QtWidgets.QMainWindow):
 
 
 class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
-
+    error_detected = False
     result_block_visible = False
+    result = {'min': {'dif': '', 'imp': '', 'brg': '', 'brg_imp': '', 'tube_len': '', 'len_btw_brg': ''},
+              'nom': {'dif': '', 'imp': '', 'brg': '', 'brg_imp': '', 'tube_len': '', 'len_btw_brg': ''},
+              'max': {'dif': '', 'imp': '', 'brg': '', 'brg_imp': '', 'tube_len': '', 'len_btw_brg': ''}
+              }
 
     def __init__(self):
         super(PumpCalcWindow, self).__init__()
@@ -1398,7 +1402,7 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
         self.initComboBoxInput()
         self.applyVisibilityResultBlock()
         self.ui_new.comboBoxProductLine.currentTextChanged.connect(self.checkProductLine)
-        self.ui_calc.pushButtonCalculate.clicked.connect(self.catchInputData)
+        self.ui_calc.pushButtonCalculate.clicked.connect(self.onClickCalculate)
 
     def initComboBoxInput(self):
         self.ui_calc.gridLayoutInput.addWidget(self.ui_new.comboBoxProductLine, 1, 1, 1, 1)
@@ -1451,9 +1455,118 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
     def applyVisibilityResultBlock(self):
         self.ui_calc.widgetResultBlock.setVisible(self.result_block_visible)
 
+    def fillInResultBlock(self, result_min, result_nom, result_max):
+        self.ui_calc.labelDifNumMinVal.setText(str(result_min[0]))
+        self.ui_calc.labelImpNumMinVal.setText(str(result_min[1]))
+        self.ui_calc.labelBrgNumMinVal.setText(str(result_min[2]))
+        self.ui_calc.labelBrgImpNumMinVal.setText(str(result_min[3]))
+        self.ui_calc.labelComprTubeLenMinVal.setText(str(result_min[4]))
+        self.ui_calc.labelLenBetweenBrgMinVal.setText(str(result_min[5]))
+
+        self.ui_calc.labelDifNumNomVal.setText(str(result_nom[0]))
+        self.ui_calc.labelImpNumNomVal.setText(str(result_nom[1]))
+        self.ui_calc.labelBrgNumNomVal.setText(str(result_nom[2]))
+        self.ui_calc.labelBrgImpNumNomVal.setText(str(result_nom[3]))
+        self.ui_calc.labelComprTubeLenNomVal.setText(str(result_nom[4]))
+        self.ui_calc.labelLenBetweenBrgNomVal.setText(str(result_nom[5]))
+
+        self.ui_calc.labelDifNumMaxVal.setText(str(result_max[0]))
+        self.ui_calc.labelImpNumMaxVal.setText(str(result_max[1]))
+        self.ui_calc.labelBrgNumMaxVal.setText(str(result_max[2]))
+        self.ui_calc.labelBrgImpNumMaxVal.setText(str(result_max[3]))
+        self.ui_calc.labelComprTubeLenMaxVal.setText(str(result_max[4]))
+        self.ui_calc.labelLenBetweenBrgMaxVal.setText(str(result_max[5]))
+
     def showResultBlock(self):
         self.result_block_visible = True
+        self.fillInResultBlock(self.result_min, self.result_nom, self.result_max)
         self.applyVisibilityResultBlock()
+
+    def onClickCalculate(self):
+        global HOUSING_LENGTH_CODE
+        self.error_detected = False
+        EXS_dist, product_line, FL_CR, stage_size, brg_mod, series, hsg_len_code = self.catchInputData()
+
+        if not self.error_detected:
+            ds_housing, ds_dif, ds_ldif, ds_bearing = self.readSavedData(product_line)
+            if not self.error_detected:
+                print('here')
+                # brg_min_len, brg_nom_len, brg_max_len, \
+                # brg_is_dif, brg_imp_type, dif_min_len, \
+                # dif_nom_len, dif_max_len, comp_per_stg, \
+                # ldif_min_len, ldif_nom_len, ldif_max_len, \
+                # hsg_min_len, hsg_nom_len, hsg_max_len = self.getData(ds_housing, ds_dif, ds_ldif,
+                #                                                      ds_bearing, product_line, FL_CR,
+                #                                                      stage_size, brg_mod, series, hsg_len_code
+                #                                                      )
+                sizes = self.getData(ds_housing, ds_dif, ds_ldif, ds_bearing, product_line, FL_CR, stage_size, brg_mod, series, hsg_len_code)
+                print('sizes!', sizes)
+
+                if not self.error_detected:
+                    overall_hsg_len = HOUSING_LENGTH_CODE[hsg_len_code]
+                    quantity = self.defineValues(overall_hsg_len, EXS_dist, sizes)
+                    print('quant', quantity)
+                    self.calculateValues(sizes, quantity)
+                    print('---------------------------------')
+                    print(self.result)
+                    print('---------------------------------')
+
+
+
+
+                else:
+                    print(f'Can\'t find find data in loaded dataset. /n Obtaintng folloving data: {sizes}')
+            else:
+                print('can\'t read file')
+
+            #self.getData(ds_housing, ds_dif, ds_ldif, ds_bearing, product_line, FL_CR, stage_size, brg_mod, series, hsg_len_code):
+            # self.result_min, self.result_nom, self.result_max =\
+            #     self.calculateResult(EXS_dist, product_line, FL_CR, stage_size, brg_mod, series, hsg_len_code)
+            # self.showResultBlock()
+        else:
+            print('NoInputData')
+
+    def calculateValues(self, sizes, quantity):
+        '''MAX - когда влезет больше всего ступеней
+        MIN - когда влезет меньше всего ступеней
+        tube_min_len может быть больше tube_max_len'''
+        self.result['min']['tube_len'] = self.calcTubeLength(quantity['dif']['min'],
+                                           sizes['dif']['min'],
+                                           sizes['ldif']['min'],
+                                           quantity['brg'],
+                                           sizes['brg']['min'],
+                                           sizes['dif']['compr'],
+                                           sizes['hsg']['min']
+                                           )
+        self.result['nom']['tube_len'] = self.calcTubeLength(quantity['dif']['nom'],
+                                           sizes['dif']['nom'],
+                                           sizes['ldif']['nom'],
+                                           quantity['brg'],
+                                           sizes['brg']['nom'],
+                                           sizes['dif']['compr'],
+                                           sizes['hsg']['nom']
+                                           )
+        self.result['max']['tube_len'] = self.calcTubeLength(quantity['dif']['max'],
+                                           sizes['dif']['max'],
+                                           sizes['ldif']['max'],
+                                           quantity['brg'],
+                                           sizes['brg']['max'],
+                                           sizes['dif']['compr'],
+                                           sizes['hsg']['max']
+                                           )
+        # Без учета компрессии!
+        self.result['min']['len_btw_brg'] = self.calcLenBtwBrg(quantity['brg'],
+                                             quantity['dif']['min'],
+                                             sizes['dif']['max']
+                                             )
+        self.result['nom']['len_btw_brg'] = self.calcLenBtwBrg(quantity['brg'],
+                                             quantity['dif']['nom'],
+                                             sizes['dif']['max']
+                                             )
+        self.result['max']['len_btw_brg'] = self.calcLenBtwBrg(quantity['brg'],
+                                             quantity['dif']['max'],
+                                             sizes['dif']['max']
+                                             )
 
     def catchInputData(self):
         EXS_dist = float(self.ui_calc.comboBoxEXSDistanse.currentText())
@@ -1461,19 +1574,21 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
         FL_CR = self.ui_new.comboBoxCRFL.currentText()
         stage_size = self.ui_calc.lineEditlabelStagSize.text()
         brg_mod = self.ui_calc.lineEditlabelBearingMod.text()
+        print('BRG_MODE', brg_mod)
+
         if product_line == 'TPS-Line' or product_line == 'другое':
             series = self.ui_new.comboBoxSeriesRus.currentText()
             hsg_len_code = self.ui_new.comboBoxLengthCodeRus.currentText()
-        if product_line == 'EZLine' or product_line == 'REDA':
+        elif product_line == 'EZLine' or product_line == 'REDA':
             series = self.ui_new.comboBoxSeriesEng.currentText()
             hsg_len_code = self.ui_new.comboBoxLengthCodeEng.currentText()
-        if product_line == '' or brg_mod == '' or stage_size == '':
-            print('Open dialog and say Empty Values')
         else:
-            result_min, result_nom, result_max = self.calculateResult(EXS_dist, product_line, FL_CR, stage_size, brg_mod, series, hsg_len_code)
-            self.showResultBlock()
-            print(result_min, result_nom, result_max)
-
+            series = ''
+            hsg_len_code = ''
+            self.error_detected = True
+        if stage_size == '' or brg_mod == '':
+            self.error_detected = True
+        return EXS_dist, product_line, FL_CR, stage_size, brg_mod, series, hsg_len_code
 
     def closePumpCalcWindow(self):
         self.ui_calc.pushButtonClose.clicked.connect(self.close)
@@ -1485,26 +1600,92 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
         tube_len = hsg_work_len - rotor_len + pump_comp
         return tube_len
 
-
-    def getBearingData(self, product_line, series, stage_size, brg_mod):
+    def getBearingData(self, ds_bearing, product_line, series, stage_size, brg_mod):
         '''Gather bearing data from file'''
-        brg_min_len, brg_nom_len, brg_max_len, brg_is_dif, brg_imp_type = 'brg_min_len', 'brg_nom_len', 'brg_max_len', 'brg_is_dif', 'brg_imp_type'
-        return brg_min_len, brg_nom_len, brg_max_len, brg_is_dif, brg_imp_type
+        found = False
+        brg_min_len, brg_nom_len, brg_max_len, brg_is_dif, brg_imp_type = -1, -1, -1, -1, -1
+        for row in range(ds_bearing.shape[0]):
+            if ds_bearing.iloc[row][0] == product_line and \
+                    ds_bearing.iloc[row][1] == series and \
+                    ds_bearing.iloc[row][2] == stage_size and \
+                    ds_bearing.iloc[row][7] == brg_mod:
+                if not found:
+                    brg_nom_len = ds_bearing.iloc[row][3]
+                    brg_max_len = brg_nom_len + ds_bearing.iloc[row][4]
+                    brg_min_len = brg_nom_len - ds_bearing.iloc[row][5]
+                    brg_is_dif = ds_bearing.iloc[row][8]
+                    brg_imp_type = ds_bearing.iloc[row][6]
+                    # print(hsg_nom_len, hsg_max_len, hsg_min_len)
+                    found = True
+                else:
+                    print(f'found dublicate in row {row}, please delete dublicate')
 
-    def getDifData(self, product_line, series, stage_size, FL_CR):
-        '''Gather diffuser data from file'''
-        dif_min_len, dif_nom_len, dif_max_len, comp_per_stg = 'dif_min_len', 'dif_nom_len', 'dif_max_len', 'comp_per_stg'
+        self.found_brg = found
+        return brg_min_len, brg_nom_len, brg_max_len, str(brg_is_dif), str(brg_imp_type)
 
+    def getDifData(self, ds_dif, product_line, series, stage_size, FL_CR):
+        '''Gather diffuser data from dataset'''
+        found = False
+        dif_min_len, dif_nom_len, dif_max_len, comp_per_stg = -1, -1, -1, -1
+        for row in range(ds_dif.shape[0]):
+            if ds_dif.iloc[row][0] == product_line and \
+                    ds_dif.iloc[row][1] == series and \
+                    ds_dif.iloc[row][2] == stage_size and \
+                    ds_dif.iloc[row][4] == FL_CR:
+                if not found:
+                    dif_nom_len = ds_dif.iloc[row][5]
+                    dif_min_len = dif_nom_len - ds_dif.iloc[row][7]
+                    dif_max_len = dif_nom_len + ds_dif.iloc[row][6]
+                    comp_per_stg = ds_dif.iloc[row][3]/1000
+
+                    # print(hsg_nom_len, hsg_max_len, hsg_min_len)
+                    found = True
+                else:
+                    print(f'found dublicate in row {row}, please delete dublicate')
+        print('dif_min_len, dif_nom_len, dif_max_len, comp_per_stg : ', dif_min_len, dif_nom_len, dif_max_len, comp_per_stg)
+        self.found_dif = found
         return dif_min_len, dif_nom_len, dif_max_len, comp_per_stg
 
-    def getHousingData(self, product_line, series, hsg_len_code):
-        '''Gather housing data from file'''
-        hsg_min_len, hsg_nom_len, hsg_max_len = 'hsg_min_len', 'hsg_nom_len', 'hsg_max_len'
+    def getHousingData(self, ds_housing, product_line, series, hsg_len_code, FL_CR):
+        '''Gather housing data from dataset'''
+        found = False
+        hsg_min_len, hsg_nom_len, hsg_max_len = -1, -1, -1
+        print(product_line, series, hsg_len_code, FL_CR, type(product_line), type(series), type(hsg_len_code), type(FL_CR))
+        for row in range(ds_housing.shape[0]):
+            if ds_housing.iloc[row][0] == product_line and \
+                    ds_housing.iloc[row][1] == series and \
+                    ds_housing.iloc[row][2] == FL_CR and \
+                    ds_housing.iloc[row][3] == float(hsg_len_code):
+                if not found:
+                    hsg_nom_len = ds_housing.iloc[row][7]
+                    hsg_max_len = ds_housing.iloc[row][8]
+                    hsg_min_len = ds_housing.iloc[row][9]
+                    # print(hsg_nom_len, hsg_max_len, hsg_min_len)
+                    found = True
+                else:
+                    print(f'found dublicate in row {row}, please delete dublicate')
+        print('hsg_nom_len, hsg_max_len, hsg_min_len', hsg_nom_len, hsg_max_len, hsg_min_len)
+        self.found_hsg = found
         return hsg_min_len, hsg_nom_len, hsg_max_len
 
-    def getLDifData(self, product_line, series, stage_size):
-        '''Gather lower diffuser data from file'''
-        ldif_min_len, ldif_nom_len, ldif_max_len = 'ldif_min_len', 'ldif_nom_len', 'ldif_max_len'
+    def getLDifData(self, ds_ldif, product_line, series, stage_size):
+        '''Gather lower diffuser data from dataset'''
+        found = False
+        ldif_min_len, ldif_nom_len, ldif_max_len = -1, -1, -1
+        for row in range(ds_ldif.shape[0]):
+            if ds_ldif.iloc[row][0] == product_line and \
+                    ds_ldif.iloc[row][1] == series and \
+                    ds_ldif.iloc[row][2] == stage_size:
+                if not found:
+                    ldif_nom_len = ds_ldif.iloc[row][3]
+                    ldif_max_len = ldif_nom_len + ds_ldif.iloc[row][4]
+                    ldif_min_len = ldif_nom_len - ds_ldif.iloc[row][5]
+                    # print(hsg_nom_len, hsg_max_len, hsg_min_len)
+                    found = True
+                else:
+                    print(f'found dublicate in row {row}, please delete dublicate')
+        print('ldif_min_len, ldif_nom_len, ldif_max_len', ldif_min_len, ldif_nom_len, ldif_max_len)
+        self.found_ldif = found
         return ldif_min_len, ldif_nom_len, ldif_max_len
 
     def defineBearingNum(self, overall_hsg_len, EXS_dist):
@@ -1513,8 +1694,8 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
         return brg_num
 
     def defineDifNum(self, brg_num, brg_len, hsg_len, dif_len, ldif_len, comp_per_stg):
-        global MINIMUM_TUBE_LEN
         '''Calculate amount of diffusers in pump '''
+        global MINIMUM_TUBE_LEN
         dif_num = math.floor((hsg_len - MINIMUM_TUBE_LEN - brg_num * brg_len - ldif_len) / (dif_len - comp_per_stg))
         return dif_num
 
@@ -1539,6 +1720,141 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
         len_btw_brg = math.ceil(brg_num / dif_num) * dif_max_len
         return len_btw_brg
 
+    def readSavedData(self, product_line):
+        dict_PL_excel_names = {'TPS-Line': ('MTHousing', 'MTDif', 'MTLDif', 'MTBearing', 'MTHB'),
+                               'EZLine': ('EZLineHousing', 'EZLineDif', 'EZLineLDif', 'EZLineBearing', 'EZLineHB'),
+                               'REDA': ('REDAHousing', 'REDADif', 'REDALDif', 'REDABearing', 'REDAHB'),
+                               'Other': ('OtherHousing', 'OtherDif', 'OtherLDif', 'OtherBearing', 'OtherHB')}
+        try:
+            excel_hsg_sheet_name = dict_PL_excel_names[product_line][0]
+            excel_dif_sheet_name = dict_PL_excel_names[product_line][1]
+            excel_ldif_sheet_name = dict_PL_excel_names[product_line][2]
+            excel_bearing_sheet_name = dict_PL_excel_names[product_line][3]
+            ds_housing = pd.read_excel('./Data.xlsx', sheet_name=excel_hsg_sheet_name, header=0, index_col=0)
+            ds_dif = pd.read_excel('./Data.xlsx', sheet_name=excel_dif_sheet_name, header=0, index_col=0)
+            ds_ldif = pd.read_excel('./Data.xlsx', sheet_name=excel_ldif_sheet_name, header=0, index_col=0)
+            ds_bearing = pd.read_excel('./Data.xlsx', sheet_name=excel_bearing_sheet_name, header=0, index_col=0)
+            return ds_housing, ds_dif, ds_ldif, ds_bearing
+        except Exception:
+            self.error_detected = True
+            print('No or wrong Data!')
+
+    def getData(self, ds_housing, ds_dif, ds_ldif, ds_bearing, product_line, FL_CR, stage_size, brg_mod, series, hsg_len_code):
+
+        sizes = {'brg': {'min': '', 'nom': '', 'max': '', 'is_dif': '', 'imp_type': ''},
+               'dif': {'min': '', 'nom': '', 'max': '', 'compr': ''},
+               'ldif': {'min': '', 'nom': '', 'max': ''},
+               'hsg': {'min': '', 'nom': '', 'max': ''}
+               }
+        # brg_min_len, brg_nom_len, brg_max_len, brg_is_dif, brg_imp_type = self.getBearingData(ds_bearing,
+        #                                                                                       product_line,
+        #                                                                                       series,
+        #                                                                                       stage_size,
+        #                                                                                       brg_mod
+        #                                                                                       )
+        # dif_min_len, dif_nom_len, dif_max_len, comp_per_stg = self.getDifData(ds_dif,
+        #                                                                       product_line,
+        #                                                                       series,
+        #                                                                       stage_size,
+        #                                                                       FL_CR
+        #                                                                       )
+        # ldif_min_len, ldif_nom_len, ldif_max_len = self.getLDifData(ds_ldif,
+        #                                                             product_line,
+        #                                                             series,
+        #                                                             stage_size
+        #                                                             )
+        # hsg_min_len, hsg_nom_len, hsg_max_len = self.getHousingData(ds_housing,
+        #                                                             product_line,
+        #                                                             series,
+        #                                                             hsg_len_code,
+        #                                                             FL_CR
+        #                                                             )
+        sizes['brg']['min'], sizes['brg']['nom'], sizes['brg']['max'], sizes['brg']['is_dif'], sizes['brg']['imp_type'] = \
+            self.getBearingData(ds_bearing, product_line, series, stage_size, brg_mod)
+
+        sizes['dif']['min'], sizes['dif']['nom'], sizes['dif']['max'], sizes['dif']['compr'] = \
+            self.getDifData(ds_dif, product_line, series, stage_size, FL_CR)
+
+        sizes['ldif']['min'], sizes['ldif']['nom'], sizes['ldif']['max'] = \
+            self.getLDifData(ds_ldif, product_line, series, stage_size)
+
+        sizes['hsg']['min'], sizes['hsg']['nom'], sizes['hsg']['max'] = \
+            self.getHousingData(ds_housing, product_line, series, hsg_len_code, FL_CR)
+
+        if not self.found_ldif * self.found_dif * self.found_hsg * self.found_brg:
+            self.error_detected = True
+            print('NO DATA')
+        return sizes
+
+            # return brg_min_len, brg_nom_len, brg_max_len,\
+            #        brg_is_dif, brg_imp_type, dif_min_len,\
+            #        dif_nom_len, dif_max_len, comp_per_stg,\
+            #        ldif_min_len, ldif_nom_len, ldif_max_len,\
+            #        hsg_min_len, hsg_nom_len, hsg_max_len
+
+    def defineValues(self, overall_hsg_len, EXS_dist, sizes):
+        quantity = {'brg': '',
+                    'dif': {'min': '', 'nom': '', 'max': ''},
+                    'imp': {'min': '', 'nom': '', 'max': ''},
+                    'brg_imp': ''
+                    }
+        quantity['brg'] = self.defineBearingNum(overall_hsg_len, EXS_dist)
+        self.result['min']['brg'] = quantity['brg']
+        self.result['nom']['brg'] = quantity['brg']
+        self.result['max']['brg'] = quantity['brg']
+
+        quantity['dif']['min'] = self.defineDifNum(quantity['brg'],
+                                                   sizes['brg']['max'],
+                                                   sizes['hsg']['min'],
+                                                   sizes['dif']['max'],
+                                                   sizes['ldif']['max'],
+                                                   sizes['dif']['compr']
+                                                  )
+        self.result['min']['dif'] = quantity['dif']['min']
+        quantity['dif']['nom'] = self.defineDifNum(quantity['brg'],
+                                                   sizes['brg']['nom'],
+                                                   sizes['hsg']['nom'],
+                                                   sizes['dif']['nom'],
+                                                   sizes['ldif']['nom'],
+                                                   sizes['dif']['compr']
+                                                  )
+        self.result['nom']['dif'] = quantity['dif']['nom']
+        quantity['dif']['max'] = self.defineDifNum(quantity['brg'],
+                                                  sizes['brg']['min'],
+                                                  sizes['hsg']['max'],
+                                                  sizes['dif']['min'],
+                                                  sizes['ldif']['min'],
+                                                  sizes['dif']['compr']
+                                                  )
+        self.result['max']['dif'] = quantity['dif']['max']
+
+        quantity['brg_imp'] = self.defineBrgImpNum(quantity['brg'], sizes['brg']['imp_type'])
+        self.result['min']['brg_imp'] = quantity['brg_imp']
+        self.result['nom']['brg_imp'] = quantity['brg_imp']
+        self.result['max']['brg_imp'] = quantity['brg_imp']
+
+        quantity['imp']['min'] = self.defineImpNum(quantity['dif']['min'],
+                                                   quantity['brg'],
+                                                   sizes['brg']['is_dif'],
+                                                   sizes['brg']['imp_type']
+                                                   )
+        self.result['min']['imp'] = quantity['imp']['min']
+        quantity['imp']['nom'] = self.defineImpNum(quantity['dif']['nom'],
+                                                   quantity['brg'],
+                                                   sizes['brg']['is_dif'],
+                                                   sizes['brg']['imp_type']
+                                                   )
+        self.result['nom']['imp'] = quantity['imp']['nom']
+        quantity['imp']['max'] = self.defineImpNum(quantity['dif']['max'],
+                                                   quantity['brg'],
+                                                   sizes['brg']['is_dif'],
+                                                   sizes['brg']['imp_type']
+                                                   )
+        self.result['max']['imp'] = quantity['imp']['max']
+
+
+        return quantity
+
     def calculateResult(self, EXS_dist, product_line, FL_CR, stage_size, brg_mod, series, hsg_len_code):
 
         '''MAX - когда влезет больше всего ступеней
@@ -1546,47 +1862,127 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
         tube_min_len может быть больше tube_max_len'''
         global HOUSING_LENGTH_CODE
 
-        brg_min_len, brg_nom_len, brg_max_len, brg_is_dif, brg_imp_type = self.getBearingData(product_line, series, stage_size, brg_mod)
-        dif_min_len, dif_nom_len, dif_max_len, comp_per_stg = self.getDifData(product_line, series, stage_size, FL_CR)
-        ldif_min_len, ldif_nom_len, ldif_max_len = self.getLDifData(product_line, series, stage_size)
-        hsg_min_len, hsg_nom_len, hsg_max_len = self.getHousingData(product_line, series, hsg_len_code)
+        ds_housing, ds_dif, ds_ldif, ds_bearing = self.readSavedData(product_line)
+
+        brg_min_len, brg_nom_len, brg_max_len,\
+        brg_is_dif, brg_imp_type, dif_min_len,\
+        dif_nom_len, dif_max_len, comp_per_stg,\
+        ldif_min_len, ldif_nom_len, ldif_max_len,\
+        hsg_min_len, hsg_nom_len, hsg_max_len = self.getData(ds_housing, ds_dif, ds_ldif,
+                                                             ds_bearing, product_line, FL_CR,
+                                                             stage_size, brg_mod, series, hsg_len_code
+                                                             )
 
         overall_hsg_len = HOUSING_LENGTH_CODE[hsg_len_code]
+
+
         brg_num = self.defineBearingNum(overall_hsg_len, EXS_dist)
 
-        dif_min_num = self.defineDifNum(brg_num, brg_max_len, hsg_min_len, dif_max_len, ldif_max_len, comp_per_stg)
-
-        dif_nom_num = self.defineDifNum(brg_num, brg_nom_len, hsg_nom_len, dif_nom_len, ldif_nom_len, comp_per_stg)
-
-        dif_max_num = self.defineDifNum(brg_num, brg_min_len, hsg_max_len, dif_min_len, ldif_min_len, comp_per_stg)
-
-
+        dif_min_num = self.defineDifNum(brg_num,
+                                        brg_max_len,
+                                        hsg_min_len,
+                                        dif_max_len,
+                                        ldif_max_len,
+                                        comp_per_stg
+                                        )
+        dif_nom_num = self.defineDifNum(brg_num,
+                                        brg_nom_len,
+                                        hsg_nom_len,
+                                        dif_nom_len,
+                                        ldif_nom_len,
+                                        comp_per_stg
+                                        )
+        dif_max_num = self.defineDifNum(brg_num,
+                                        brg_min_len,
+                                        hsg_max_len,
+                                        dif_min_len,
+                                        ldif_min_len,
+                                        comp_per_stg
+                                        )
 
         brg_imp_num = self.defineBrgImpNum(brg_num, brg_imp_type)
 
-        imp_min_num = self.defineImpNum(dif_min_num, brg_num, brg_is_dif, brg_imp_type)
-        imp_nom_num = self.defineImpNum(dif_nom_num, brg_num, brg_is_dif, brg_imp_type)
-        imp_max_num = self.defineImpNum(dif_max_num, brg_num, brg_is_dif, brg_imp_type)
+        imp_min_num = self.defineImpNum(dif_min_num,
+                                        brg_num,
+                                        brg_is_dif,
+                                        brg_imp_type
+                                        )
+        imp_nom_num = self.defineImpNum(dif_nom_num,
+                                        brg_num,
+                                        brg_is_dif,
+                                        brg_imp_type
+                                        )
+        imp_max_num = self.defineImpNum(dif_max_num,
+                                        brg_num,
+                                        brg_is_dif,
+                                        brg_imp_type
+                                        )
 
-        tube_min_len = self.calcTubeLength(dif_min_num, dif_min_len, ldif_min_len, brg_num, brg_min_len, comp_per_stg, hsg_min_len)
-        tube_nom_len = self.calcTubeLength(dif_nom_num, dif_nom_len, ldif_nom_len, brg_num, brg_nom_len, comp_per_stg, hsg_nom_len)
-        tube_max_len = self.calcTubeLength(dif_max_num, dif_max_len, ldif_max_len, brg_num, brg_max_len, comp_per_stg, hsg_max_len)
-
+        tube_min_len = self.calcTubeLength(dif_min_num,
+                                           dif_min_len,
+                                           ldif_min_len,
+                                           brg_num,
+                                           brg_min_len,
+                                           comp_per_stg,
+                                           hsg_min_len
+                                           )
+        tube_nom_len = self.calcTubeLength(dif_nom_num,
+                                           dif_nom_len,
+                                           ldif_nom_len,
+                                           brg_num,
+                                           brg_nom_len,
+                                           comp_per_stg,
+                                           hsg_nom_len
+                                           )
+        tube_max_len = self.calcTubeLength(dif_max_num,
+                                           dif_max_len,
+                                           ldif_max_len,
+                                           brg_num,
+                                           brg_max_len,
+                                           comp_per_stg,
+                                           hsg_max_len
+                                           )
         #Без учета компрессии!
-        len_btw_brg_min = self.calcLenBtwBrg(brg_num, dif_min_num, dif_max_len)
-        len_btw_brg_nom = self.calcLenBtwBrg(brg_num, dif_nom_num, dif_max_len)
-        len_btw_brg_max = self.calcLenBtwBrg(brg_num, dif_max_num, dif_max_len)
+        len_btw_brg_min = self.calcLenBtwBrg(brg_num,
+                                             dif_min_num,
+                                             dif_max_len
+                                             )
+        len_btw_brg_nom = self.calcLenBtwBrg(brg_num,
+                                             dif_nom_num,
+                                             dif_max_len
+                                             )
+        len_btw_brg_max = self.calcLenBtwBrg(brg_num,
+                                             dif_max_num,
+                                             dif_max_len
+                                             )
 
-        result_min = (imp_min_num, dif_min_num, brg_num, brg_imp_num, tube_min_len, len_btw_brg_min)
-        result_nom = (imp_nom_num, dif_nom_num, brg_num, brg_imp_num, tube_nom_len, len_btw_brg_nom)
-        result_max = (imp_max_num, dif_max_num, brg_num, brg_imp_num, tube_max_len, len_btw_brg_max)
+        result_min = (dif_min_num,
+                      imp_min_num,
+                      brg_num,
+                      brg_imp_num,
+                      tube_min_len,
+                      len_btw_brg_min
+                      )
+        result_nom = (dif_nom_num,
+                      imp_nom_num,
+                      brg_num,
+                      brg_imp_num,
+                      tube_nom_len,
+                      len_btw_brg_nom
+                      )
+        result_max = (dif_max_num,
+                      imp_max_num,
+                      brg_num,
+                      brg_imp_num,
+                      tube_max_len,
+                      len_btw_brg_max
+                      )
 
         return result_min, result_nom, result_max
 
 def excepthook(exc_type, exc_value, exc_tb):
     tb = "".join(traceback.format_exception(exc_type, exc_value, exc_tb))
     print("Oбнаружена ошибка !:", tb)
-#    QtWidgets.QApplication.quit()             # !!! если вы хотите, чтобы событие завершилось
 
 sys.excepthook = excepthook
 
