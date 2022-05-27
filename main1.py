@@ -1479,8 +1479,31 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
 
     def showResultBlock(self):
         self.result_block_visible = True
-        self.fillInResultBlock(self.result_min, self.result_nom, self.result_max)
+        self.fillInResultBlock2(self.result)
+        #self.fillInResultBlock(self.result_min, self.result_nom, self.result_max)
         self.applyVisibilityResultBlock()
+
+    def fillInResultBlock2(self, result):
+        self.ui_calc.labelDifNumMinVal.setText(str(result['min']['dif']))
+        self.ui_calc.labelImpNumMinVal.setText(str(result['min']['imp']))
+        self.ui_calc.labelBrgNumMinVal.setText(str(result['min']['brg']))
+        self.ui_calc.labelBrgImpNumMinVal.setText(str(result['min']['brg_imp']))
+        self.ui_calc.labelComprTubeLenMinVal.setText(str(result['min']['tube_len']))
+        self.ui_calc.labelLenBetweenBrgMinVal.setText(str(result['min']['len_btw_brg']))
+
+        self.ui_calc.labelDifNumNomVal.setText(str(result['nom']['dif']))
+        self.ui_calc.labelImpNumNomVal.setText(str(result['nom']['imp']))
+        self.ui_calc.labelBrgNumNomVal.setText(str(result['nom']['brg']))
+        self.ui_calc.labelBrgImpNumNomVal.setText(str(result['nom']['brg_imp']))
+        self.ui_calc.labelComprTubeLenNomVal.setText(str(result['nom']['tube_len']))
+        self.ui_calc.labelLenBetweenBrgNomVal.setText(str(result['nom']['len_btw_brg']))
+
+        self.ui_calc.labelDifNumMaxVal.setText(str(result['max']['dif']))
+        self.ui_calc.labelImpNumMaxVal.setText(str(result['max']['imp']))
+        self.ui_calc.labelBrgNumMaxVal.setText(str(result['max']['brg']))
+        self.ui_calc.labelBrgImpNumMaxVal.setText(str(result['max']['brg_imp']))
+        self.ui_calc.labelComprTubeLenMaxVal.setText(str(result['max']['tube_len']))
+        self.ui_calc.labelLenBetweenBrgMaxVal.setText(str(result['max']['len_btw_brg']))
 
     def onClickCalculate(self):
         global HOUSING_LENGTH_CODE
@@ -1504,16 +1527,14 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
 
                 if not self.error_detected:
                     overall_hsg_len = HOUSING_LENGTH_CODE[hsg_len_code]
+                    print(EXS_dist, type(EXS_dist))
                     quantity = self.defineValues(overall_hsg_len, EXS_dist, sizes)
                     print('quant', quantity)
                     self.calculateValues(sizes, quantity)
                     print('---------------------------------')
                     print(self.result)
                     print('---------------------------------')
-
-
-
-
+                    self.showResultBlock()
                 else:
                     print(f'Can\'t find find data in loaded dataset. /n Obtaintng folloving data: {sizes}')
             else:
@@ -1528,13 +1549,13 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
 
     def calculateValues(self, sizes, quantity):
         '''MAX - когда влезет больше всего ступеней
-        MIN - когда влезет меньше всего ступеней
+        MIN - когда влезет меньше всего ступеней, т.е. когда длины РО максимальные, а корпуса - минимальные
         tube_min_len может быть больше tube_max_len'''
         self.result['min']['tube_len'] = self.calcTubeLength(quantity['dif']['min'],
-                                           sizes['dif']['min'],
-                                           sizes['ldif']['min'],
+                                           sizes['dif']['max'],
+                                           sizes['ldif']['max'],
                                            quantity['brg'],
-                                           sizes['brg']['min'],
+                                           sizes['brg']['max'],
                                            sizes['dif']['compr'],
                                            sizes['hsg']['min']
                                            )
@@ -1547,10 +1568,10 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
                                            sizes['hsg']['nom']
                                            )
         self.result['max']['tube_len'] = self.calcTubeLength(quantity['dif']['max'],
-                                           sizes['dif']['max'],
-                                           sizes['ldif']['max'],
+                                           sizes['dif']['min'],
+                                           sizes['ldif']['min'],
                                            quantity['brg'],
-                                           sizes['brg']['max'],
+                                           sizes['brg']['min'],
                                            sizes['dif']['compr'],
                                            sizes['hsg']['max']
                                            )
@@ -1597,7 +1618,7 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
         '''calculates compression tube length'''
         rotor_len = dif_num * dif_len + ldif_len + brg_num * brg_len
         pump_comp = (dif_num + brg_num + 1) * comp_per_stg
-        tube_len = hsg_work_len - rotor_len + pump_comp
+        tube_len = round(hsg_work_len - rotor_len + pump_comp, 2)
         return tube_len
 
     def getBearingData(self, ds_bearing, product_line, series, stage_size, brg_mod):
@@ -1717,7 +1738,7 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
     def calcLenBtwBrg(self, brg_num, dif_num, dif_max_len):
         '''Calculate distance between bearings in pump. This should be the maximum possible distance
          without compression account! I.e. dif_len is always maximum value!'''
-        len_btw_brg = math.ceil(brg_num / dif_num) * dif_max_len
+        len_btw_brg = round(math.ceil(dif_num / (brg_num + 1)) * dif_max_len, 2)
         return len_btw_brg
 
     def readSavedData(self, product_line):
@@ -1854,131 +1875,132 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
 
 
         return quantity
+    #
+    # def calculateResult(self, EXS_dist, product_line, FL_CR, stage_size, brg_mod, series, hsg_len_code):
+    #
+    #     '''MAX - когда влезет больше всего ступеней
+    #     MIN - когда влезет меньше всего ступеней
+    #     tube_min_len может быть больше tube_max_len'''
+    #     global HOUSING_LENGTH_CODE
+    #
+    #     ds_housing, ds_dif, ds_ldif, ds_bearing = self.readSavedData(product_line)
+    #
+    #     brg_min_len, brg_nom_len, brg_max_len,\
+    #     brg_is_dif, brg_imp_type, dif_min_len,\
+    #     dif_nom_len, dif_max_len, comp_per_stg,\
+    #     ldif_min_len, ldif_nom_len, ldif_max_len,\
+    #     hsg_min_len, hsg_nom_len, hsg_max_len = self.getData(ds_housing, ds_dif, ds_ldif,
+    #                                                          ds_bearing, product_line, FL_CR,
+    #                                                          stage_size, brg_mod, series, hsg_len_code
+    #                                                          )
+    #
+    #     overall_hsg_len = HOUSING_LENGTH_CODE[hsg_len_code]
+    #
+    #
+    #     brg_num = self.defineBearingNum(overall_hsg_len, EXS_dist)
+    #
+    #     dif_min_num = self.defineDifNum(brg_num,
+    #                                     brg_max_len,
+    #                                     hsg_min_len,
+    #                                     dif_max_len,
+    #                                     ldif_max_len,
+    #                                     comp_per_stg
+    #                                     )
+    #     dif_nom_num = self.defineDifNum(brg_num,
+    #                                     brg_nom_len,
+    #                                     hsg_nom_len,
+    #                                     dif_nom_len,
+    #                                     ldif_nom_len,
+    #                                     comp_per_stg
+    #                                     )
+    #     dif_max_num = self.defineDifNum(brg_num,
+    #                                     brg_min_len,
+    #                                     hsg_max_len,
+    #                                     dif_min_len,
+    #                                     ldif_min_len,
+    #                                     comp_per_stg
+    #                                     )
+    #
+    #     brg_imp_num = self.defineBrgImpNum(brg_num, brg_imp_type)
+    #
+    #     imp_min_num = self.defineImpNum(dif_min_num,
+    #                                     brg_num,
+    #                                     brg_is_dif,
+    #                                     brg_imp_type
+    #                                     )
+    #     imp_nom_num = self.defineImpNum(dif_nom_num,
+    #                                     brg_num,
+    #                                     brg_is_dif,
+    #                                     brg_imp_type
+    #                                     )
+    #     imp_max_num = self.defineImpNum(dif_max_num,
+    #                                     brg_num,
+    #                                     brg_is_dif,
+    #                                     brg_imp_type
+    #                                     )
+    #
+    #     tube_min_len = self.calcTubeLength(dif_min_num,
+    #                                        dif_min_len,
+    #                                        ldif_min_len,
+    #                                        brg_num,
+    #                                        brg_min_len,
+    #                                        comp_per_stg,
+    #                                        hsg_min_len
+    #                                        )
+    #     tube_nom_len = self.calcTubeLength(dif_nom_num,
+    #                                        dif_nom_len,
+    #                                        ldif_nom_len,
+    #                                        brg_num,
+    #                                        brg_nom_len,
+    #                                        comp_per_stg,
+    #                                        hsg_nom_len
+    #                                        )
+    #     tube_max_len = self.calcTubeLength(dif_max_num,
+    #                                        dif_max_len,
+    #                                        ldif_max_len,
+    #                                        brg_num,
+    #                                        brg_max_len,
+    #                                        comp_per_stg,
+    #                                        hsg_max_len
+    #                                        )
+    #     #Без учета компрессии!
+    #     len_btw_brg_min = self.calcLenBtwBrg(brg_num,
+    #                                          dif_min_num,
+    #                                          dif_max_len
+    #                                          )
+    #     len_btw_brg_nom = self.calcLenBtwBrg(brg_num,
+    #                                          dif_nom_num,
+    #                                          dif_max_len
+    #                                          )
+    #     len_btw_brg_max = self.calcLenBtwBrg(brg_num,
+    #                                          dif_max_num,
+    #                                          dif_max_len
+    #                                          )
+    #
+    #     result_min = (dif_min_num,
+    #                   imp_min_num,
+    #                   brg_num,
+    #                   brg_imp_num,
+    #                   tube_min_len,
+    #                   len_btw_brg_min
+    #                   )
+    #     result_nom = (dif_nom_num,
+    #                   imp_nom_num,
+    #                   brg_num,
+    #                   brg_imp_num,
+    #                   tube_nom_len,
+    #                   len_btw_brg_nom
+    #                   )
+    #     result_max = (dif_max_num,
+    #                   imp_max_num,
+    #                   brg_num,
+    #                   brg_imp_num,
+    #                   tube_max_len,
+    #                   len_btw_brg_max
+    #                   )
+    #
+    #     return result_min, result_nom, result_max
 
-    def calculateResult(self, EXS_dist, product_line, FL_CR, stage_size, brg_mod, series, hsg_len_code):
-
-        '''MAX - когда влезет больше всего ступеней
-        MIN - когда влезет меньше всего ступеней
-        tube_min_len может быть больше tube_max_len'''
-        global HOUSING_LENGTH_CODE
-
-        ds_housing, ds_dif, ds_ldif, ds_bearing = self.readSavedData(product_line)
-
-        brg_min_len, brg_nom_len, brg_max_len,\
-        brg_is_dif, brg_imp_type, dif_min_len,\
-        dif_nom_len, dif_max_len, comp_per_stg,\
-        ldif_min_len, ldif_nom_len, ldif_max_len,\
-        hsg_min_len, hsg_nom_len, hsg_max_len = self.getData(ds_housing, ds_dif, ds_ldif,
-                                                             ds_bearing, product_line, FL_CR,
-                                                             stage_size, brg_mod, series, hsg_len_code
-                                                             )
-
-        overall_hsg_len = HOUSING_LENGTH_CODE[hsg_len_code]
-
-
-        brg_num = self.defineBearingNum(overall_hsg_len, EXS_dist)
-
-        dif_min_num = self.defineDifNum(brg_num,
-                                        brg_max_len,
-                                        hsg_min_len,
-                                        dif_max_len,
-                                        ldif_max_len,
-                                        comp_per_stg
-                                        )
-        dif_nom_num = self.defineDifNum(brg_num,
-                                        brg_nom_len,
-                                        hsg_nom_len,
-                                        dif_nom_len,
-                                        ldif_nom_len,
-                                        comp_per_stg
-                                        )
-        dif_max_num = self.defineDifNum(brg_num,
-                                        brg_min_len,
-                                        hsg_max_len,
-                                        dif_min_len,
-                                        ldif_min_len,
-                                        comp_per_stg
-                                        )
-
-        brg_imp_num = self.defineBrgImpNum(brg_num, brg_imp_type)
-
-        imp_min_num = self.defineImpNum(dif_min_num,
-                                        brg_num,
-                                        brg_is_dif,
-                                        brg_imp_type
-                                        )
-        imp_nom_num = self.defineImpNum(dif_nom_num,
-                                        brg_num,
-                                        brg_is_dif,
-                                        brg_imp_type
-                                        )
-        imp_max_num = self.defineImpNum(dif_max_num,
-                                        brg_num,
-                                        brg_is_dif,
-                                        brg_imp_type
-                                        )
-
-        tube_min_len = self.calcTubeLength(dif_min_num,
-                                           dif_min_len,
-                                           ldif_min_len,
-                                           brg_num,
-                                           brg_min_len,
-                                           comp_per_stg,
-                                           hsg_min_len
-                                           )
-        tube_nom_len = self.calcTubeLength(dif_nom_num,
-                                           dif_nom_len,
-                                           ldif_nom_len,
-                                           brg_num,
-                                           brg_nom_len,
-                                           comp_per_stg,
-                                           hsg_nom_len
-                                           )
-        tube_max_len = self.calcTubeLength(dif_max_num,
-                                           dif_max_len,
-                                           ldif_max_len,
-                                           brg_num,
-                                           brg_max_len,
-                                           comp_per_stg,
-                                           hsg_max_len
-                                           )
-        #Без учета компрессии!
-        len_btw_brg_min = self.calcLenBtwBrg(brg_num,
-                                             dif_min_num,
-                                             dif_max_len
-                                             )
-        len_btw_brg_nom = self.calcLenBtwBrg(brg_num,
-                                             dif_nom_num,
-                                             dif_max_len
-                                             )
-        len_btw_brg_max = self.calcLenBtwBrg(brg_num,
-                                             dif_max_num,
-                                             dif_max_len
-                                             )
-
-        result_min = (dif_min_num,
-                      imp_min_num,
-                      brg_num,
-                      brg_imp_num,
-                      tube_min_len,
-                      len_btw_brg_min
-                      )
-        result_nom = (dif_nom_num,
-                      imp_nom_num,
-                      brg_num,
-                      brg_imp_num,
-                      tube_nom_len,
-                      len_btw_brg_nom
-                      )
-        result_max = (dif_max_num,
-                      imp_max_num,
-                      brg_num,
-                      brg_imp_num,
-                      tube_max_len,
-                      len_btw_brg_max
-                      )
-
-        return result_min, result_nom, result_max
 
 def excepthook(exc_type, exc_value, exc_tb):
     tb = "".join(traceback.format_exception(exc_type, exc_value, exc_tb))
