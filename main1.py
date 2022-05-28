@@ -38,6 +38,16 @@ HOUSING_LENGTH_CODE = {
     '9': 9000, '9.5': 9500, '10': 10000,
     }
 MINIMUM_TUBE_LEN = 20
+COMPR_PER_LEN_DICT = {'TPS-Line':
+                          {'300CR':
+                               {'0.5': '2.32', '1': '3.21',
+                                '1.5': '4.32', '2': '6.21',
+                                '2.5': '7.32', '3': '9.21',
+                                '3.5': '10.32', '4': '12.21',
+                                '4.5': '13.32', '5': '15.21',
+                                '5.5': '16.32', '6': '18.21', }
+                           }
+                      }
 '''
 class - CamelCase
 Method and func - lower_case_with_underscores or likeThatName
@@ -1404,6 +1414,14 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
         self.ui_new.comboBoxProductLine.currentTextChanged.connect(self.checkProductLine)
         self.ui_calc.pushButtonCalculate.clicked.connect(self.onClickCalculate)
 
+    def showErrorDialog(self, text):
+        dialog = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical,
+                                       "Ошибка",
+                                       text,
+                                       buttons=QtWidgets.QMessageBox.Ok,
+                                       parent=self)
+        dialog.exec_()
+
     def initComboBoxInput(self):
         self.ui_calc.gridLayoutInput.addWidget(self.ui_new.comboBoxProductLine, 1, 1, 1, 1)
         self.ui_calc.gridLayoutInput.addWidget(self.ui_new.comboBoxCRFL, 1, 2, 1, 1)
@@ -1536,15 +1554,18 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
                     print('---------------------------------')
                     self.showResultBlock()
                 else:
+                    self.showErrorDialog(f'Can\'t find find data in loaded dataset. \n Obtaintng folloving data:\n {sizes}')
                     print(f'Can\'t find find data in loaded dataset. /n Obtaintng folloving data: {sizes}')
             else:
-                print('can\'t read file')
+                self.showErrorDialog('Can\'t read file')
+                print('Can\'t read file')
 
             #self.getData(ds_housing, ds_dif, ds_ldif, ds_bearing, product_line, FL_CR, stage_size, brg_mod, series, hsg_len_code):
             # self.result_min, self.result_nom, self.result_max =\
             #     self.calculateResult(EXS_dist, product_line, FL_CR, stage_size, brg_mod, series, hsg_len_code)
             # self.showResultBlock()
         else:
+            self.showErrorDialog('Not enough input data')
             print('NoInputData')
 
     def calculateValues(self, sizes, quantity):
@@ -1593,9 +1614,8 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
         EXS_dist = float(self.ui_calc.comboBoxEXSDistanse.currentText())
         product_line = self.ui_new.comboBoxProductLine.currentText()
         FL_CR = self.ui_new.comboBoxCRFL.currentText()
-        stage_size = self.ui_calc.lineEditlabelStagSize.text()
+        stage_size = str(self.ui_calc.lineEditlabelStagSize.text())
         brg_mod = self.ui_calc.lineEditlabelBearingMod.text()
-        print('BRG_MODE', brg_mod)
 
         if product_line == 'TPS-Line' or product_line == 'другое':
             series = self.ui_new.comboBoxSeriesRus.currentText()
@@ -1609,6 +1629,15 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
             self.error_detected = True
         if stage_size == '' or brg_mod == '':
             self.error_detected = True
+
+        #Need to save this data for rare case, when compression per stage is not defined.
+        #However, compression may be stated in a drawing, but for a whole pump.
+        #In that case, we need to calculate compression per stage. Actually, we can not to calculate it and take
+        #overall compression value, but it looks like more complicated.
+        self.chosen_prod_line = product_line
+        self.chosen_stage_size = str(stage_size)
+        self.chosen_hsg_len = str(hsg_len_code)
+
         return EXS_dist, product_line, FL_CR, stage_size, brg_mod, series, hsg_len_code
 
     def closePumpCalcWindow(self):
@@ -1619,6 +1648,9 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
         rotor_len = dif_num * dif_len + ldif_len + brg_num * brg_len
         pump_comp = (dif_num + brg_num + 1) * comp_per_stg
         tube_len = round(hsg_work_len - rotor_len + pump_comp, 2)
+
+        print('rotor_len = dif_num * dif_len + ldif_len + brg_num * brg_len', rotor_len, dif_num, dif_len, ldif_len , brg_num , brg_len)
+        print('pump_comp = (dif_num + brg_num + 1) * comp_per_stg', pump_comp ,dif_num, brg_num , comp_per_stg)
         return tube_len
 
     def getBearingData(self, ds_bearing, product_line, series, stage_size, brg_mod):
@@ -1631,9 +1663,9 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
                     ds_bearing.iloc[row][2] == stage_size and \
                     ds_bearing.iloc[row][7] == brg_mod:
                 if not found:
-                    brg_nom_len = ds_bearing.iloc[row][3]
-                    brg_max_len = brg_nom_len + ds_bearing.iloc[row][4]
-                    brg_min_len = brg_nom_len - ds_bearing.iloc[row][5]
+                    brg_nom_len = float(ds_bearing.iloc[row][3])
+                    brg_max_len = round(brg_nom_len + float(ds_bearing.iloc[row][4]), 3)
+                    brg_min_len = round(brg_nom_len - float(ds_bearing.iloc[row][5]), 3)
                     brg_is_dif = ds_bearing.iloc[row][8]
                     brg_imp_type = ds_bearing.iloc[row][6]
                     # print(hsg_nom_len, hsg_max_len, hsg_min_len)
@@ -1654,10 +1686,17 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
                     ds_dif.iloc[row][2] == stage_size and \
                     ds_dif.iloc[row][4] == FL_CR:
                 if not found:
-                    dif_nom_len = ds_dif.iloc[row][5]
-                    dif_min_len = dif_nom_len - ds_dif.iloc[row][7]
-                    dif_max_len = dif_nom_len + ds_dif.iloc[row][6]
-                    comp_per_stg = ds_dif.iloc[row][3]/1000
+                    dif_nom_len = float(ds_dif.iloc[row][5])
+                    dif_min_len = round(dif_nom_len - float(ds_dif.iloc[row][7]), 3)
+                    dif_max_len = round(dif_nom_len + float(ds_dif.iloc[row][6]), 3)
+                    try:
+                        comp_per_stg = round(float(ds_dif.iloc[row][3])/1000, 3)
+                    except ValueError:
+                        comp_per_stg = False
+                        print('X'*30)
+                        print('need to find compression value in table!')
+                        print('X' * 30)
+
 
                     # print(hsg_nom_len, hsg_max_len, hsg_min_len)
                     found = True
@@ -1678,9 +1717,9 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
                     ds_housing.iloc[row][2] == FL_CR and \
                     ds_housing.iloc[row][3] == float(hsg_len_code):
                 if not found:
-                    hsg_nom_len = ds_housing.iloc[row][7]
-                    hsg_max_len = ds_housing.iloc[row][8]
-                    hsg_min_len = ds_housing.iloc[row][9]
+                    hsg_nom_len = float(ds_housing.iloc[row][7])
+                    hsg_max_len = float(ds_housing.iloc[row][8])
+                    hsg_min_len = float(ds_housing.iloc[row][9])
                     # print(hsg_nom_len, hsg_max_len, hsg_min_len)
                     found = True
                 else:
@@ -1698,9 +1737,9 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
                     ds_ldif.iloc[row][1] == series and \
                     ds_ldif.iloc[row][2] == stage_size:
                 if not found:
-                    ldif_nom_len = ds_ldif.iloc[row][3]
-                    ldif_max_len = ldif_nom_len + ds_ldif.iloc[row][4]
-                    ldif_min_len = ldif_nom_len - ds_ldif.iloc[row][5]
+                    ldif_nom_len = float(ds_ldif.iloc[row][3])
+                    ldif_max_len = round(ldif_nom_len + float(ds_ldif.iloc[row][4]), 3)
+                    ldif_min_len = round(ldif_nom_len - float(ds_ldif.iloc[row][5]), 3)
                     # print(hsg_nom_len, hsg_max_len, hsg_min_len)
                     found = True
                 else:
@@ -1711,13 +1750,23 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
 
     def defineBearingNum(self, overall_hsg_len, EXS_dist):
         '''Defines amount of radial bearings depenantly on overall housing and EXS distance'''
-        brg_num = math.floor((overall_hsg_len + 1) / (1000 * EXS_dist)) - 1
+        brg_num = math.ceil((overall_hsg_len + 0.1) / (1000 * EXS_dist)) - 1
         return brg_num
 
     def defineDifNum(self, brg_num, brg_len, hsg_len, dif_len, ldif_len, comp_per_stg):
         '''Calculate amount of diffusers in pump '''
         global MINIMUM_TUBE_LEN
-        dif_num = math.floor((hsg_len - MINIMUM_TUBE_LEN - brg_num * brg_len - ldif_len) / (dif_len - comp_per_stg))
+        if self.no_copr_per_stg:
+            try:
+                overall_compr = float(COMPR_PER_LEN_DICT[self.chosen_prod_line][self.chosen_stage_size][self.chosen_hsg_len])
+            except Exception:
+                self.showErrorDialog('Compression per stage undefined. Tried to find compression per pump in COMPR_PER_LEN_DICT, but unseccessful')
+            print('open dialog compression per stage undefined. Tried to find compression per pump in COMPR_PER_LEN_DICT, but unseccessful')
+
+            dif_num = math.floor((hsg_len + overall_compr - MINIMUM_TUBE_LEN - brg_num * brg_len - ldif_len) / (dif_len))
+        else:
+            print(type(hsg_len), type(MINIMUM_TUBE_LEN), type(brg_num), type(brg_len), type(ldif_len), type(dif_len), type(comp_per_stg))
+            dif_num = math.floor((hsg_len - MINIMUM_TUBE_LEN - brg_num * brg_len - ldif_len) / (dif_len - comp_per_stg))
         return dif_num
 
     def defineBrgImpNum(self, brg_num, brg_imp_type):
@@ -1731,8 +1780,11 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
     def defineImpNum(self, dif_num, brg_num, brg_is_dif, brg_imp_type):
         '''Calculate amount of  impellers in pump'''
         brg_imp_bot = brg_num if brg_imp_type != 'Обычное' else 0
-        brg_imp_top = brg_num if brg_is_dif else 0
+        brg_imp_top = brg_num if brg_is_dif == '1' else 0
         imp_num = dif_num - brg_imp_bot + brg_imp_top
+        print('*' * 20)
+        print(imp_num, dif_num, brg_imp_bot, brg_imp_top)
+        print('*' * 20)
         return imp_num
 
     def calcLenBtwBrg(self, brg_num, dif_num, dif_max_len):
@@ -1761,6 +1813,7 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
             print('No or wrong Data!')
 
     def getData(self, ds_housing, ds_dif, ds_ldif, ds_bearing, product_line, FL_CR, stage_size, brg_mod, series, hsg_len_code):
+        global COMPR_PER_LEN_DICT
 
         sizes = {'brg': {'min': '', 'nom': '', 'max': '', 'is_dif': '', 'imp_type': ''},
                'dif': {'min': '', 'nom': '', 'max': '', 'compr': ''},
@@ -1793,14 +1846,19 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
         sizes['brg']['min'], sizes['brg']['nom'], sizes['brg']['max'], sizes['brg']['is_dif'], sizes['brg']['imp_type'] = \
             self.getBearingData(ds_bearing, product_line, series, stage_size, brg_mod)
 
-        sizes['dif']['min'], sizes['dif']['nom'], sizes['dif']['max'], sizes['dif']['compr'] = \
-            self.getDifData(ds_dif, product_line, series, stage_size, FL_CR)
+        sizes['hsg']['min'], sizes['hsg']['nom'], sizes['hsg']['max'] = \
+            self.getHousingData(ds_housing, product_line, series, hsg_len_code, FL_CR)
 
         sizes['ldif']['min'], sizes['ldif']['nom'], sizes['ldif']['max'] = \
             self.getLDifData(ds_ldif, product_line, series, stage_size)
 
-        sizes['hsg']['min'], sizes['hsg']['nom'], sizes['hsg']['max'] = \
-            self.getHousingData(ds_housing, product_line, series, hsg_len_code, FL_CR)
+        sizes['dif']['min'], sizes['dif']['nom'], sizes['dif']['max'], sizes['dif']['compr'] = \
+            self.getDifData(ds_dif, product_line, series, stage_size, FL_CR)
+
+        if not sizes['dif']['compr']:
+            self.no_copr_per_stg = True
+        else:
+            self.no_copr_per_stg = False
 
         if not self.found_ldif * self.found_dif * self.found_hsg * self.found_brg:
             self.error_detected = True
@@ -1823,6 +1881,8 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
         self.result['min']['brg'] = quantity['brg']
         self.result['nom']['brg'] = quantity['brg']
         self.result['max']['brg'] = quantity['brg']
+
+
 
         quantity['dif']['min'] = self.defineDifNum(quantity['brg'],
                                                    sizes['brg']['max'],
@@ -1875,131 +1935,7 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
 
 
         return quantity
-    #
-    # def calculateResult(self, EXS_dist, product_line, FL_CR, stage_size, brg_mod, series, hsg_len_code):
-    #
-    #     '''MAX - когда влезет больше всего ступеней
-    #     MIN - когда влезет меньше всего ступеней
-    #     tube_min_len может быть больше tube_max_len'''
-    #     global HOUSING_LENGTH_CODE
-    #
-    #     ds_housing, ds_dif, ds_ldif, ds_bearing = self.readSavedData(product_line)
-    #
-    #     brg_min_len, brg_nom_len, brg_max_len,\
-    #     brg_is_dif, brg_imp_type, dif_min_len,\
-    #     dif_nom_len, dif_max_len, comp_per_stg,\
-    #     ldif_min_len, ldif_nom_len, ldif_max_len,\
-    #     hsg_min_len, hsg_nom_len, hsg_max_len = self.getData(ds_housing, ds_dif, ds_ldif,
-    #                                                          ds_bearing, product_line, FL_CR,
-    #                                                          stage_size, brg_mod, series, hsg_len_code
-    #                                                          )
-    #
-    #     overall_hsg_len = HOUSING_LENGTH_CODE[hsg_len_code]
-    #
-    #
-    #     brg_num = self.defineBearingNum(overall_hsg_len, EXS_dist)
-    #
-    #     dif_min_num = self.defineDifNum(brg_num,
-    #                                     brg_max_len,
-    #                                     hsg_min_len,
-    #                                     dif_max_len,
-    #                                     ldif_max_len,
-    #                                     comp_per_stg
-    #                                     )
-    #     dif_nom_num = self.defineDifNum(brg_num,
-    #                                     brg_nom_len,
-    #                                     hsg_nom_len,
-    #                                     dif_nom_len,
-    #                                     ldif_nom_len,
-    #                                     comp_per_stg
-    #                                     )
-    #     dif_max_num = self.defineDifNum(brg_num,
-    #                                     brg_min_len,
-    #                                     hsg_max_len,
-    #                                     dif_min_len,
-    #                                     ldif_min_len,
-    #                                     comp_per_stg
-    #                                     )
-    #
-    #     brg_imp_num = self.defineBrgImpNum(brg_num, brg_imp_type)
-    #
-    #     imp_min_num = self.defineImpNum(dif_min_num,
-    #                                     brg_num,
-    #                                     brg_is_dif,
-    #                                     brg_imp_type
-    #                                     )
-    #     imp_nom_num = self.defineImpNum(dif_nom_num,
-    #                                     brg_num,
-    #                                     brg_is_dif,
-    #                                     brg_imp_type
-    #                                     )
-    #     imp_max_num = self.defineImpNum(dif_max_num,
-    #                                     brg_num,
-    #                                     brg_is_dif,
-    #                                     brg_imp_type
-    #                                     )
-    #
-    #     tube_min_len = self.calcTubeLength(dif_min_num,
-    #                                        dif_min_len,
-    #                                        ldif_min_len,
-    #                                        brg_num,
-    #                                        brg_min_len,
-    #                                        comp_per_stg,
-    #                                        hsg_min_len
-    #                                        )
-    #     tube_nom_len = self.calcTubeLength(dif_nom_num,
-    #                                        dif_nom_len,
-    #                                        ldif_nom_len,
-    #                                        brg_num,
-    #                                        brg_nom_len,
-    #                                        comp_per_stg,
-    #                                        hsg_nom_len
-    #                                        )
-    #     tube_max_len = self.calcTubeLength(dif_max_num,
-    #                                        dif_max_len,
-    #                                        ldif_max_len,
-    #                                        brg_num,
-    #                                        brg_max_len,
-    #                                        comp_per_stg,
-    #                                        hsg_max_len
-    #                                        )
-    #     #Без учета компрессии!
-    #     len_btw_brg_min = self.calcLenBtwBrg(brg_num,
-    #                                          dif_min_num,
-    #                                          dif_max_len
-    #                                          )
-    #     len_btw_brg_nom = self.calcLenBtwBrg(brg_num,
-    #                                          dif_nom_num,
-    #                                          dif_max_len
-    #                                          )
-    #     len_btw_brg_max = self.calcLenBtwBrg(brg_num,
-    #                                          dif_max_num,
-    #                                          dif_max_len
-    #                                          )
-    #
-    #     result_min = (dif_min_num,
-    #                   imp_min_num,
-    #                   brg_num,
-    #                   brg_imp_num,
-    #                   tube_min_len,
-    #                   len_btw_brg_min
-    #                   )
-    #     result_nom = (dif_nom_num,
-    #                   imp_nom_num,
-    #                   brg_num,
-    #                   brg_imp_num,
-    #                   tube_nom_len,
-    #                   len_btw_brg_nom
-    #                   )
-    #     result_max = (dif_max_num,
-    #                   imp_max_num,
-    #                   brg_num,
-    #                   brg_imp_num,
-    #                   tube_max_len,
-    #                   len_btw_brg_max
-    #                   )
-    #
-    #     return result_min, result_nom, result_max
+
 
 
 def excepthook(exc_type, exc_value, exc_tb):
