@@ -18,10 +18,7 @@ import pandas as pd
 flag = ''
 PASSWORD = '123'
 user = 'Технолог'
-MT_hidden = False
-EZLine_hidden = False
-REDA_hidden = False
-Other_hidden = False
+
 
 HOUSING_LENGTH_CODE = {
     '#10': 450, '#20': 850, '#30': 1230,
@@ -54,36 +51,34 @@ Method and func - lower_case_with_underscores or likeThatName
  global variable - _global_var_name
  Constants - CAP_WORDS'''
 
-# class all_windows(QtWidgets.QMainWindow):
-#
-#     def __init__(self):
-#         super(all_windows, self).__init__()
-#         self.ui = Ui_PumpCalcWindow()   # Создать ui файл с шаблонным оформлением?
-#         self.ui.setupUi(self)
-#         #Как применить этот участок кода для всех окон?:
-#         pixmap = QPixmap(':/images/logo.png')  # resource path starts with ':'
-#         self.ui.putImageHere.setPixmap(pixmap)
-#         self.ui.labelCurrentUser.setText(user)
+class CommonMethods():
+    '''This class collects common methods across other classes for reusing'''
 
-class PutLogo():
-    pass
+    def putLogo(self, ui):
+        '''Puts a logo in left top corner of a window.'''
+        pixmap = QPixmap(':/images/logo.png')  # resource path starts with ':'
+        ui.putImageHere.setPixmap(pixmap)
 
-class MainWindow(QtWidgets.QMainWindow):
+    def showErrorDialog(self, type=QtWidgets.QMessageBox.Critical, title='Ошибка', text=''):
+        '''shows simple error/warning window, return nothing'''
+        if type == 'warning':
+            type = QtWidgets.QMessageBox.Warning
+        dialog = QtWidgets.QMessageBox(type,
+                                       title,
+                                       text,
+                                       buttons=QtWidgets.QMessageBox.Ok,
+                                       parent=self)
+        dialog.exec_()
+
+
+class MainWindow(QtWidgets.QMainWindow, CommonMethods):
 
     def __init__(self):
         super(MainWindow, self).__init__()
         self.ui_main = Ui_MainWindow()
         self.ui_main.setupUi(self)
-
-        self.put_a_logo(self.ui_main)
+        self.putLogo(self.ui_main)
         self.initMainWindowButtons()
-        # pixmap = QPixmap(':/images/logo.png')  # resource path starts with ':'
-        # self.ui_main.putImageHere.setPixmap(pixmap)
-
-    def put_a_logo(self, chosen_ui):
-        '''Puts a logo in left top corner of a window.'''
-        pixmap = QPixmap(':/images/logo.png')  # resource path starts with ':'
-        chosen_ui.putImageHere.setPixmap(pixmap)
 
     def initMainWindowButtons(self):
         self.ui_main.pushButtonChekConstValues.clicked.connect(self.showConstantWindow)
@@ -137,7 +132,7 @@ class MainWindow(QtWidgets.QMainWindow):
             print('smth went wrong. Wrong user type. Current user: ', user)
 
 
-class ClssDialog(QtWidgets.QDialog):
+class ClssDialog(QtWidgets.QDialog, CommonMethods):
     '''This class is responsible for password input dialog box operation
     Description of this dialog box is implemented 'on place' and not imported from other modules'''
     global flag
@@ -184,35 +179,15 @@ class ClssDialog(QtWidgets.QDialog):
             self.close()
         else:
             flag = 'Invalid Password'
-            dialog = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical,
-                                           "Неправильный пароль",
-                                           "Вы ввели неправильный пароль!\nПопробуйте еще раз",
-                                           buttons=QtWidgets.QMessageBox.Ok,
-                                           parent=self)
-            dialog.exec_()
-
-    # def closeEvent(self, event):
-    #     global flag
-    #     # Переопределить colseEvent
-    #     print('closed')
-    #     flag = 'Canceled'
-    #     event.accept()
-
-        # if reply == QMessageBox.Yes:
-        #     event.accept()
-        # else:
-        #     event.ignore()
+            self.showErrorDialog(text="Вы ввели неправильный пароль!\nПопробуйте еще раз")
 
 
-class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, QtWidgets.QMainWindow):
+class ConstantWindow(QtWidgets.QMainWindow, CommonMethods): #class ConstantWindow(MainWindow, QtWidgets.QMainWindow):
     '''This class fully describes behavior of the window "Constant window"'''
     ''' Need to:
-    Improve a function to save and load data!
-   
+    Improve a function to save and load data?
     Right-click menu:
-                    Delete item
                     Edit item (open AddNewItemWindow)
-                    Recalculate current row
                     smthg else?
     '''
 
@@ -223,31 +198,67 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
     incorrect_HB_data = dict()
 
     def __init__(self, parent=None):
-        global MT_hidden
-
         super(ConstantWindow, self).__init__(parent)
         self.ui = Ui_CheckConstantWindow()
         self.ui.setupUi(self)
-        self.MT_content = [self.ui.tableWidgetMTHousing,
-                           self.ui.tableWidgetMTHB,
-                           self.ui.tableWidgetMTDif,
-                           self.ui.tableWidgetMTLDif,
-                           self.ui.tableWidgetMTBearing,
-                           self.ui.pushButtonHideMTHousing,
-                           self.ui.pushButtonInitTableMTHousing,
-                           self.ui.pushButtonHideMTHB,
-                           self.ui.pushButtonInitTableMTHB,
-                           self.ui.pushButtonHideMTDif,
-                           self.ui.pushButtonInitTableMTDif,
-                           self.ui.pushButtonHideMTLDif,
-                           self.ui.pushButtonInitTableMTLDif,
-                           self.ui.pushButtonHideMTBearing,
-                           self.ui.pushButtonInitTableMTBearing
-        ]
-        '''Put a logo'''
-        #self.put_a_logo(self, self.ui)             HOW TO INHERIT?
-        pixmap = QPixmap(':/images/logo.png')  # resource path starts with ':' #@staticmethod??? Mixin?
-        self.ui.putImageHere.setPixmap(pixmap)
+        self.prod_line_cont = {'MT':
+            {
+                'is_hidden': False,
+                'content': (self.ui.tableWidgetMTHousing,
+                            self.ui.tableWidgetMTHB,
+                            self.ui.tableWidgetMTDif,
+                            self.ui.tableWidgetMTLDif,
+                            self.ui.tableWidgetMTBearing,
+                            self.ui.pushButtonHideMTHousing,
+                            self.ui.pushButtonHideMTHB,
+                            self.ui.pushButtonHideMTDif,
+                            self.ui.pushButtonHideMTLDif,
+                            self.ui.pushButtonHideMTBearing)
+            },
+            'EZLine':
+            {
+                'is_hidden': False,
+                'content': (self.ui.tableWidgetEZLineHousing,
+                            self.ui.tableWidgetEZLineHB,
+                            self.ui.tableWidgetEZLineDif,
+                            self.ui.tableWidgetEZLineLDif,
+                            self.ui.tableWidgetEZLineBearing,
+                            self.ui.pushButtonHideEZLineHousing,
+                            self.ui.pushButtonHideEZLineHB,
+                            self.ui.pushButtonHideEZLineDif,
+                            self.ui.pushButtonHideEZLineLDif,
+                            self.ui.pushButtonHideEZLineBearing)
+            },
+            'REDA':
+            {
+                'is_hidden': False,
+                'content': (self.ui.tableWidgetREDAHousing,
+                            self.ui.tableWidgetREDAHB,
+                            self.ui.tableWidgetREDADif,
+                            self.ui.tableWidgetREDALDif,
+                            self.ui.tableWidgetREDABearing,
+                            self.ui.pushButtonHideREDAHousing,
+                            self.ui.pushButtonHideREDAHB,
+                            self.ui.pushButtonHideREDADif,
+                            self.ui.pushButtonHideREDALDif,
+                            self.ui.pushButtonHideREDABearing)
+            },
+            'Other':
+            {
+                'is_hidden': False,
+                'content': (self.ui.tableWidgetOtherHousing,
+                            self.ui.tableWidgetOtherHB,
+                            self.ui.tableWidgetOtherDif,
+                            self.ui.tableWidgetOtherLDif,
+                            self.ui.tableWidgetOtherBearing,
+                            self.ui.pushButtonHideOtherHousing,
+                            self.ui.pushButtonHideOtherHB,
+                            self.ui.pushButtonHideOtherDif,
+                            self.ui.pushButtonHideOtherLDif,
+                            self.ui.pushButtonHideOtherBearing)
+            }
+        }
+        self.putLogo(self.ui) #CommonMethods
 
         self.ui.labelCurrentUser.setText(user)
         self.expandColumnsWidth()
@@ -260,40 +271,41 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
         # else:
         #     self.blockUneditableTablesVals()
         #     self.addRightClickMenu()
+        #     self.ui.pushButtonRecalculate.clicked.connect(self.recalculateAllHousingLengthsValues)
+        #     self.ui.pushButtonSaveChanges.clicked.connect(self.btnSaveChangesClicked)
+        #     self.ui.pushButtonAddItem.clicked.connect(self.showAddNewItemWindow)
         '''^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'''
         '''and comment this:
         vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv'''
         self.addRightClickMenu()
-        '''^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'''
-
-        self.ui.pushButtonInitTableMTHousing.clicked.connect(self.upload_xlsx_file)
         self.ui.pushButtonRecalculate.clicked.connect(self.recalculateAllHousingLengthsValues)
-        #self.ui.pushButtonHideMTHousing.clicked.connect(self.button_hide_clicked) #replaced with universal method ''buttonHide2Clicked''
-
         self.ui.pushButtonSaveChanges.clicked.connect(self.btnSaveChangesClicked)
         self.ui.pushButtonAddItem.clicked.connect(self.showAddNewItemWindow)
-        self.ui.TestButton.clicked.connect(self.blockUneditableTablesVals)
-
-
+        '''^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'''
         self.setupHideButtons()
 
     # def put_a_logo(self):
     def addRightClickMenu(self):
+        '''apply right-click menu for all tables'''
         for table in self.all_tables:
             table.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
             table.customContextMenuRequested.connect(lambda point, table=table: self.initRightClickMenu(point, table))
 
     def initRightClickMenu(self, point, table):
+        '''Initialization of right-click menu for current table.'''
         menu = QtWidgets.QMenu()
         if table.itemAt(point):
+            '''vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv'''
             # edit_item = QtWidgets.QAction('edit_item', menu)
             # edit_item.triggered.connect(lambda: self.showAddNewItemWindow())
             # menu.addAction(edit_item)
+            '''^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'''
+            '''Adds additional action for housing tables'''
             if 'Housing' in str(table.objectName()):
                 recalc_row = QtWidgets.QAction('recalculate_row', menu)
                 row = table.itemAt(point).row()
                 HB_table = getattr(self.ui, table.objectName()[:-6] + 'B', 'Check names of Housing and HB tables!!!')
-                recalc_row.triggered.connect(lambda: self.tryRecalculateCurrentRowHousingLengthsValues(row, table, HB_table))
+                recalc_row.triggered.connect(lambda: self.tryRecalcCurrentRowHsgLenVal(row, table, HB_table))
                 menu.addAction(recalc_row)
 
             del_item = QtWidgets.QAction('del_item', menu)
@@ -324,6 +336,7 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
 
 
     def confirmDeleteRowDialog(self, row, table):
+        '''Open warning dialog prior deleting row. The result must be processed further'''
         dialog = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning,
                                    f"Удалить деталь",
                                    f'Вы уверены, что хотите удалить ряд {row+1} в таблице {table.objectName()}?',
@@ -333,16 +346,18 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
         return result
 
     def deleteChosenRow(self, table, point):
+        '''delete chosen row'''
         deleted_row = table.itemAt(point).row()
         if self.confirmDeleteRowDialog(deleted_row, table) == QtWidgets.QMessageBox.Yes:
             table.removeRow(deleted_row)
             print(deleted_row)
 
     def setupHideButtons(self):
-        self.ui.pushButtonTPSLine.clicked.connect(self.hideAllMT, MT_hidden)
-        self.ui.pushButtonEZLine.clicked.connect(self.hideAllEZLine, EZLine_hidden)
-        self.ui.pushButtonREDA.clicked.connect(self.hideAllREDA, REDA_hidden)
-        self.ui.pushButtonOther.clicked.connect(self.hideAllOther, Other_hidden)
+        '''Set up all buttons in the Constant Window'''
+        self.ui.pushButtonTPSLine.clicked.connect(lambda checked, prod_line='MT': self.hidePLContent(prod_line))
+        self.ui.pushButtonEZLine.clicked.connect(lambda checked, prod_line='EZLine': self.hidePLContent(prod_line))
+        self.ui.pushButtonREDA.clicked.connect(lambda checked, prod_line='REDA': self.hidePLContent(prod_line))
+        self.ui.pushButtonOther.clicked.connect(lambda checked, prod_line='Other': self.hidePLContent(prod_line))
 
         self.ui.pushButtonHideMTHousing.clicked.connect(
             lambda checked, btn_name='MTHousing': self.buttonHide2Clicked(btn_name))
@@ -387,34 +402,11 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
             lambda checked, btn_name='OtherBearing': self.buttonHide2Clicked(btn_name))
 
     def expandColumnsWidth(self):
+        '''Expands columns width to fill all spare space horisontally'''
         all_tables = self.ui.scrollAreaWidgetContents.findChildren(QtWidgets.QTableWidget)
         self.all_tables = all_tables
         for table in all_tables:
             table.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
-
-        # self.ui.tableWidgetMTHousing.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
-        # self.ui.tableWidgetMTDif.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
-        # self.ui.tableWidgetMTLDif.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
-        # self.ui.tableWidgetMTBearing.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
-        # self.ui.tableWidgetMTHB.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
-        #
-        # self.ui.tableWidgetEZLineHousing.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
-        # self.ui.tableWidgetEZLineDif.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
-        # self.ui.tableWidgetEZLineLDif.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
-        # self.ui.tableWidgetEZLineBearing.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
-        # self.ui.tableWidgetEZLineHB.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
-        #
-        # self.ui.tableWidgetREDAHousing.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
-        # self.ui.tableWidgetREDADif.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
-        # self.ui.tableWidgetREDALDif.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
-        # self.ui.tableWidgetREDABearing.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
-        # self.ui.tableWidgetREDAHB.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
-        #
-        # self.ui.tableWidgetOtherHousing.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
-        # self.ui.tableWidgetOtherDif.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
-        # self.ui.tableWidgetOtherLDif.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
-        # self.ui.tableWidgetOtherBearing.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
-        # self.ui.tableWidgetOtherHB.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
 
     def showAddNewItemWindow(self): #, is_edited=False
         self.ui_new = NewItemWindow(self) #NewItemWindow(self) - ссылка на self как раз позволяет прицепить дочерний класс к родительскому. Т.е. у NewItemWindow - родитель self (constant_window)
@@ -429,16 +421,16 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
             HB_table = getattr(self.ui, table.objectName()[:-6] + 'B', 'Check names of Housing and HB tables!!!')
             rows = table.rowCount()
             for row in range(rows):
-                self.tryRecalculateCurrentRowHousingLengthsValues(row, table, HB_table)
+                self.tryRecalcCurrentRowHsgLenVal(row, table, HB_table)
         self.blockUneditableTablesVals()
-        #print(self.incorrect_HB_data)
         self.showIncorrectDataInHBTable(self.incorrect_HB_data)
 
-    def tryRecalculateCurrentRowHousingLengthsValues(self, row, table, HB_table):
+    def tryRecalcCurrentRowHsgLenVal(self, row, table, HB_table):
+        '''recalculate constant values but only for one chosen row'''
         result_set, product_line, series, FL_or_CR = self.findHBRowsForRecalculatedValues(row, table, HB_table)
         if self.checkRelevantHBQuantityInHBTable(HB_table, result_set, product_line, series, FL_or_CR):
             head_sizes_list, base_sizes_list = self.getHeadAndBaseSizesFromHBTable(result_set, HB_table)
-            self.recalculateCurrentRowHousingLengthsValues(table, row, head_sizes_list, base_sizes_list)
+            self.recalcCurrentRowHsgLenVal(table, row, head_sizes_list, base_sizes_list)
         else:
             self.putWorkLengthValuesInHousingTablesAndBlock(table, row)
 
@@ -482,7 +474,7 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
         return find_series_in_HB_set & find_product_line_in_HB_set & find_FL_or_CR_in_HB_set,\
                product_line, series, FL_or_CR
 
-    def recalculateCurrentRowHousingLengthsValues(self, table, row, head_sizes_list, base_sizes_list):
+    def recalcCurrentRowHsgLenVal(self, table, row, head_sizes_list, base_sizes_list):
         '''Recalculates min, max and nominal work length of the housing in the table "table" at row "row"'''
         head_size_nom = float(head_sizes_list[0])
         head_size_up_dev = float(head_sizes_list[1])
@@ -531,7 +523,7 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
         # item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
 
     def getHeadAndBaseSizesFromHBTable(self, result_set, HB_table):
-        ''' This method gets size, up_dev and low_dev for head and base in HB_table with row_ids written in result_set'''
+        ''' This method gets size, up_dev and low_dev for head & base in HB_table with row_ids written in result_set'''
         head_sizes_list = []
         base_sizes_list = []
 
@@ -562,12 +554,10 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
         Invokes window after window for all PL where mistakes were found.
         It's more likely to make it more user-friendly'''
         for PL_type in incorrect_HB_data:
-            dialog = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning,
-                                           f"Ошибка в таблице {PL_type}",
-                                           f'Ошибка в таблице Концевые Детали {PL_type}!\n {str(incorrect_HB_data[PL_type])}',
-                                           buttons=QtWidgets.QMessageBox.Ok,
-                                           parent=self)
-            dialog.exec_()
+            self.showErrorDialog('warning',
+                                 f"Ошибка в таблице {PL_type}",
+                                 f'Ошибка в таблице Концевые Детали {PL_type}!\n {str(incorrect_HB_data[PL_type])}'
+                                 )
 
     def checkRelevantHBQuantityInHBTable(self, HB_table, evaluated_set, product_line, series, FL_or_CR):
         '''Checks if there are only 1 Head and 1 Base suitable for current PL, series and FL_CR
@@ -612,128 +602,11 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
         self.ui.pushButtonSaveChanges.hide()
         self.ui.pushButtonRecalculate.hide()
 
-    def hideAllMT(self):
-        '''This method allows to hide all data about MT equipment by clicking TPS-line nameline (button)
-        I changed it from if-else statement, but this invoked a bug: when hide a single TabWidget and clicking TPS-line nameline twice,
-        TabWidget becomes visible with button labeled "Unhide"
-        NEED TO FIX IT -- button 'hide/unhide' will be removed and replaced by button with name of item type '''
-        global MT_hidden
-        for content_element in self.MT_content:
-                content_element.setVisible(MT_hidden)
-        # self.ui.tableWidgetMTHousing.setVisible(MT_hidden)
-        # self.ui.tableWidgetMTHB.setVisible(MT_hidden)
-        # self.ui.tableWidgetMTDif.setVisible(MT_hidden)
-        # self.ui.tableWidgetMTLDif.setVisible(MT_hidden)
-        # self.ui.tableWidgetMTBearing.setVisible(MT_hidden)
-        #
-        # self.ui.pushButtonHideMTHousing.setVisible(MT_hidden)
-        # self.ui.pushButtonInitTableMTHousing.setVisible(MT_hidden)
-        #
-        # self.ui.pushButtonHideMTHB.setVisible(MT_hidden)
-        # self.ui.pushButtonInitTableMTHB.setVisible(MT_hidden)
-        #
-        # self.ui.pushButtonHideMTDif.setVisible(MT_hidden)
-        # self.ui.pushButtonInitTableMTDif.setVisible(MT_hidden)
-        #
-        # self.ui.pushButtonHideMTLDif.setVisible(MT_hidden)
-        # self.ui.pushButtonInitTableMTLDif.setVisible(MT_hidden)
-        #
-        # self.ui.pushButtonHideMTBearing.setVisible(MT_hidden)
-        # self.ui.pushButtonInitTableMTBearing.setVisible(MT_hidden)
-        MT_hidden = not MT_hidden
-
-    def hideAllEZLine(self):
-        '''hides all EZLine content
-        I'm not sure if it is necessary to do like hideAllMT or how to do it in another way.
-        Also, not sure if it is necessary to merge this 4 similar methods in one (gues, it's likely) and
-        how to implement it without "eval"'''
-        global EZLine_hidden
-
-        self.ui.tableWidgetEZLineHousing.setVisible(EZLine_hidden)
-        self.ui.tableWidgetEZLineHB.setVisible(EZLine_hidden)
-        self.ui.tableWidgetEZLineDif.setVisible(EZLine_hidden)
-        self.ui.tableWidgetEZLineLDif.setVisible(EZLine_hidden)
-        self.ui.tableWidgetEZLineBearing.setVisible(EZLine_hidden)
-
-        self.ui.pushButtonHideEZLineHousing.setVisible(EZLine_hidden)
-        self.ui.pushButtonInitTableEZLineHousing.setVisible(EZLine_hidden)
-
-        self.ui.pushButtonHideEZLineHB.setVisible(EZLine_hidden)
-        self.ui.pushButtonInitTableEZLineHB.setVisible(EZLine_hidden)
-
-        self.ui.pushButtonHideEZLineDif.setVisible(EZLine_hidden)
-        self.ui.pushButtonInitTableEZLineDif.setVisible(EZLine_hidden)
-
-        self.ui.pushButtonHideEZLineLDif.setVisible(EZLine_hidden)
-        self.ui.pushButtonInitTableEZLineLDif.setVisible(EZLine_hidden)
-
-        self.ui.pushButtonHideEZLineBearing.setVisible(EZLine_hidden)
-        self.ui.pushButtonInitTableEZLineBearing.setVisible(EZLine_hidden)
-
-        EZLine_hidden = not EZLine_hidden
-
-    def hideAllREDA(self):
-        '''hides all REDA content'''
-        global REDA_hidden
-
-        self.ui.tableWidgetREDAHousing.setVisible(REDA_hidden)
-        self.ui.tableWidgetREDAHB.setVisible(REDA_hidden)
-        self.ui.tableWidgetREDADif.setVisible(REDA_hidden)
-        self.ui.tableWidgetREDALDif.setVisible(REDA_hidden)
-        self.ui.tableWidgetREDABearing.setVisible(REDA_hidden)
-
-        self.ui.pushButtonHideREDAHousing.setVisible(REDA_hidden)
-        self.ui.pushButtonInitTableREDAHousing.setVisible(REDA_hidden)
-
-        self.ui.pushButtonHideREDAHB.setVisible(REDA_hidden)
-        self.ui.pushButtonInitTableREDAHB.setVisible(REDA_hidden)
-
-        self.ui.pushButtonHideREDADif.setVisible(REDA_hidden)
-        self.ui.pushButtonInitTableREDADif.setVisible(REDA_hidden)
-
-        self.ui.pushButtonHideREDALDif.setVisible(REDA_hidden)
-        self.ui.pushButtonInitTableREDALDif.setVisible(REDA_hidden)
-
-        self.ui.pushButtonHideREDABearing.setVisible(REDA_hidden)
-        self.ui.pushButtonInitTableREDABearing.setVisible(REDA_hidden)
-
-        REDA_hidden = not REDA_hidden
-
-    def hideAllOther(self):
-        '''hides all Other PL content'''
-        global Other_hidden
-
-        self.ui.tableWidgetOtherHousing.setVisible(Other_hidden)
-        self.ui.tableWidgetOtherHB.setVisible(Other_hidden)
-        self.ui.tableWidgetOtherDif.setVisible(Other_hidden)
-        self.ui.tableWidgetOtherLDif.setVisible(Other_hidden)
-        self.ui.tableWidgetOtherBearing.setVisible(Other_hidden)
-
-        self.ui.pushButtonHideOtherHousing.setVisible(Other_hidden)
-        self.ui.pushButtonInitTableOtherHousing.setVisible(Other_hidden)
-
-        self.ui.pushButtonHideOtherHB.setVisible(Other_hidden)
-        self.ui.pushButtonInitTableOtherHB.setVisible(Other_hidden)
-
-        self.ui.pushButtonHideOtherDif.setVisible(Other_hidden)
-        self.ui.pushButtonInitTableOtherDif.setVisible(Other_hidden)
-
-        self.ui.pushButtonHideOtherLDif.setVisible(Other_hidden)
-        self.ui.pushButtonInitTableOtherLDif.setVisible(Other_hidden)
-
-        self.ui.pushButtonHideOtherBearing.setVisible(Other_hidden)
-        self.ui.pushButtonInitTableOtherBearing.setVisible(Other_hidden)
-
-        Other_hidden = not Other_hidden
-
-    # def button_hide_clicked(self):
-    #'''This method allows to hide Table widget of MT Housings by clicking Hide/Unhide button'''
-    #     if self.ui.pushButtonHideMTHousing.text() == 'Hide':
-    #         self.ui.tableWidgetMTHousing.setVisible(False)
-    #         self.ui.pushButtonHideMTHousing.setText('Unhide')
-    #     else:
-    #         self.ui.tableWidgetMTHousing.setVisible(True)
-    #         self.ui.pushButtonHideMTHousing.setText('Hide')
+    def hidePLContent(self, prod_line):
+        '''Hides all QTabWidgets and Buttons with product line names related to chosen product line '''
+        for content_el in self.prod_line_cont[prod_line]['content']:
+            content_el.setVisible(self.prod_line_cont[prod_line]['is_hidden'])
+        self.prod_line_cont[prod_line]['is_hidden'] = not self.prod_line_cont[prod_line]['is_hidden']
 
     def buttonHide2Clicked(self, btn_name):
         '''This method allows to hide any Table widget dependantly on clicked button Hide/Unhide
@@ -746,20 +619,6 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
 
     def closeConstantWindow(self):
         self.ui.pushButtonClose.clicked.connect(self.close)
-        #self.ui.pushButton_backToMainWindow.clicked.connect(self.showMainWindow)
-
-    def upload_xlsx_file(self):
-        ''' This method allows to upload all cells values from xslx table to program. I.e. initialize the table.
-        I guess, it's better to transform it into the func or to think how to reuse this method'''
-        self.ui.tableWidgetMTHousing.clearContents()
-        xl = pd.read_excel('./MT_housing.xlsx', header=0, index_col=0)
-        #self.ui.tableWidgetMTHousing.clear()
-        rows, cols = xl.shape
-        self.ui.tableWidgetMTHousing.setRowCount(rows)
-        for row in range(rows):
-            for col in range(cols):
-                self.ui.tableWidgetMTHousing.setItem(row, col, QtWidgets.QTableWidgetItem(str(xl.iloc[row][col])))
-        #self.calculateAndBlockUneditableMTHousingTableValues()
 
     def clearTablesData(self):
         '''Clears all tableWidgets content'''
@@ -808,29 +667,6 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
             print('Missing data were found and replaced with \'-1\' value!\n Data were saved')
         else:
             print('Your data saved successfully')
-
-    def btnSaveChangesClicked_TEST(self):
-        '''This method should save all changes to the memory'''
-        print('Saving your data')
-        #Перезаписывает таблицы с нуля. Нужно подумать над частичной перезаписью
-        #Возможно стоит отмечать каким-то цветом измененные поля, собирать данные об измененной ячейке
-        #в формате table_name, row, col и осуществлять перезапись в файл чисто по собранным данным
-
-        for table in self.all_tables:
-            rows = table.rowCount()
-            cols = table.columnCount()
-            table_values = []
-            for row in range(rows):
-                col_vals = []
-                for col in range(cols):
-                    try:
-                        col_vals.append(table.item(row, col).text())
-                    except Exception:
-                        print('empty?', row, col)
-                table_values.append(col_vals)
-
-            print(table_values)
-        print('Your data saved successfully')
 
     def addNewRow(self, table):
         '''This method add new empty row to the "table"'''
@@ -888,7 +724,7 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
         table.setItem(row_position, 6, QtWidgets.QTableWidgetItem(data_to_save[5]))
 
     def addNewItem(self, new_item_product_line, new_item_type, data_to_save):
-        '''This method choose neccessary table for new Item and fills chosen table with transmitted data'''
+        '''This method choose necessary table for new Item and fills chosen table with transmitted data'''
         #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         #Как это реализовать? Через условия? Через eval? Через словари?
         #[MT, EZLine, REDA, Other]
@@ -957,10 +793,10 @@ class ConstantWindow(QtWidgets.QMainWindow): #class ConstantWindow(MainWindow, Q
             else:  # head&base
                 self.fillHBTable(self.ui.tableWidgetOtherHB, new_item_product_line, data_to_save)
         else:
-                print('New ProductLine?')
+            self.showErrorDialog(text='Undefined Prodcuct Line')
 
 
-class NewItemWindow(QtWidgets.QDialog):
+class NewItemWindow(QtWidgets.QDialog, CommonMethods):
     '''Describes behaviour of NewItemWindow'''
     chosen_product_line = ''
     comboBoxItemType_activated = False
@@ -1050,21 +886,20 @@ class NewItemWindow(QtWidgets.QDialog):
             # if item.isVisible():
             #     line_edits.append(f'{item.text()}')
         #-----------------------------------------------------------------------
-        param_properties = [
-                                self.ui_new.comboBoxSeriesRus,
-                                self.ui_new.comboBoxSeriesEng,
-                                self.ui_new.comboBoxHorB,
-                                self.ui_new.lineEditStagSize,
-                                self.ui_new.lineEditCompression,
-                                self.ui_new.comboBoxCRFL,
-                                self.ui_new.comboBoxLengthCodeRus,
-                                self.ui_new.comboBoxLengthCodeEng,
-                                self.ui_new.lineEditHeight,
-                                self.ui_new.lineEditUpDev,
-                                self.ui_new.lineEditLowDev,
-                                self.ui_new.comboBoxBearingImp,
-                                self.ui_new.lineEditBearingMod,
-                                self.ui_new.comboBoxBearingIsDif
+        param_properties = [self.ui_new.comboBoxSeriesRus,
+                            self.ui_new.comboBoxSeriesEng,
+                            self.ui_new.comboBoxHorB,
+                            self.ui_new.lineEditStagSize,
+                            self.ui_new.lineEditCompression,
+                            self.ui_new.comboBoxCRFL,
+                            self.ui_new.comboBoxLengthCodeRus,
+                            self.ui_new.comboBoxLengthCodeEng,
+                            self.ui_new.lineEditHeight,
+                            self.ui_new.lineEditUpDev,
+                            self.ui_new.lineEditLowDev,
+                            self.ui_new.comboBoxBearingImp,
+                            self.ui_new.lineEditBearingMod,
+                            self.ui_new.comboBoxBearingIsDif
                             ]#или в __init__ его?
         for param in param_properties:
             if param.isVisible():
@@ -1072,16 +907,13 @@ class NewItemWindow(QtWidgets.QDialog):
                     data_to_save.append(f'{param.text()}')
                 else:
                     data_to_save.append(f'{param.currentText()}')
-        if self.checkNoEmptyValues(data_to_save):
+        if new_item_product_line == '' or new_item_type == '':
+            self.showErrorDialog(text="Пустые значения\nНе выбран производитель и/или тип детали")
+        elif self.checkNoEmptyValues(data_to_save):
             self.close()
             self.parent.addNewItem(new_item_product_line, new_item_type, data_to_save)
         else:
-            dialog = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical,
-                                           "Пустые значения",
-                                           "Не все необходимые поля заполнены",
-                                           buttons=QtWidgets.QMessageBox.Ok,
-                                           parent=self)
-            dialog.exec_()
+            self.showErrorDialog(text="Пустые значения\nНе все необходимые поля заполнены")
 
         '''def collectNewItemParamVals(self):
         print('hi')
@@ -1152,14 +984,12 @@ class NewItemWindow(QtWidgets.QDialog):
                           "color: rgb(255, 255, 255);\n"
                           "font: 75 15pt \"MS Sans Serif\";")
             #self.ui_new.DialogCreateNewItem.setStyleSheet("background-color: rgb(220, 255, 220);")
-
         self.applyStyle(label_style)
 
     def applyStyle(self, label_style):
         self.ui_new.labelProductLine.setStyleSheet(label_style)
         self.ui_new.labelItemType.setStyleSheet(label_style)
         self.ui_new.labelItemParameters.setStyleSheet(label_style)
-
 
     def checkProductLine(self):
         ''' Checks chosen product line and hides all fields, if no product line is chosen and shows ItemTypeBoxes'''
@@ -1370,33 +1200,31 @@ class NewItemWindow(QtWidgets.QDialog):
             self.ui_new.labelItemParameters.hide()
 
 
-class AboutWindow(QtWidgets.QMainWindow):
+class AboutWindow(QtWidgets.QMainWindow, CommonMethods):
 
     def __init__(self):
         super(AboutWindow, self).__init__()
         self.ui = Ui_AboutWindow()
         self.ui.setupUi(self)
-        pixmap = QPixmap(':/images/logo.png')  # resource path starts with ':'
-        self.ui.putImageHere.setPixmap(pixmap)
+        self.putLogo(self.ui)  # CommonMethods
         self.ui.labelCurrentUser.setText(user)
 
     def closeAboutWindow(self):
         self.ui.pushButtonClose.clicked.connect(self.close)
-        #self.ui.pushButton_backToMainWindow.clicked.connect(self.showMainWindow)
-
-    # def showMainWindow(self):
-    #     self.ui = MainWindow()
-    #     self.ui.show()
-    #     self.ui.showMainWindow()
 
 
-class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
+class PumpCalcWindow(QtWidgets.QMainWindow, CommonMethods):
     error_detected = False
     result_block_visible = False
+    ds_dif, ds_hsg, ds_ldif, ds_brg, ds_hb = [], [], [], [], []
     result = {'min': {'dif': '', 'imp': '', 'brg': '', 'brg_imp': '', 'tube_len': '', 'len_btw_brg': ''},
               'nom': {'dif': '', 'imp': '', 'brg': '', 'brg_imp': '', 'tube_len': '', 'len_btw_brg': ''},
               'max': {'dif': '', 'imp': '', 'brg': '', 'brg_imp': '', 'tube_len': '', 'len_btw_brg': ''}
               }
+    dict_PL_excel_names = {'TPS-Line': {'hsg': 'MTHousing', 'dif': 'MTDif', 'ldif': 'MTLDif', 'brg': 'MTBearing', 'hb': 'MTHB'},
+                           'EZLine': {'hsg': 'EZLineHousing', 'dif': 'EZLineDif', 'ldif': 'EZLineLDif', 'brg': 'EZLineBearing', 'hb': 'EZLineHB'},
+                           'REDA': {'hsg': 'REDAHousing', 'dif': 'REDADif', 'ldif': 'REDALDif', 'brg': 'REDABearing', 'hb': 'REDAHB'},
+                           'другое': {'hsg': 'OtherHousing', 'dif': 'OtherDif', 'ldif': 'OtherLDif', 'brg': 'OtherBearing', 'hb': 'OtherHB'}}
 
     def __init__(self):
         super(PumpCalcWindow, self).__init__()
@@ -1406,21 +1234,17 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
         self.ui_new = Ui_DialogCreateNewItem()
         self.ui_new.setupUi(self)
 
-        pixmap = QPixmap(':/images/logo.png')  # resource path starts with ':'
-        self.ui_calc.putImageHere.setPixmap(pixmap)
+        self.putLogo(self.ui_calc)  # CommonMethods
+
         self.ui_calc.labelCurrentUser.setText(user)
         self.initComboBoxInput()
         self.applyVisibilityResultBlock()
         self.ui_new.comboBoxProductLine.currentTextChanged.connect(self.checkProductLine)
         self.ui_calc.pushButtonCalculate.clicked.connect(self.onClickCalculate)
 
-    def showErrorDialog(self, text):
-        dialog = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical,
-                                       "Ошибка",
-                                       text,
-                                       buttons=QtWidgets.QMessageBox.Ok,
-                                       parent=self)
-        dialog.exec_()
+        self.ui_new.comboBoxCRFL.currentTextChanged.connect(self.grabDataForCombo)
+        self.ui_new.comboBoxSeriesRus.currentTextChanged.connect(self.grabDataForCombo)
+        self.ui_new.comboBoxSeriesEng.currentTextChanged.connect(self.grabDataForCombo)
 
     def initComboBoxInput(self):
         self.ui_calc.gridLayoutInput.addWidget(self.ui_new.comboBoxProductLine, 1, 1, 1, 1)
@@ -1442,6 +1266,84 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
         self.ui_calc.labelHousingLengthEng.hide()
         self.ui_new.comboBoxLengthCodeEng.hide()
 
+    def prepareDataSets(self, product_line):
+        if len(self.ds_dif) > 0 or len(self.ds_brg) > 0:
+            ds_dif = self.readSavedData_item(product_line, 'dif')
+            ds_bearing = self.readSavedData_item(product_line, 'brg')
+        else:
+            ds_bearing = self.ds_brg
+            ds_dif = self.ds_dif
+        ds_housing = self.readSavedData_item(product_line, 'hsg')
+        ds_ldif = self.readSavedData_item(product_line, 'ldif')
+        return ds_housing, ds_dif, ds_ldif, ds_bearing
+
+    def grabDataForCombo(self):
+        '''COllects changed data and re-init comboboxes of bearing type and stages type'''
+        product_line = self.ui_new.comboBoxProductLine.currentText()
+        FL_CR = self.ui_new.comboBoxCRFL.currentText()
+        series = self.ui_new.comboBoxSeriesRus.currentText() if self.ui_new.comboBoxSeriesRus.isVisible() \
+            else self.ui_new.comboBoxSeriesEng.currentText()
+        print(product_line, FL_CR, series)
+        self.ds_dif = ds_dif = self.readSavedData_item(product_line, 'dif')
+        self.ds_brg = ds_brg = self.readSavedData_item(product_line, 'brg')
+
+        all_stg_types = self.findStgSizes(ds_dif, product_line, FL_CR, series)
+        self.initChangingComboBoxes(self.ui_calc.comboBoxStageSize, all_stg_types)
+        self.ui_calc.comboBoxStageSize.currentTextChanged.connect(self.gatherInfo)
+        all_brg_types = self.findBrgSizes(ds_brg, product_line, series)
+        self.initChangingComboBoxes(self.ui_calc.comboBoxBrgMod, all_brg_types)
+
+    def gatherInfo(self):
+        ds_brg = self.ds_brg
+        product_line = self.ui_new.comboBoxProductLine.currentText()
+        if product_line == 'REDA' or product_line == 'EZLine':
+            series = self.ui_new.comboBoxSeriesEng.currentText()
+        elif product_line == 'TPS-Line' or product_line == 'другое':
+            series = self.ui_new.comboBoxSeriesRus.currentText()
+        else:
+            return
+        all_brg_types = self.findBrgSizes(ds_brg, product_line, series)
+        self.initChangingComboBoxes(self.ui_calc.comboBoxBrgMod, all_brg_types)
+
+    def findBrgSizes(self, ds_brg, product_line, series):
+        all_brg_types = []
+        #print(self.ui_calc.comboBoxStageSize.currentText(), type(self.ui_calc.comboBoxStageSize.currentText()))
+        for row in range(ds_brg.shape[0]):
+            if ds_brg.iloc[row][0] == product_line and \
+                    str(ds_brg.iloc[row][1]) == series and \
+                    str(ds_brg.iloc[row][2]) == self.ui_calc.comboBoxStageSize.currentText():
+                cur_brg_mod = str(ds_brg.iloc[row][7])
+                if cur_brg_mod in all_brg_types:
+                    self.showErrorDialog(text=f'Found dublicate of the same bearing'
+                                              f' modification {cur_brg_mod} in table row {row} of {product_line}'
+                                         )
+                else:
+                    all_brg_types.append(cur_brg_mod)
+        return all_brg_types
+
+    def findStgSizes(self, ds_dif, product_line, FL_CR, series):
+        all_stg_types = []
+        for row in range(ds_dif.shape[0]):
+            if ds_dif.iloc[row][0] == product_line and \
+                    str(ds_dif.iloc[row][1]) == series:# and \
+                    #ds_dif.iloc[row][4] == FL_CR: ###UNCOMMENT FOR REDA
+                all_stg_types.append(str(ds_dif.iloc[row][2]))
+        return all_stg_types
+
+    def initChangingComboBoxes(self, combo_box, values_list):
+        if len(values_list) > 0:
+            combo_box.clear()
+            combo_box.addItems(values_list)
+        # else:
+        #     self.showErrorDialog(type='warning', text='No bearing or stages items for this series and product line found!')
+
+    # def initStgSizeCombo(self, all_stg_types):
+    #     if len(all_stg_types) > 0:
+    #         self.ui_calc.comboBoxStageSize.clear()
+    #         self.ui_calc.comboBoxStageSize.addItems(all_stg_types)
+    #     else:
+    #         self.showErrorDialog(type='warning', text='No stages for this series and product line found!')
+
     def checkProductLine(self):
         ''' Checks chosen product line and hides all fields, if no product line is chosen and shows ItemTypeBoxes'''
         chosen_product_line = self.ui_new.comboBoxProductLine.currentText()
@@ -1457,6 +1359,8 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
             self.ui_calc.labelHousingLengthEng.hide()
             self.ui_new.comboBoxLengthCodeEng.hide()
 
+            self.grabDataForCombo()
+
         elif chosen_product_line == 'EZLine' or chosen_product_line == 'REDA':
             self.ui_calc.labelSeriesRus.hide()
             self.ui_new.comboBoxSeriesRus.hide()
@@ -1467,41 +1371,21 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
             self.ui_new.comboBoxSeriesEng.show()
             self.ui_calc.labelHousingLengthEng.show()
             self.ui_new.comboBoxLengthCodeEng.show()
+
+            self.grabDataForCombo()
         else:
             self.hideChangingContent()
 
     def applyVisibilityResultBlock(self):
         self.ui_calc.widgetResultBlock.setVisible(self.result_block_visible)
 
-    def fillInResultBlock(self, result_min, result_nom, result_max):
-        self.ui_calc.labelDifNumMinVal.setText(str(result_min[0]))
-        self.ui_calc.labelImpNumMinVal.setText(str(result_min[1]))
-        self.ui_calc.labelBrgNumMinVal.setText(str(result_min[2]))
-        self.ui_calc.labelBrgImpNumMinVal.setText(str(result_min[3]))
-        self.ui_calc.labelComprTubeLenMinVal.setText(str(result_min[4]))
-        self.ui_calc.labelLenBetweenBrgMinVal.setText(str(result_min[5]))
-
-        self.ui_calc.labelDifNumNomVal.setText(str(result_nom[0]))
-        self.ui_calc.labelImpNumNomVal.setText(str(result_nom[1]))
-        self.ui_calc.labelBrgNumNomVal.setText(str(result_nom[2]))
-        self.ui_calc.labelBrgImpNumNomVal.setText(str(result_nom[3]))
-        self.ui_calc.labelComprTubeLenNomVal.setText(str(result_nom[4]))
-        self.ui_calc.labelLenBetweenBrgNomVal.setText(str(result_nom[5]))
-
-        self.ui_calc.labelDifNumMaxVal.setText(str(result_max[0]))
-        self.ui_calc.labelImpNumMaxVal.setText(str(result_max[1]))
-        self.ui_calc.labelBrgNumMaxVal.setText(str(result_max[2]))
-        self.ui_calc.labelBrgImpNumMaxVal.setText(str(result_max[3]))
-        self.ui_calc.labelComprTubeLenMaxVal.setText(str(result_max[4]))
-        self.ui_calc.labelLenBetweenBrgMaxVal.setText(str(result_max[5]))
-
     def showResultBlock(self):
         self.result_block_visible = True
         self.fillInResultBlock2(self.result)
-        #self.fillInResultBlock(self.result_min, self.result_nom, self.result_max)
         self.applyVisibilityResultBlock()
 
     def fillInResultBlock2(self, result):
+        '''Fills all the result block with data from result dictionary'''
         self.ui_calc.labelDifNumMinVal.setText(str(result['min']['dif']))
         self.ui_calc.labelImpNumMinVal.setText(str(result['min']['imp']))
         self.ui_calc.labelBrgNumMinVal.setText(str(result['min']['brg']))
@@ -1524,23 +1408,23 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
         self.ui_calc.labelLenBetweenBrgMaxVal.setText(str(result['max']['len_btw_brg']))
 
     def onClickCalculate(self):
+        '''describes actions performed after button "pushButtonCalculate" clicked'''
         global HOUSING_LENGTH_CODE
+
         self.error_detected = False
         EXS_dist, product_line, FL_CR, stage_size, brg_mod, series, hsg_len_code = self.catchInputData()
 
         if not self.error_detected:
-            ds_housing, ds_dif, ds_ldif, ds_bearing = self.readSavedData(product_line)
+            ds_housing, ds_dif, ds_ldif, ds_bearing = self.prepareDataSets(product_line)
+
+            #ds_housing, ds_dif, ds_ldif, ds_bearing = self.readSavedData(product_line)
             if not self.error_detected:
-                print('here')
-                # brg_min_len, brg_nom_len, brg_max_len, \
-                # brg_is_dif, brg_imp_type, dif_min_len, \
-                # dif_nom_len, dif_max_len, comp_per_stg, \
-                # ldif_min_len, ldif_nom_len, ldif_max_len, \
-                # hsg_min_len, hsg_nom_len, hsg_max_len = self.getData(ds_housing, ds_dif, ds_ldif,
-                #                                                      ds_bearing, product_line, FL_CR,
-                #                                                      stage_size, brg_mod, series, hsg_len_code
-                #                                                      )
-                sizes = self.getData(ds_housing, ds_dif, ds_ldif, ds_bearing, product_line, FL_CR, stage_size, brg_mod, series, hsg_len_code)
+                sizes = self.getData(ds_housing, ds_dif,
+                                     ds_ldif, ds_bearing,
+                                     product_line, FL_CR,
+                                     stage_size, brg_mod,
+                                     series, hsg_len_code
+                                     )
                 print('sizes!', sizes)
 
                 if not self.error_detected:
@@ -1554,18 +1438,14 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
                     print('---------------------------------')
                     self.showResultBlock()
                 else:
-                    self.showErrorDialog(f'Can\'t find find data in loaded dataset. \n Obtaintng folloving data:\n {sizes}')
+                    self.showErrorDialog(text=f'Can\'t find find data in loaded dataset.'
+                                              f'\n Obtaintng folloving data:\n {sizes}')
                     print(f'Can\'t find find data in loaded dataset. /n Obtaintng folloving data: {sizes}')
             else:
-                self.showErrorDialog('Can\'t read file')
+                self.showErrorDialog(text='Can\'t read file')
                 print('Can\'t read file')
-
-            #self.getData(ds_housing, ds_dif, ds_ldif, ds_bearing, product_line, FL_CR, stage_size, brg_mod, series, hsg_len_code):
-            # self.result_min, self.result_nom, self.result_max =\
-            #     self.calculateResult(EXS_dist, product_line, FL_CR, stage_size, brg_mod, series, hsg_len_code)
-            # self.showResultBlock()
         else:
-            self.showErrorDialog('Not enough input data')
+            self.showErrorDialog(text='Not enough input data')
             print('NoInputData')
 
     def calculateValues(self, sizes, quantity):
@@ -1611,11 +1491,12 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
                                              )
 
     def catchInputData(self):
+        '''Saves input data to variables'''
         EXS_dist = float(self.ui_calc.comboBoxEXSDistanse.currentText())
         product_line = self.ui_new.comboBoxProductLine.currentText()
         FL_CR = self.ui_new.comboBoxCRFL.currentText()
-        stage_size = str(self.ui_calc.lineEditlabelStagSize.text())
-        brg_mod = self.ui_calc.lineEditlabelBearingMod.text()
+        stage_size = str(self.ui_calc.comboBoxStageSize.currentText())
+        brg_mod = self.ui_calc.comboBoxBrgMod.currentText()
 
         if product_line == 'TPS-Line' or product_line == 'другое':
             series = self.ui_new.comboBoxSeriesRus.currentText()
@@ -1635,7 +1516,7 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
         #In that case, we need to calculate compression per stage. Actually, we can not to calculate it and take
         #overall compression value, but it looks like more complicated.
         self.chosen_prod_line = product_line
-        self.chosen_stage_size = str(stage_size)
+        self.chosen_stg_size = str(stage_size)
         self.chosen_hsg_len = str(hsg_len_code)
 
         return EXS_dist, product_line, FL_CR, stage_size, brg_mod, series, hsg_len_code
@@ -1649,8 +1530,8 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
         pump_comp = (dif_num + brg_num + 1) * comp_per_stg
         tube_len = round(hsg_work_len - rotor_len + pump_comp, 2)
 
-        print('rotor_len = dif_num * dif_len + ldif_len + brg_num * brg_len', rotor_len, dif_num, dif_len, ldif_len , brg_num , brg_len)
-        print('pump_comp = (dif_num + brg_num + 1) * comp_per_stg', pump_comp ,dif_num, brg_num , comp_per_stg)
+        print('rotor_len = dif_num * dif_len + ldif_len + brg_num * brg_len', rotor_len, dif_num, dif_len, ldif_len, brg_num , brg_len)
+        print('pump_comp = (dif_num + brg_num + 1) * comp_per_stg', pump_comp, dif_num, brg_num, comp_per_stg)
         return tube_len
 
     def getBearingData(self, ds_bearing, product_line, series, stage_size, brg_mod):
@@ -1671,6 +1552,10 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
                     # print(hsg_nom_len, hsg_max_len, hsg_min_len)
                     found = True
                 else:
+                    self.showErrorDialog(type='warning',
+                                          title='Дубликат',
+                                          text=f'found dublicate in table "Bearing" of {product_line},'
+                                               f' row {row}, please delete dublicate')
                     print(f'found dublicate in row {row}, please delete dublicate')
 
         self.found_brg = found
@@ -1693,14 +1578,15 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
                         comp_per_stg = round(float(ds_dif.iloc[row][3])/1000, 3)
                     except ValueError:
                         comp_per_stg = False
-                        print('X'*30)
+                        print('X' * 30)
                         print('need to find compression value in table!')
                         print('X' * 30)
-
-
-                    # print(hsg_nom_len, hsg_max_len, hsg_min_len)
                     found = True
                 else:
+                    self.showErrorDialog(type='warning',
+                                          title='Дубликат',
+                                          text=f'found dublicate in table "Diffusers" of {product_line},'
+                                               f' row {row}, please delete dublicate')
                     print(f'found dublicate in row {row}, please delete dublicate')
         print('dif_min_len, dif_nom_len, dif_max_len, comp_per_stg : ', dif_min_len, dif_nom_len, dif_max_len, comp_per_stg)
         self.found_dif = found
@@ -1723,6 +1609,10 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
                     # print(hsg_nom_len, hsg_max_len, hsg_min_len)
                     found = True
                 else:
+                    self.showErrorDialog(type='warning',
+                                          title='Дубликат',
+                                          text=f'found dublicate in table "Housing" of {product_line},'
+                                               f' row {row}, please delete dublicate')
                     print(f'found dublicate in row {row}, please delete dublicate')
         print('hsg_nom_len, hsg_max_len, hsg_min_len', hsg_nom_len, hsg_max_len, hsg_min_len)
         self.found_hsg = found
@@ -1743,6 +1633,10 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
                     # print(hsg_nom_len, hsg_max_len, hsg_min_len)
                     found = True
                 else:
+                    self.showErrorDialog(type='warning',
+                                          title='Дубликат',
+                                          text=f'found dublicate in table "LowerDiffuser" of {product_line},'
+                                               f' row {row}, please delete dublicate')
                     print(f'found dublicate in row {row}, please delete dublicate')
         print('ldif_min_len, ldif_nom_len, ldif_max_len', ldif_min_len, ldif_nom_len, ldif_max_len)
         self.found_ldif = found
@@ -1756,14 +1650,15 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
     def defineDifNum(self, brg_num, brg_len, hsg_len, dif_len, ldif_len, comp_per_stg):
         '''Calculate amount of diffusers in pump '''
         global MINIMUM_TUBE_LEN
-        if self.no_copr_per_stg:
+        if self.no_compr_per_stg:
             try:
-                overall_compr = float(COMPR_PER_LEN_DICT[self.chosen_prod_line][self.chosen_stage_size][self.chosen_hsg_len])
+                pump_compr = float(COMPR_PER_LEN_DICT[self.chosen_prod_line][self.chosen_stg_size][self.chosen_hsg_len])
             except Exception:
-                self.showErrorDialog('Compression per stage undefined. Tried to find compression per pump in COMPR_PER_LEN_DICT, but unseccessful')
+                self.showErrorDialog(text='Compression per stage undefined.'
+                                          ' Tried to find compression per pump in COMPR_PER_LEN_DICT, but unseccessful')
             print('open dialog compression per stage undefined. Tried to find compression per pump in COMPR_PER_LEN_DICT, but unseccessful')
 
-            dif_num = math.floor((hsg_len + overall_compr - MINIMUM_TUBE_LEN - brg_num * brg_len - ldif_len) / (dif_len))
+            dif_num = math.floor((hsg_len + pump_compr - MINIMUM_TUBE_LEN - brg_num * brg_len - ldif_len) / (dif_len))
         else:
             print(type(hsg_len), type(MINIMUM_TUBE_LEN), type(brg_num), type(brg_len), type(ldif_len), type(dif_len), type(comp_per_stg))
             dif_num = math.floor((hsg_len - MINIMUM_TUBE_LEN - brg_num * brg_len - ldif_len) / (dif_len - comp_per_stg))
@@ -1793,26 +1688,39 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
         len_btw_brg = round(math.ceil(dif_num / (brg_num + 1)) * dif_max_len, 2)
         return len_btw_brg
 
-    def readSavedData(self, product_line):
-        dict_PL_excel_names = {'TPS-Line': ('MTHousing', 'MTDif', 'MTLDif', 'MTBearing', 'MTHB'),
-                               'EZLine': ('EZLineHousing', 'EZLineDif', 'EZLineLDif', 'EZLineBearing', 'EZLineHB'),
-                               'REDA': ('REDAHousing', 'REDADif', 'REDALDif', 'REDABearing', 'REDAHB'),
-                               'Other': ('OtherHousing', 'OtherDif', 'OtherLDif', 'OtherBearing', 'OtherHB')}
+    # def readSavedData(self, product_line):
+    #     dict_PL_excel_names = {'TPS-Line': ('MTHousing', 'MTDif', 'MTLDif', 'MTBearing', 'MTHB'),
+    #                            'EZLine': ('EZLineHousing', 'EZLineDif', 'EZLineLDif', 'EZLineBearing', 'EZLineHB'),
+    #                            'REDA': ('REDAHousing', 'REDADif', 'REDALDif', 'REDABearing', 'REDAHB'),
+    #                            'Other': ('OtherHousing', 'OtherDif', 'OtherLDif', 'OtherBearing', 'OtherHB')}
+    #     try:
+    #         excel_hsg_sheet_name = dict_PL_excel_names[product_line][0]
+    #         excel_dif_sheet_name = dict_PL_excel_names[product_line][1]
+    #         excel_ldif_sheet_name = dict_PL_excel_names[product_line][2]
+    #         excel_bearing_sheet_name = dict_PL_excel_names[product_line][3]
+    #         ds_housing = pd.read_excel('./Data.xlsx', sheet_name=excel_hsg_sheet_name, header=0, index_col=0)
+    #         ds_dif = pd.read_excel('./Data.xlsx', sheet_name=excel_dif_sheet_name, header=0, index_col=0)
+    #         ds_ldif = pd.read_excel('./Data.xlsx', sheet_name=excel_ldif_sheet_name, header=0, index_col=0)
+    #         ds_bearing = pd.read_excel('./Data.xlsx', sheet_name=excel_bearing_sheet_name, header=0, index_col=0)
+    #         return ds_housing, ds_dif, ds_ldif, ds_bearing
+    #     except Exception:
+    #         self.error_detected = True
+    #         print('No or wrong Data!')
+
+    def readSavedData_item(self, product_line, item):
         try:
-            excel_hsg_sheet_name = dict_PL_excel_names[product_line][0]
-            excel_dif_sheet_name = dict_PL_excel_names[product_line][1]
-            excel_ldif_sheet_name = dict_PL_excel_names[product_line][2]
-            excel_bearing_sheet_name = dict_PL_excel_names[product_line][3]
-            ds_housing = pd.read_excel('./Data.xlsx', sheet_name=excel_hsg_sheet_name, header=0, index_col=0)
-            ds_dif = pd.read_excel('./Data.xlsx', sheet_name=excel_dif_sheet_name, header=0, index_col=0)
-            ds_ldif = pd.read_excel('./Data.xlsx', sheet_name=excel_ldif_sheet_name, header=0, index_col=0)
-            ds_bearing = pd.read_excel('./Data.xlsx', sheet_name=excel_bearing_sheet_name, header=0, index_col=0)
-            return ds_housing, ds_dif, ds_ldif, ds_bearing
+            sheet_name = self.dict_PL_excel_names[product_line][item]
+            ds = pd.read_excel('./Data.xlsx', sheet_name=sheet_name, header=0, index_col=0)
+            return ds
         except Exception:
             self.error_detected = True
+            self.showErrorDialog(text=f'No or wrong Data! in table {product_line} {item}')
             print('No or wrong Data!')
 
-    def getData(self, ds_housing, ds_dif, ds_ldif, ds_bearing, product_line, FL_CR, stage_size, brg_mod, series, hsg_len_code):
+    def getData(self,
+                ds_housing, ds_dif, ds_ldif, ds_bearing, product_line,
+                FL_CR, stage_size, brg_mod, series, hsg_len_code
+                ):
         global COMPR_PER_LEN_DICT
 
         sizes = {'brg': {'min': '', 'nom': '', 'max': '', 'is_dif': '', 'imp_type': ''},
@@ -1820,29 +1728,7 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
                'ldif': {'min': '', 'nom': '', 'max': ''},
                'hsg': {'min': '', 'nom': '', 'max': ''}
                }
-        # brg_min_len, brg_nom_len, brg_max_len, brg_is_dif, brg_imp_type = self.getBearingData(ds_bearing,
-        #                                                                                       product_line,
-        #                                                                                       series,
-        #                                                                                       stage_size,
-        #                                                                                       brg_mod
-        #                                                                                       )
-        # dif_min_len, dif_nom_len, dif_max_len, comp_per_stg = self.getDifData(ds_dif,
-        #                                                                       product_line,
-        #                                                                       series,
-        #                                                                       stage_size,
-        #                                                                       FL_CR
-        #                                                                       )
-        # ldif_min_len, ldif_nom_len, ldif_max_len = self.getLDifData(ds_ldif,
-        #                                                             product_line,
-        #                                                             series,
-        #                                                             stage_size
-        #                                                             )
-        # hsg_min_len, hsg_nom_len, hsg_max_len = self.getHousingData(ds_housing,
-        #                                                             product_line,
-        #                                                             series,
-        #                                                             hsg_len_code,
-        #                                                             FL_CR
-        #                                                             )
+
         sizes['brg']['min'], sizes['brg']['nom'], sizes['brg']['max'], sizes['brg']['is_dif'], sizes['brg']['imp_type'] = \
             self.getBearingData(ds_bearing, product_line, series, stage_size, brg_mod)
 
@@ -1856,33 +1742,25 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
             self.getDifData(ds_dif, product_line, series, stage_size, FL_CR)
 
         if not sizes['dif']['compr']:
-            self.no_copr_per_stg = True
+            self.no_compr_per_stg = True
         else:
-            self.no_copr_per_stg = False
+            self.no_compr_per_stg = False
 
         if not self.found_ldif * self.found_dif * self.found_hsg * self.found_brg:
             self.error_detected = True
             print('NO DATA')
         return sizes
 
-            # return brg_min_len, brg_nom_len, brg_max_len,\
-            #        brg_is_dif, brg_imp_type, dif_min_len,\
-            #        dif_nom_len, dif_max_len, comp_per_stg,\
-            #        ldif_min_len, ldif_nom_len, ldif_max_len,\
-            #        hsg_min_len, hsg_nom_len, hsg_max_len
-
     def defineValues(self, overall_hsg_len, EXS_dist, sizes):
-        quantity = {'brg': '',
+
+        quantity = {'brg': self.defineBearingNum(overall_hsg_len, EXS_dist),
                     'dif': {'min': '', 'nom': '', 'max': ''},
                     'imp': {'min': '', 'nom': '', 'max': ''},
-                    'brg_imp': ''
-                    }
-        quantity['brg'] = self.defineBearingNum(overall_hsg_len, EXS_dist)
+                    'brg_imp': ''}
+
         self.result['min']['brg'] = quantity['brg']
         self.result['nom']['brg'] = quantity['brg']
         self.result['max']['brg'] = quantity['brg']
-
-
 
         quantity['dif']['min'] = self.defineDifNum(quantity['brg'],
                                                    sizes['brg']['max'],
@@ -1932,10 +1810,7 @@ class PumpCalcWindow(QtWidgets.QMainWindow):#QtWidgets.QMainWindow):
                                                    sizes['brg']['imp_type']
                                                    )
         self.result['max']['imp'] = quantity['imp']['max']
-
-
         return quantity
-
 
 
 def excepthook(exc_type, exc_value, exc_tb):
@@ -1950,6 +1825,4 @@ if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
     w = MainWindow()
     w.show()
-    #w.showMainWindow()
-    #w.back_to_main_window()
     sys.exit(app.exec_())

@@ -125,22 +125,6 @@
       </item>
       <item>
        <layout class="QGridLayout" name="gridLayoutInput">
-        <item row="1" column="7">
-         <widget class="QLineEdit" name="lineEditlabelStagSize">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>200</width>
-            <height>16777215</height>
-           </size>
-          </property>
-         </widget>
-        </item>
         <item row="1" column="0">
          <widget class="QComboBox" name="comboBoxEXSDistanse">
           <item>
@@ -160,13 +144,6 @@
           </item>
          </widget>
         </item>
-        <item row="0" column="7">
-         <widget class="QLabel" name="labelStagSize">
-          <property name="text">
-           <string>Типоразмер</string>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="5">
          <widget class="QLabel" name="labelHousingLengthRus">
           <property name="text">
@@ -181,10 +158,10 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="6">
-         <widget class="QLabel" name="labelHousingLengthEng">
+        <item row="0" column="7">
+         <widget class="QLabel" name="labelStagSize">
           <property name="text">
-           <string>Длина корпуса, #</string>
+           <string>Типоразмер</string>
           </property>
          </widget>
         </item>
@@ -195,17 +172,17 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
-         <widget class="QLabel" name="labelProductLine">
-          <property name="text">
-           <string>Производитель</string>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="3">
          <widget class="QLabel" name="labelSeriesRus">
           <property name="text">
            <string>Серия</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="labelProductLine">
+          <property name="text">
+           <string>Производитель</string>
           </property>
          </widget>
         </item>
@@ -216,6 +193,13 @@
           </property>
          </widget>
         </item>
+        <item row="0" column="6">
+         <widget class="QLabel" name="labelHousingLengthEng">
+          <property name="text">
+           <string>Длина корпуса, #</string>
+          </property>
+         </widget>
+        </item>
         <item row="0" column="8">
          <widget class="QLabel" name="labelBearingMod">
           <property name="text">
@@ -223,21 +207,11 @@
           </property>
          </widget>
         </item>
+        <item row="1" column="7">
+         <widget class="QComboBox" name="comboBoxStageSize"/>
+        </item>
         <item row="1" column="8">
-         <widget class="QLineEdit" name="lineEditlabelBearingMod">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>200</width>
-            <height>16777215</height>
-           </size>
-          </property>
-         </widget>
+         <widget class="QComboBox" name="comboBoxBrgMod"/>
         </item>
        </layout>
       </item>

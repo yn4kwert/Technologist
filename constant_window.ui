@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1414</width>
+    <width>1452</width>
     <height>1202</height>
    </rect>
   </property>
@@ -138,9 +138,9 @@
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>-1754</y>
-           <width>1375</width>
-           <height>2665</height>
+           <y>-1611</y>
+           <width>1413</width>
+           <height>2522</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -188,84 +188,39 @@ border: 2px solid rgb(170, 0, 0);
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="hzLayMTHousingAndButtons">
-            <property name="spacing">
-             <number>0</number>
+           <widget class="QPushButton" name="pushButtonHideMTHousing">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <item>
-             <widget class="QPushButton" name="pushButtonHideMTHousing">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>99999</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>-31073</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 229, 229);
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>99999</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="baseSize">
+             <size>
+              <width>-31073</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 229, 229);
 border: 1px solid rgb(220, 0, 0);</string>
-              </property>
-              <property name="text">
-               <string>Корпуса</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="TestButton">
-              <property name="text">
-               <string>PushButton</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButtonInitTableMTHousing">
-              <property name="minimumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="sizeIncrement">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>+</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+            </property>
+            <property name="text">
+             <string>Корпуса</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QTableWidget" name="tableWidgetMTHousing">
@@ -559,77 +514,39 @@ border: 1px solid rgb(220, 0, 0);</string>
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="hzLayMTDifAndButtons">
-            <property name="spacing">
-             <number>0</number>
+           <widget class="QPushButton" name="pushButtonHideMTDif">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <item>
-             <widget class="QPushButton" name="pushButtonHideMTDif">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>99999</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 229, 229);
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>99999</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="baseSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 229, 229);
 border: 1px solid rgb(220, 0, 0);</string>
-              </property>
-              <property name="text">
-               <string>Направляющие аппараты</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButtonInitTableMTDif">
-              <property name="minimumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="sizeIncrement">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>+</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+            </property>
+            <property name="text">
+             <string>Направляющие аппараты</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QTableWidget" name="tableWidgetMTDif">
@@ -868,77 +785,39 @@ border: 1px solid rgb(220, 0, 0);</string>
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="hzLayMTLDifAndButtons">
-            <property name="spacing">
-             <number>0</number>
+           <widget class="QPushButton" name="pushButtonHideMTLDif">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <item>
-             <widget class="QPushButton" name="pushButtonHideMTLDif">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>99999</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 229, 229);
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>99999</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="baseSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 229, 229);
 border: 1px solid rgb(220, 0, 0);</string>
-              </property>
-              <property name="text">
-               <string>Нижние направляющие аппараты</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButtonInitTableMTLDif">
-              <property name="minimumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="sizeIncrement">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>+</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+            </property>
+            <property name="text">
+             <string>Нижние направляющие аппараты</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QTableWidget" name="tableWidgetMTLDif">
@@ -1137,77 +1016,39 @@ border: 1px solid rgb(220, 0, 0);</string>
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="hzLayMTBearingAndButtons">
-            <property name="spacing">
-             <number>0</number>
+           <widget class="QPushButton" name="pushButtonHideMTBearing">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <item>
-             <widget class="QPushButton" name="pushButtonHideMTBearing">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>99999</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 229, 229);
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>99999</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="baseSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 229, 229);
 border: 1px solid rgb(220, 0, 0);</string>
-              </property>
-              <property name="text">
-               <string>Подшипники</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButtonInitTableMTBearing">
-              <property name="minimumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="sizeIncrement">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>+</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+            </property>
+            <property name="text">
+             <string>Подшипники</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QTableWidget" name="tableWidgetMTBearing">
@@ -1496,77 +1337,39 @@ border: 1px solid rgb(220, 0, 0);</string>
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="hzLayMTHBAndButtons">
-            <property name="spacing">
-             <number>0</number>
+           <widget class="QPushButton" name="pushButtonHideMTHB">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <item>
-             <widget class="QPushButton" name="pushButtonHideMTHB">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>2000</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 229, 229);
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>2000</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="baseSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 229, 229);
 border: 1px solid rgb(220, 0, 0);</string>
-              </property>
-              <property name="text">
-               <string>Концевые детали</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButtonInitTableMTHB">
-              <property name="minimumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="sizeIncrement">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>+</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+            </property>
+            <property name="text">
+             <string>Концевые детали</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QTableWidget" name="tableWidgetMTHB">
@@ -2038,78 +1841,40 @@ border: 2px solid rgb(229, 214, 0);
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="hzLayEZLineHousingAndButtons">
-            <property name="spacing">
-             <number>0</number>
+           <widget class="QPushButton" name="pushButtonHideEZLineHousing">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <item>
-             <widget class="QPushButton" name="pushButtonHideEZLineHousing">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>99999</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(248, 255, 167);
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>99999</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="baseSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(248, 255, 167);
 border: 1px solid rgb(229, 214, 0);
 </string>
-              </property>
-              <property name="text">
-               <string>Корпуса</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButtonInitTableEZLineHousing">
-              <property name="minimumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="sizeIncrement">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>+</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+            </property>
+            <property name="text">
+             <string>Корпуса</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QTableWidget" name="tableWidgetEZLineHousing">
@@ -2290,78 +2055,40 @@ border: 1px solid rgb(229, 214, 0);
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="hzLayEZLineDifAndButtons">
-            <property name="spacing">
-             <number>0</number>
+           <widget class="QPushButton" name="pushButtonHideEZLineDif">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <item>
-             <widget class="QPushButton" name="pushButtonHideEZLineDif">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>99999</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(248, 255, 167);
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>99999</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="baseSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(248, 255, 167);
 border: 1px solid rgb(229, 214, 0);
 </string>
-              </property>
-              <property name="text">
-               <string>Направляющие аппараты</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButtonInitTableEZLineDif">
-              <property name="minimumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="sizeIncrement">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>+</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+            </property>
+            <property name="text">
+             <string>Направляющие аппараты</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QTableWidget" name="tableWidgetEZLineDif">
@@ -2510,78 +2237,40 @@ border: 1px solid rgb(229, 214, 0);
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="hzLayEZLineLDifAndButtons">
-            <property name="spacing">
-             <number>0</number>
+           <widget class="QPushButton" name="pushButtonHideEZLineLDif">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <item>
-             <widget class="QPushButton" name="pushButtonHideEZLineLDif">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>99999</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(248, 255, 167);
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>99999</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="baseSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(248, 255, 167);
 border: 1px solid rgb(229, 214, 0);
 </string>
-              </property>
-              <property name="text">
-               <string>Нижние направляющие аппараты</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButtonInitTableEZLineLDif">
-              <property name="minimumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="sizeIncrement">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>+</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+            </property>
+            <property name="text">
+             <string>Нижние направляющие аппараты</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QTableWidget" name="tableWidgetEZLineLDif">
@@ -2710,78 +2399,40 @@ border: 1px solid rgb(229, 214, 0);
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="hzLayEZLineBearingAndButtons">
-            <property name="spacing">
-             <number>0</number>
+           <widget class="QPushButton" name="pushButtonHideEZLineBearing">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <item>
-             <widget class="QPushButton" name="pushButtonHideEZLineBearing">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>99999</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(248, 255, 167);
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>99999</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="baseSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(248, 255, 167);
 border: 1px solid rgb(229, 214, 0);
 </string>
-              </property>
-              <property name="text">
-               <string>Подшипники</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButtonInitTableEZLineBearing">
-              <property name="minimumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="sizeIncrement">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>+</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+            </property>
+            <property name="text">
+             <string>Подшипники</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QTableWidget" name="tableWidgetEZLineBearing">
@@ -2935,78 +2586,40 @@ border: 1px solid rgb(229, 214, 0);
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="hzLayEZLineHBAndButtons">
-            <property name="spacing">
-             <number>0</number>
+           <widget class="QPushButton" name="pushButtonHideEZLineHB">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <item>
-             <widget class="QPushButton" name="pushButtonHideEZLineHB">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>99999</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(248, 255, 167);
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>99999</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="baseSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(248, 255, 167);
 border: 1px solid rgb(229, 214, 0);
 </string>
-              </property>
-              <property name="text">
-               <string>Концевые детали</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButtonInitTableEZLineHB">
-              <property name="minimumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="sizeIncrement">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>+</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+            </property>
+            <property name="text">
+             <string>Концевые детали</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QTableWidget" name="tableWidgetEZLineHB">
@@ -3198,79 +2811,41 @@ border: 2px solid rgb(0, 0, 180);
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="hzLayREDAHousingAndButtons">
-            <property name="spacing">
-             <number>0</number>
+           <widget class="QPushButton" name="pushButtonHideREDAHousing">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <item>
-             <widget class="QPushButton" name="pushButtonHideREDAHousing">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>99999</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(200, 200, 255);
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>99999</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="baseSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(200, 200, 255);
 border: 1px solid rgb(0, 0, 180);
 
 </string>
-              </property>
-              <property name="text">
-               <string>Корпуса</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButtonInitTableREDAHousing">
-              <property name="minimumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="sizeIncrement">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>+</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+            </property>
+            <property name="text">
+             <string>Корпуса</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QTableWidget" name="tableWidgetREDAHousing">
@@ -3451,79 +3026,41 @@ border: 1px solid rgb(0, 0, 180);
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="hzLayREDADifAndButtons">
-            <property name="spacing">
-             <number>0</number>
+           <widget class="QPushButton" name="pushButtonHideREDADif">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <item>
-             <widget class="QPushButton" name="pushButtonHideREDADif">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>99999</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(200, 200, 255);
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>99999</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="baseSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(200, 200, 255);
 border: 1px solid rgb(0, 0, 180);
 
 </string>
-              </property>
-              <property name="text">
-               <string>Направляющие аппараты</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButtonInitTableREDADif">
-              <property name="minimumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="sizeIncrement">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>+</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+            </property>
+            <property name="text">
+             <string>Направляющие аппараты</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QTableWidget" name="tableWidgetREDADif">
@@ -3672,79 +3209,41 @@ border: 1px solid rgb(0, 0, 180);
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="hzLayREDALDifAndButtons">
-            <property name="spacing">
-             <number>0</number>
+           <widget class="QPushButton" name="pushButtonHideREDALDif">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <item>
-             <widget class="QPushButton" name="pushButtonHideREDALDif">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>99999</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(200, 200, 255);
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>99999</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="baseSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(200, 200, 255);
 border: 1px solid rgb(0, 0, 180);
 
 </string>
-              </property>
-              <property name="text">
-               <string>Нижние направляющие аппараты</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButtonInitTableREDALDif">
-              <property name="minimumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="sizeIncrement">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>+</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+            </property>
+            <property name="text">
+             <string>Нижние направляющие аппараты</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QTableWidget" name="tableWidgetREDALDif">
@@ -3873,79 +3372,41 @@ border: 1px solid rgb(0, 0, 180);
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="hzLayREDABearingAndButtons">
-            <property name="spacing">
-             <number>0</number>
+           <widget class="QPushButton" name="pushButtonHideREDABearing">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <item>
-             <widget class="QPushButton" name="pushButtonHideREDABearing">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>99999</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(200, 200, 255);
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>99999</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="baseSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(200, 200, 255);
 border: 1px solid rgb(0, 0, 180);
 
 </string>
-              </property>
-              <property name="text">
-               <string>Подшипники</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButtonInitTableREDABearing">
-              <property name="minimumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="sizeIncrement">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>+</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+            </property>
+            <property name="text">
+             <string>Подшипники</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QTableWidget" name="tableWidgetREDABearing">
@@ -4099,79 +3560,41 @@ border: 1px solid rgb(0, 0, 180);
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="hzLayREDAHBAndButtons">
-            <property name="spacing">
-             <number>0</number>
+           <widget class="QPushButton" name="pushButtonHideREDAHB">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <item>
-             <widget class="QPushButton" name="pushButtonHideREDAHB">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>99999</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(200, 200, 255);
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>99999</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="baseSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(200, 200, 255);
 border: 1px solid rgb(0, 0, 180);
 
 </string>
-              </property>
-              <property name="text">
-               <string>Концевые детали</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButtonInitTableREDAHB">
-              <property name="minimumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="sizeIncrement">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>+</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+            </property>
+            <property name="text">
+             <string>Концевые детали</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QTableWidget" name="tableWidgetREDAHB">
@@ -4363,78 +3786,40 @@ border: 2px solid rgb(6, 126, 0);
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="hzLayOtherHousingAndButtons">
-            <property name="spacing">
-             <number>0</number>
+           <widget class="QPushButton" name="pushButtonHideOtherHousing">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <item>
-             <widget class="QPushButton" name="pushButtonHideOtherHousing">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>99999</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(200, 255, 200);
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>99999</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="baseSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(200, 255, 200);
 border: 1px solid rgb(0, 126, 0);
 </string>
-              </property>
-              <property name="text">
-               <string>Корпуса</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButtonInitTableOtherHousing">
-              <property name="minimumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="sizeIncrement">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>+</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+            </property>
+            <property name="text">
+             <string>Корпуса</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QTableWidget" name="tableWidgetOtherHousing">
@@ -4615,78 +4000,40 @@ border: 1px solid rgb(0, 126, 0);
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="hzLayOtherDifAndButtons">
-            <property name="spacing">
-             <number>0</number>
+           <widget class="QPushButton" name="pushButtonHideOtherDif">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <item>
-             <widget class="QPushButton" name="pushButtonHideOtherDif">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>99999</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(200, 255, 200);
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>99999</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="baseSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(200, 255, 200);
 border: 1px solid rgb(0, 126, 0);
 </string>
-              </property>
-              <property name="text">
-               <string>Направляющие аппараты</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButtonInitTableOtherDif">
-              <property name="minimumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="sizeIncrement">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>+</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+            </property>
+            <property name="text">
+             <string>Направляющие аппараты</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QTableWidget" name="tableWidgetOtherDif">
@@ -4835,78 +4182,40 @@ border: 1px solid rgb(0, 126, 0);
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="hzLayOtherLDifAndButtons">
-            <property name="spacing">
-             <number>0</number>
+           <widget class="QPushButton" name="pushButtonHideOtherLDif">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <item>
-             <widget class="QPushButton" name="pushButtonHideOtherLDif">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>99999</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(200, 255, 200);
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>99999</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="baseSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(200, 255, 200);
 border: 1px solid rgb(0, 126, 0);
 </string>
-              </property>
-              <property name="text">
-               <string>Нижние направляющие аппараты</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButtonInitTableOtherLDif">
-              <property name="minimumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="sizeIncrement">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>+</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+            </property>
+            <property name="text">
+             <string>Нижние направляющие аппараты</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QTableWidget" name="tableWidgetOtherLDif">
@@ -5035,78 +4344,40 @@ border: 1px solid rgb(0, 126, 0);
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="hzLayOtherBearingAndButtons">
-            <property name="spacing">
-             <number>0</number>
+           <widget class="QPushButton" name="pushButtonHideOtherBearing">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <item>
-             <widget class="QPushButton" name="pushButtonHideOtherBearing">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>99999</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(200, 255, 200);
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>99999</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="baseSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(200, 255, 200);
 border: 1px solid rgb(0, 126, 0);
 </string>
-              </property>
-              <property name="text">
-               <string>Подшипники</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButtonInitTableOtherBearing">
-              <property name="minimumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="sizeIncrement">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>+</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+            </property>
+            <property name="text">
+             <string>Подшипники</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QTableWidget" name="tableWidgetOtherBearing">
@@ -5260,78 +4531,40 @@ border: 1px solid rgb(0, 126, 0);
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="hzLayOtherHBAndButtons">
-            <property name="spacing">
-             <number>0</number>
+           <widget class="QPushButton" name="pushButtonHideOtherHB">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <item>
-             <widget class="QPushButton" name="pushButtonHideOtherHB">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>99999</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(200, 255, 200);
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>99999</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="baseSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(200, 255, 200);
 border: 1px solid rgb(0, 126, 0);
 </string>
-              </property>
-              <property name="text">
-               <string>Концевые детали</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButtonInitTableOtherHB">
-              <property name="minimumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="sizeIncrement">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>+</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+            </property>
+            <property name="text">
+             <string>Концевые детали</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QTableWidget" name="tableWidgetOtherHB">
@@ -5559,7 +4792,7 @@ border: 1px solid rgb(0, 126, 0);
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1414</width>
+     <width>1452</width>
      <height>21</height>
     </rect>
    </property>
