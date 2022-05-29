@@ -1334,15 +1334,6 @@ class PumpCalcWindow(QtWidgets.QMainWindow, CommonMethods):
         if len(values_list) > 0:
             combo_box.clear()
             combo_box.addItems(values_list)
-        # else:
-        #     self.showErrorDialog(type='warning', text='No bearing or stages items for this series and product line found!')
-
-    # def initStgSizeCombo(self, all_stg_types):
-    #     if len(all_stg_types) > 0:
-    #         self.ui_calc.comboBoxStageSize.clear()
-    #         self.ui_calc.comboBoxStageSize.addItems(all_stg_types)
-    #     else:
-    #         self.showErrorDialog(type='warning', text='No stages for this series and product line found!')
 
     def checkProductLine(self):
         ''' Checks chosen product line and hides all fields, if no product line is chosen and shows ItemTypeBoxes'''
@@ -1536,20 +1527,23 @@ class PumpCalcWindow(QtWidgets.QMainWindow, CommonMethods):
 
     def getBearingData(self, ds_bearing, product_line, series, stage_size, brg_mod):
         '''Gather bearing data from file'''
+        print(1)
         found = False
         brg_min_len, brg_nom_len, brg_max_len, brg_is_dif, brg_imp_type = -1, -1, -1, -1, -1
         for row in range(ds_bearing.shape[0]):
             if ds_bearing.iloc[row][0] == product_line and \
-                    ds_bearing.iloc[row][1] == series and \
+                    str(ds_bearing.iloc[row][1]) == series and \
                     ds_bearing.iloc[row][2] == stage_size and \
-                    ds_bearing.iloc[row][7] == brg_mod:
+                    str(ds_bearing.iloc[row][7]) == brg_mod:
+                print('cond sucess')
                 if not found:
+                    print('if not found')
                     brg_nom_len = float(ds_bearing.iloc[row][3])
                     brg_max_len = round(brg_nom_len + float(ds_bearing.iloc[row][4]), 3)
                     brg_min_len = round(brg_nom_len - float(ds_bearing.iloc[row][5]), 3)
                     brg_is_dif = ds_bearing.iloc[row][8]
                     brg_imp_type = ds_bearing.iloc[row][6]
-                    # print(hsg_nom_len, hsg_max_len, hsg_min_len)
+                    print(brg_nom_len, brg_max_len, brg_min_len,brg_is_dif, brg_is_dif )
                     found = True
                 else:
                     self.showErrorDialog(type='warning',
