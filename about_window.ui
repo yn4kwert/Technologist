@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>743</width>
+    <width>1318</width>
     <height>732</height>
    </rect>
   </property>
@@ -70,6 +70,9 @@
           <property name="text">
            <string>О программе</string>
           </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
          </widget>
         </item>
         <item>
@@ -84,12 +87,21 @@
             </property>
             <property name="font">
              <font>
-              <family>MS Sans Serif</family>
-              <pointsize>10</pointsize>
+              <family>Arial</family>
+              <pointsize>12</pointsize>
+              <weight>9</weight>
+              <italic>false</italic>
+              <bold>false</bold>
              </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 75 12pt &quot;Arial&quot;;</string>
             </property>
             <property name="text">
              <string>Тип пользователя:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
@@ -111,6 +123,9 @@
             <property name="text">
              <string>Технолог</string>
             </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
            </widget>
           </item>
          </layout>
@@ -120,15 +135,45 @@
       <item>
        <widget class="QLabel" name="labelInfo">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Версия 0.0.1. Реализован базовый функционал.</string>
+         <string>Версия 0.0.1. Реализован базовый функционал. Для расчета доступно оборудование только линейки TPS-Line FL и CR</string>
         </property>
        </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Пару моментов по расчету, которые ведет программа.
+ 1. Для расчета CR секции, программа учитывает тот факт, что верхний НА резаный (без замка) и его длина меньше на соответствующую длину (3 мм). 
+ 2. Значение длины компрессионного кольца - 39 мм. Оба эти размера &quot;зашиты&quot; в высоту головы для 5А CR (т.к. у TPS_Line только один компрессионник), поэтому длина головы 5А-CR в таблице не 41мм, как по чертежу, а 41+39-3 = 77 мм. 
+ 3. Что такое минимальный, максимальный и номинальный сценарий расчета? 
+ tНоминальный - когда все длины взяты в номинальном размере БЕЗ учета отклонений по чертежу. 
+ tВАЖНО! Есть детали, у которых верхний и нижний допуски даны в одну сторону, например 50+0.1+0.19, в таком случае возьмется величина именно 50 мм, что несколько будет искажать результат расчета. 
+ tМинимальный - сценарий, когда в ЭЦН зайдет меньше всего  РО, т.е. все детали, влияющие на длину РОТОРА взяты по верхнему допуску (макс.длина), длина корпуса - по нижнему (мин. длина) 
+ tМаксимальный - сценарий, когда в ЭЦН зайдет максимальное количество органов. Т.е. длины деталей, влияющих на длину ротора взяты по нижнему допуску(мин.длина), а длина корпуса - по верхнему(макс.длина)
+ Какому сценарию верить? Руководствоваться здравым смыслом и выбирать усредненное значение
+4. Длины компрессионных трубок - длины трубок для текущего сценария расчета и лишь приблизительные величины, меньше которой длина трубки получиться не должна, если все детали выполнены в допуске. 
+ 5. Расчеты не учитывают влияние шимс на длину 6. При расчетах так же опущена возможность добавления еще одной ступени за счет сжатия ступеней (компрессии), т.к. это потенциально может привести к трудностям на сборке</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
       </item>
       <item>
        <widget class="QPushButton" name="pushButtonClose">
@@ -155,8 +200,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>743</width>
-     <height>26</height>
+     <width>1318</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>

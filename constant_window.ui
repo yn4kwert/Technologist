@@ -90,9 +90,15 @@
             </property>
             <property name="font">
              <font>
-              <family>MS Sans Serif</family>
-              <pointsize>10</pointsize>
+              <family>Arial</family>
+              <pointsize>12</pointsize>
+              <weight>9</weight>
+              <italic>false</italic>
+              <bold>false</bold>
              </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 75 12pt &quot;Arial&quot;;</string>
             </property>
             <property name="text">
              <string>Тип пользователя:</string>
@@ -138,7 +144,7 @@
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>-1611</y>
+           <y>0</y>
            <width>1413</width>
            <height>2522</height>
           </rect>
@@ -4730,6 +4736,15 @@ border: 1px solid rgb(0, 126, 0);
       </item>
       <item>
        <widget class="QPushButton" name="pushButtonRecalculate">
+        <property name="font">
+         <font>
+          <family>MS Sans Serif</family>
+          <pointsize>15</pointsize>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="text">
          <string>Пересчитать расчетные величины</string>
         </property>
@@ -4742,6 +4757,9 @@ border: 1px solid rgb(0, 126, 0);
           <family>MS Sans Serif</family>
           <pointsize>15</pointsize>
          </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="text">
          <string>Добавить деталь</string>

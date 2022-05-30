@@ -266,21 +266,21 @@ class ConstantWindow(QtWidgets.QMainWindow, CommonMethods): #class ConstantWindo
         self.loadTablesData()
         '''UNCOMMENT THIS when releasing the program
         vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv'''
-        # if user != 'Главный технолог':
-        #     self.disableTablesIfNotChiefTech()
-        # else:
-        #     self.blockUneditableTablesVals()
-        #     self.addRightClickMenu()
-        #     self.ui.pushButtonRecalculate.clicked.connect(self.recalculateAllHousingLengthsValues)
-        #     self.ui.pushButtonSaveChanges.clicked.connect(self.btnSaveChangesClicked)
-        #     self.ui.pushButtonAddItem.clicked.connect(self.showAddNewItemWindow)
+        if user != 'Главный технолог':
+            self.disableTablesIfNotChiefTech()
+        else:
+            self.blockUneditableTablesVals()
+            self.addRightClickMenu()
+            self.ui.pushButtonRecalculate.clicked.connect(self.recalculateAllHousingLengthsValues)
+            self.ui.pushButtonSaveChanges.clicked.connect(self.btnSaveChangesClicked)
+            self.ui.pushButtonAddItem.clicked.connect(self.showAddNewItemWindow)
         '''^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'''
         '''and comment this:
         vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv'''
-        self.addRightClickMenu()
-        self.ui.pushButtonRecalculate.clicked.connect(self.recalculateAllHousingLengthsValues)
-        self.ui.pushButtonSaveChanges.clicked.connect(self.btnSaveChangesClicked)
-        self.ui.pushButtonAddItem.clicked.connect(self.showAddNewItemWindow)
+        # self.addRightClickMenu()
+        # self.ui.pushButtonRecalculate.clicked.connect(self.recalculateAllHousingLengthsValues)
+        # self.ui.pushButtonSaveChanges.clicked.connect(self.btnSaveChangesClicked)
+        # self.ui.pushButtonAddItem.clicked.connect(self.showAddNewItemWindow)
         '''^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'''
         self.setupHideButtons()
 
@@ -1610,6 +1610,7 @@ class PumpCalcWindow(QtWidgets.QMainWindow, CommonMethods):
                     print(f'found dublicate in row {row}, please delete dublicate')
         print('hsg_nom_len, hsg_max_len, hsg_min_len', hsg_nom_len, hsg_max_len, hsg_min_len)
         self.found_hsg = found
+        print(str(self.found_hsg)*10)
         return hsg_min_len, hsg_nom_len, hsg_max_len
 
     def getLDifData(self, ds_ldif, product_line, series, stage_size):
@@ -1650,7 +1651,6 @@ class PumpCalcWindow(QtWidgets.QMainWindow, CommonMethods):
             except Exception:
                 self.showErrorDialog(text='Compression per stage undefined.'
                                           ' Tried to find compression per pump in COMPR_PER_LEN_DICT, but unseccessful')
-            print('open dialog compression per stage undefined. Tried to find compression per pump in COMPR_PER_LEN_DICT, but unseccessful')
 
             dif_num = math.floor((hsg_len + pump_compr - MINIMUM_TUBE_LEN - brg_num * brg_len - ldif_len) / (dif_len))
         else:

@@ -111,9 +111,15 @@
             </property>
             <property name="font">
              <font>
-              <family>MS Sans Serif</family>
-              <pointsize>10</pointsize>
+              <family>Arial</family>
+              <pointsize>12</pointsize>
+              <weight>9</weight>
+              <italic>false</italic>
+              <bold>false</bold>
              </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 75 12pt &quot;Arial&quot;;</string>
             </property>
             <property name="text">
              <string>Тип пользователя:</string>

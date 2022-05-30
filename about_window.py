@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_AboutWindow(object):
     def setupUi(self, AboutWindow):
         AboutWindow.setObjectName("AboutWindow")
-        AboutWindow.resize(743, 732)
+        AboutWindow.resize(1318, 732)
         self.centralwidget = QtWidgets.QWidget(AboutWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.centralwidget)
@@ -45,6 +45,7 @@ class Ui_AboutWindow(object):
         font.setFamily("MS Sans Serif")
         font.setPointSize(15)
         self.windowName.setFont(font)
+        self.windowName.setAlignment(QtCore.Qt.AlignCenter)
         self.windowName.setObjectName("windowName")
         self.horizontalLayout.addWidget(self.windowName)
         self.verticalLayout = QtWidgets.QVBoxLayout()
@@ -56,9 +57,14 @@ class Ui_AboutWindow(object):
         sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
         self.label.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
-        font.setFamily("MS Sans Serif")
-        font.setPointSize(10)
+        font.setFamily("Arial")
+        font.setPointSize(12)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(9)
         self.label.setFont(font)
+        self.label.setStyleSheet("font: 75 12pt \"Arial\";")
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.verticalLayout.addWidget(self.label)
         self.labelCurrentUser = QtWidgets.QLabel(self.centralwidget)
@@ -72,18 +78,24 @@ class Ui_AboutWindow(object):
         font.setPointSize(10)
         font.setItalic(True)
         self.labelCurrentUser.setFont(font)
+        self.labelCurrentUser.setAlignment(QtCore.Qt.AlignCenter)
         self.labelCurrentUser.setObjectName("labelCurrentUser")
         self.verticalLayout.addWidget(self.labelCurrentUser)
         self.horizontalLayout.addLayout(self.verticalLayout)
         self.verticalLayoutOverall.addLayout(self.horizontalLayout)
         self.labelInfo = QtWidgets.QLabel(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.labelInfo.sizePolicy().hasHeightForWidth())
         self.labelInfo.setSizePolicy(sizePolicy)
         self.labelInfo.setObjectName("labelInfo")
         self.verticalLayoutOverall.addWidget(self.labelInfo)
+        self.label_2 = QtWidgets.QLabel(self.centralwidget)
+        self.label_2.setObjectName("label_2")
+        self.verticalLayoutOverall.addWidget(self.label_2)
+        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayoutOverall.addItem(spacerItem)
         self.pushButtonClose = QtWidgets.QPushButton(self.centralwidget)
         font = QtGui.QFont()
         font.setFamily("MS Sans Serif")
@@ -95,7 +107,7 @@ class Ui_AboutWindow(object):
         self.verticalLayout_3.addLayout(self.verticalLayoutOverall)
         AboutWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(AboutWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 743, 26))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1318, 21))
         self.menubar.setObjectName("menubar")
         AboutWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(AboutWindow)
@@ -112,7 +124,18 @@ class Ui_AboutWindow(object):
         self.windowName.setText(_translate("AboutWindow", "О программе"))
         self.label.setText(_translate("AboutWindow", "Тип пользователя:"))
         self.labelCurrentUser.setText(_translate("AboutWindow", "Технолог"))
-        self.labelInfo.setText(_translate("AboutWindow", "Версия 0.0.1. Реализован базовый функционал."))
+        self.labelInfo.setText(_translate("AboutWindow", "Версия 0.0.1. Реализован базовый функционал. Для расчета доступно оборудование только линейки TPS-Line FL и CR"))
+        self.label_2.setText(_translate("AboutWindow", "Пару моментов по расчету, которые ведет программа.\n"
+" 1. Для расчета CR секции, программа учитывает тот факт, что верхний НА резаный (без замка) и его длина меньше на соответствующую длину (3 мм). \n"
+" 2. Значение длины компрессионного кольца - 39 мм. Оба эти размера \"зашиты\" в высоту головы для 5А CR (т.к. у TPS_Line только один компрессионник), поэтому длина головы 5А-CR в таблице не 41мм, как по чертежу, а 41+39-3 = 77 мм. \n"
+" 3. Что такое минимальный, максимальный и номинальный сценарий расчета? \n"
+" tНоминальный - когда все длины взяты в номинальном размере БЕЗ учета отклонений по чертежу. \n"
+" tВАЖНО! Есть детали, у которых верхний и нижний допуски даны в одну сторону, например 50+0.1+0.19, в таком случае возьмется величина именно 50 мм, что несколько будет искажать результат расчета. \n"
+" tМинимальный - сценарий, когда в ЭЦН зайдет меньше всего  РО, т.е. все детали, влияющие на длину РОТОРА взяты по верхнему допуску (макс.длина), длина корпуса - по нижнему (мин. длина) \n"
+" tМаксимальный - сценарий, когда в ЭЦН зайдет максимальное количество органов. Т.е. длины деталей, влияющих на длину ротора взяты по нижнему допуску(мин.длина), а длина корпуса - по верхнему(макс.длина)\n"
+" Какому сценарию верить? Руководствоваться здравым смыслом и выбирать усредненное значение\n"
+"4. Длины компрессионных трубок - длины трубок для текущего сценария расчета и лишь приблизительные величины, меньше которой длина трубки получиться не должна, если все детали выполнены в допуске. \n"
+" 5. Расчеты не учитывают влияние шимс на длину 6. При расчетах так же опущена возможность добавления еще одной ступени за счет сжатия ступеней (компрессии), т.к. это потенциально может привести к трудностям на сборке"))
         self.pushButtonClose.setText(_translate("AboutWindow", "Закрыть"))
 
 
